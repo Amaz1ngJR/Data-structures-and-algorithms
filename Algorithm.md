@@ -1,5 +1,37 @@
 # Algorithm
 
+## *位运算
+
+[2917. 找出数组中的 K-or 值](https://leetcode.cn/problems/find-the-k-or-of-an-array/)
+
+```c++
+int findKOr(vector<int>& nums, int k) {
+    int ans = 0;
+    for (int i = 0; i < 31; i++) {//元素范围最多31位
+        int cnt1 = 0;//第i位是1的元素的个数
+        for (const auto& v : nums) {
+            cnt1 += (v >> i) & 1;//元素右移i位 判断第i位是否是1
+        }
+        if (cnt1 >= k) {
+            ans |= 1 << i;//将1右移i位与ans| 将第i位的1添加到ans上
+        }
+    }
+    return ans;
+}
+
+//记录每位
+for (const auto& v : nums) {
+    string temp(31, '0');//用长度为31的字符串记录元素的每一位
+    for (int i = 0; i < 31; i++) {
+        if (v >> i & 1)temp[30 - i] = '1';
+    }
+    std::bitset<64> bits(temp);//#include <bitset> 将二进制字符串表示为二进制
+	int num = bits.to_ulong();//将二进制转成十进制
+}
+```
+
+
+
 ## *排序算法
 
 快速排序和归并排序都是基于分治思想的
@@ -773,6 +805,30 @@ ListNode* deleteDuplicates(ListNode* head) {
             pre->next = nullptr;
         }
         return dummy->next;
+}
+```
+
+
+
+## *哈希表
+
+### [1. 两数之和](https://leetcode.cn/problems/two-sum/)
+
+插入图片
+
+```c++
+vector<int> twoSum(vector<int>& nums, int target) {
+    unordered_map<int, int>m;//创建一个空哈希表
+    vector<int> ans;
+    for (int i = 0; i < nums.size();i++) {// 枚举 i
+        auto it = m.find(target - nums[i]);// 在左边找target-nums[i]
+        if (it != m.end()) {// 找到了
+            ans = { i,it->second };
+            break;
+        }
+        m[nums[i]] = i;
+    }
+    return ans;
 }
 ```
 

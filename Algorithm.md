@@ -814,7 +814,7 @@ ListNode* deleteDuplicates(ListNode* head) {
 
 ### [1. 两数之和](https://leetcode.cn/problems/two-sum/)
 
-插入图片
+![1699107866160](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/e997b036-1e92-45f6-aae4-0e645fc42c58)
 
 ```c++
 vector<int> twoSum(vector<int>& nums, int target) {

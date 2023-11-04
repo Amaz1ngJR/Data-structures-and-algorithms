@@ -1180,9 +1180,13 @@ dfs(i)=max(dfs(i-1),dfs(i-2)+nums[i])
 选：nums[i]+进入dfs(i-2)(从最后一个开始选) 不选进入上一层
 
 从后向前算：记忆化搜索递归
+
 普通回溯
+
 ![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/cc18f256-6184-49a5-892a-23f1b1051c52)
+
 记忆化搜索后的回溯
+
 ![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/f2a23cc9-f1de-4b68-8e1e-0320e17c70f8)
 ```c++
 int rob(vector<int>& nums) {

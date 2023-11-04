@@ -8,8 +8,13 @@
 
 #### ***直接插入排序O(n^2)（gap为1的希尔排序）
 
+插入图片
+
 ```c++
-//ֱ直接插入排序
+//直接插入排序
+//性能分析 稳定
+//时间复杂度：平均O(n^2) 最好O(n) 最坏O(n^2)
+//空间复杂度：O(1)
 template<typename T>
 void DirenctlyInsertSort(vector<T>& nums) {
 	for (int i = 1; i < nums.size(); i++) {
@@ -31,6 +36,9 @@ void DirenctlyInsertSort(vector<T>& nums) {
 
 ```c++
 //折半插入排序
+//性能分析 稳定
+//时间复杂度：平均O(n^2) 最好O(n) 最坏O(n^2)
+//空间复杂度：O(1)
 template<typename T>
 void BinarySearchSort(vector<T>& nums) {
 	for (int i = 1; i < nums.size(); i++) {
@@ -57,28 +65,33 @@ void BinarySearchSort(vector<T>& nums) {
 
 #### ***希尔排序/缩小增量排序
 
+插入图片
+
 ```c++
-	//希尔排序
-	template<typename T>
-	void ShellSort(vector<T>& nums) {
-		//希尔排序
-		std::function<void(vector<T>&, int)> Shell =
-			[&](vector<T>& nums, int gap) {
-			for (int i = gap; i < nums.size(); i++) {
-				int temp = nums[i];
-				int j;
-				for (j = i - gap; j >= 0 && nums[j] > temp; j -= gap) {
-					nums[j + gap] = nums[j];
-				}
-				nums[j + gap] = temp;
-			}
-		};
-		int gap = nums.size();
-		while (gap > 1) {
-			gap /= 2;
-			Shell(nums, gap);
-		}
-	}
+//希尔排序
+//性能分析 不稳定
+//时间复杂度：平均O(n^1.3-1.5) 最好O(n) 最坏O(n^2)
+//空间复杂度：O(1)
+template<typename T>
+void ShellSort(vector<T>& nums) {
+    //希尔排序
+    std::function<void(vector<T>&, int)> Shell =
+        [&](vector<T>& nums, int gap) {
+        for (int i = gap; i < nums.size(); i++) {
+            int temp = nums[i];
+            int j;
+            for (j = i - gap; j >= 0 && nums[j] > temp; j -= gap) {
+                nums[j + gap] = nums[j];
+            }
+            nums[j + gap] = temp;
+        }
+    };
+    int gap = nums.size();
+    while (gap > 1) {
+        gap /= 2;
+        Shell(nums, gap);
+    }
+}
 ```
 
 
@@ -88,47 +101,55 @@ void BinarySearchSort(vector<T>& nums) {
 #### ***快速排序O（nlogn）（重要）
 
 ```c++
-	//快速排序
-	template<typename T>
-	void QuickSort(vector<T>& nums, int low, int high) {
-		//划分
-		std::function<int(vector<T>&, int, int)>Parttion =
-			[&](vector<T>& nums, int low, int high)->int {
-			int pivot = nums[low];
-			while (low < high) {
-				while (low < high && nums[high] >= pivot) --high;
-				nums[low] = nums[high];
-				while (low < high && nums[low] <= pivot) ++low;
-				nums[high] = nums[low];
-			}
-			nums[low] = pivot;
-			return low;
-		};
-		//排序
-		if (low < high) {
-			int pivotpos = Parttion(nums, low, high);
-			QuickSort(nums, low, pivotpos - 1);
-			QuickSort(nums, pivotpos + 1, high);
-		}
-	}
+//快速排序
+//性能分析 不稳定
+//时间复杂度：平均O(nlogn) 最好O(nlogn) 最坏O(n^2)
+//空间复杂度：O(nlogn)
+template<typename T>
+void QuickSort(vector<T>& nums, int low, int high) {
+    //划分
+    std::function<int(vector<T>&, int, int)>Parttion =
+        [&](vector<T>& nums, int low, int high)->int {
+        int pivot = nums[low];
+        while (low < high) {
+            while (low < high && nums[high] >= pivot) --high;
+            nums[low] = nums[high];
+            while (low < high && nums[low] <= pivot) ++low;
+            nums[high] = nums[low];
+        }
+        nums[low] = pivot;
+        return low;
+    };
+    //排序
+    if (low < high) {
+        int pivotpos = Parttion(nums, low, high);
+        QuickSort(nums, low, pivotpos - 1);
+        QuickSort(nums, pivotpos + 1, high);
+    }
+}
 ```
 
 
 
 #### ***冒泡排序O(n^2)
 
+插入图片
+
 ```C++
-	//冒泡排序
-	template<typename T>
-	void BubbleSort(vector<T>& nums) {
-		for (int i = 0; i < nums.size(); i++) {
-			for (int j = 0; j + 1 < nums.size() - i; j++) {
-				if (nums[j] > nums[j + 1]) {
-					swap(nums[j], nums[j + 1]);
-				}
-			}
-		}
-	}
+//冒泡排序
+//性能分析 稳定
+//时间复杂度：平均O(n^2) 最好O(n) 最坏O(n^2)
+//空间复杂度：O(1)
+template<typename T>
+void BubbleSort(vector<T>& nums) {
+    for (int i = 0; i < nums.size(); i++) {
+        for (int j = 0; j + 1 < nums.size() - i; j++) {
+            if (nums[j] > nums[j + 1]) {
+                swap(nums[j], nums[j + 1]);
+            }
+        }
+    }
+}
 ```
 
 
@@ -137,18 +158,23 @@ void BinarySearchSort(vector<T>& nums) {
 
 #### ***简单选择排序O(n^2)
 
+插入图片
+
 ```c++
-	//简单选择排序
-	template<typename T>
-	void SelectSort(vector<T>& nums) {
-		for (int i = 0; i < nums.size() - 1; i++) {
-			for (int j = i + 1; j < nums.size(); j++) {
-				if (nums[j] < nums[i]) {
-					swap(nums[j], nums[i]);
-				}
-			}
-		}
-	}
+//简单选择排序
+//性能分析 不稳定
+//时间复杂度：平均O(n^2) 最好O(n^2) 最坏O(n^2)
+//空间复杂度：O(1)
+template<typename T>
+void SelectSort(vector<T>& nums) {
+    for (int i = 0; i < nums.size() - 1; i++) {
+        for (int j = i + 1; j < nums.size(); j++) {
+            if (nums[j] < nums[i]) {
+                swap(nums[j], nums[i]);
+            }
+        }
+    }
+}
 ```
 
 
@@ -157,6 +183,9 @@ void BinarySearchSort(vector<T>& nums) {
 
 ```C++
 //堆排序
+//性能分析 不稳定
+//时间复杂度：平均O(nlogn) 最好O(nlogn) 最坏O(nlogn)
+//空间复杂度：O(1)
 template<typename T>
 void HeapSort(vector<T>& nums) {
 	//调整堆
@@ -189,6 +218,10 @@ void HeapSort(vector<T>& nums) {
 #### ***二路归并
 
 ```c++
+//二路归并排序
+//性能分析 稳定
+//时间复杂度：平均O(nlogn) 
+//空间复杂度：O(n)
 template<typename T>
 void MergeSort(vector<T>& a, int low, int high) {
 	int i, j, k;
@@ -226,6 +259,8 @@ void MergeSort(vector<T>& a, int low, int high) {
 ##  *查找算法
 
 ### **二分/折半查找O（logn）
+
+适用：排好序的数组
 
 ```c++
 //二分查找 有序数组
@@ -266,6 +301,24 @@ int BinarySearch(vector<T>& nums, T target) {
 ## *前后缀
 
 ### **前缀和 与 差分
+
+```c++
+前缀和sum[i]=accumulate(arr[0],arr[i])
+
+sum[L,R] = sum[R]-sum[L-1]
+
+差分数组d[i+1]=sum[i+1]-sum[i]
+
+对一个区间[L,R]所有元素加上值v，就转换成了只对差分数组的两个元素分别加、减一个v，然后进行一次前缀和
+[L,R] + v == d[L] + v , d[R+1] – v ;  sumd[L,R];
+例如：
+arr:   1,3,7,5,2
+d:     1,2,4,-2,-3
+sumd:  1,3,7,5,2
+//在arr[1,3]区间元素+3
+d2:    1,5,4,-2,-6//仅对d[1]+3 d[4]-3
+sumd2: 1,6,10,8,2
+```
 
 
 

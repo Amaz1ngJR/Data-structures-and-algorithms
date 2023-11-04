@@ -8,7 +8,7 @@
 
 #### ***直接插入排序O(n^2)（gap为1的希尔排序）
 
-插入图片
+![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/cb7140a6-945d-4d7e-b6bd-88d56ade37f1)
 
 ```c++
 //直接插入排序
@@ -64,8 +64,7 @@ void BinarySearchSort(vector<T>& nums) {
 
 
 #### ***希尔排序/缩小增量排序
-
-插入图片
+![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/9bf01f8f-c80a-4ae6-aab2-07c78d9b8d39)
 
 ```c++
 //希尔排序
@@ -133,7 +132,8 @@ void QuickSort(vector<T>& nums, int low, int high) {
 
 #### ***冒泡排序O(n^2)
 
-插入图片
+![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/d7b7ba2c-f66c-4c38-8f12-9cde8b7a7488)
+
 
 ```C++
 //冒泡排序
@@ -158,7 +158,7 @@ void BubbleSort(vector<T>& nums) {
 
 #### ***简单选择排序O(n^2)
 
-插入图片
+![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/fee239fd-9441-4465-9fc6-73802c73819f)
 
 ```c++
 //简单选择排序

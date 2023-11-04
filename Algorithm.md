@@ -296,6 +296,84 @@ int BinarySearch(vector<T>& nums, T target) {
 }
 ```
 
+### **二分查找的变形
+
+#### [162. 寻找峰值](https://leetcode.cn/problems/find-peak-element/)
+
+```c++
+int findPeakElement(vector<int>& nums) {
+    int low = -1;
+    int high = nums.size() - 1;
+    int mid;
+    while (low+1 < high) {
+        mid = low + ((high - low) / 2);
+        if (nums[mid] > nums[mid + 1])
+            high = mid;
+        else
+            low = mid ;
+    }
+    return high;
+}
+```
+
+#### [153. 寻找旋转排序数组中的最小值](https://leetcode.cn/problems/find-minimum-in-rotated-sorted-array/)
+
+```c++
+int findMin(vector<int>& nums) {
+    int low = -1;
+    int high = nums.size()-1;
+    int mid;
+    while (low + 1 < high) {
+        mid = low + ((high - low) / 2);
+        if (nums[mid] < nums[nums.size()-1])
+            high = mid;
+        else
+            low = mid;
+    }
+    return nums[high];
+
+}
+```
+
+#### [33. 搜索旋转排序数组](https://leetcode.cn/problems/search-in-rotated-sorted-array/)
+
+可以使用153的方法先找到两个有序数组，再二分。仅一次二分的方法如下
+
+二分位置nums[mid]右侧全是蓝色的三种情况：
+
+1、如果nums[n-1]<target<=nums[mid] 同一左段 
+
+2、nums[mid]<nums[n-1]<target    target左段、mid右段
+
+3、target<=nums[mid]<nums[n-1]    同一右段   
+
+```c++
+int search(vector<int>& nums, int target) {
+    int n = nums.size();
+    if (nums[n - 1] == target)return n - 1;
+    int low = -1;
+    int high = nums.size() - 1;
+    int mid;
+    auto isblue = [&](int mid) {
+        if (nums[mid] > target) {
+            if (target > nums[n - 1]) return true;
+            else if (nums[mid] < nums[n - 1]) return true;
+        }
+        else if (target > nums[n - 1] && nums[n - 1] > nums[mid])return true;
+        return false;
+    };
+    while (low + 1 < high) {
+        mid = low + ((high - low) / 2);
+        if (nums[mid] == target)return mid;
+        else if (isblue(mid))
+            high = mid;
+        else
+            low = mid;
+    }
+    return -1;
+}
+```
+
 
 
 ## *前后缀
@@ -324,27 +402,370 @@ sumd2: 1,6,10,8,2
 
 ### **前缀和最值
 
+#### [121. 买卖股票的最佳时机](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/)
+
+```c++
+int maxProfit(vector<int>& prices) {
+    vector<int>suf;
+    int ans = 0;
+    int n = prices.size();
+    suf.resize(n);
+    int  maxsuf= 0;
+    for (int j = n - 1; j >= 0; j--) {
+        suf[j] = maxsuf;
+        maxsuf = max(maxsuf, prices[j]);
+    }
+    for (int i = 0; i < n; i++) {
+        ans = max(ans, suf[i] - prices[i]);
+    }
+    return ans;
+}
+```
+
 
 
 ### **分解前后缀
 
+#### [238. 除自身以外数组的乘积](https://leetcode.cn/problems/product-of-array-except-self/)
 
+```c++
+vector<int> productExceptSelf(vector<int>& nums) {
+    int n = nums.size();
+    vector<int> ans(n, 1);
+    int i, suf;
+    suf = 1;
+    for (i = 1; i < n; i++) {
+        ans[i] = nums[i - 1] * ans[i - 1];
+    }
+    for (i = n - 1; i >= 0; i--) {
+        ans[i] *= suf;
+        suf *= nums[i];
+    }
+    return ans;
+}
+```
 
 ## *双指针
 
 ### **相向双指针
 
+#### [167. 两数之和 II - 输入有序数组](https://leetcode.cn/problems/two-sum-ii-input-array-is-sorted/)
+
+有序排列后，如果low+high>target,low之后所有的数与high相加都大于target，high只能舍去(左移)，如果low+high<target,high之前所有的数加上low也肯定都小于target，所以low舍去(右移)
+
+[15. 三数之和](https://leetcode.cn/problems/3sum/)/[18. 四数之和](https://leetcode.cn/problems/4sum/)：枚举第一个数/枚举前两个数，降为两数之和
+
+```c++
+vector<int> twoSum(vector<int>& numbers, int target) {
+    int i, j;
+    vector<int> ans;
+    i = 0; j = numbers.size() - 1;
+    while (i != j) {
+        if (numbers[i] + numbers[j] == target) {
+            ans.emplace_back(i+1);
+            ans.emplace_back(j+1);
+            break;
+        }
+        else if (numbers[i] + numbers[j] > target) j--;
+        else i++;
+    }
+    return ans;
+}
+```
+
+#### [42. 接雨水](https://leetcode.cn/problems/trapping-rain-water/)
+
+Pre前后缀分解:分别计算每个格子的最大前缀(左向右)和最大后缀(右向左)，存两个数组里，然后取前后缀的最小值减去格子的值即为这个格子所能接的水
+
+Final:不用一下子计算完每个格子的最大前缀和后缀，分别从low、high开始更新计算最大前缀、最大后缀，只需要取最小缀即可，最大缀又不会缩小
+
+```c++
+ int trap(vector<int>& height) {
+    int ans = 0;
+    int low = 0;
+    int high = height.size() - 1;
+    int pre_max = 0;
+    int suf_max = 0;
+    while (low <= high) {
+        pre_max = max(pre_max, height[low]);
+        suf_max = max(suf_max, height[high]);
+        if (pre_max <= suf_max) {
+            ans += (pre_max - height[low]);
+            low++;
+        }
+        else {
+            ans += (suf_max - height[high]);
+            high--;
+        }
+    }
+    return ans;
+}
+```
+
+#### [11. 盛最多水的容器](https://leetcode.cn/problems/container-with-most-water/)
+
+```c++
+int maxArea(vector<int>& height) {
+    int ans = 0;
+    int low = 0;
+    int high = height.size() - 1;
+    while (low < high) {      
+        if (height[low] <= height[high]) {
+            ans = max(ans, height[low] * (high - low));
+            low++;
+        }
+        else {
+            ans = max(ans, height[high] * (high - low));
+            high--;
+        }
+    }
+    return ans;
+}
+```
+
 
 
 ### **同向双指针 滑动窗口
+
+#### [209. 长度最小的子数组](https://leetcode.cn/problems/minimum-size-subarray-sum/)
+
+初始为第一个元素，子数组小于目标则加大右端点来增加子数组长度，若子数组和大于等于目标，缩小左端点。直到右端点为数组最后一个。
+
+```c++
+int minSubArrayLen(int target, vector<int>& nums) {
+    int n=nums.size();
+    int low = 0;
+    int high = low;
+    int ans = n+1;
+    int sum = nums[low];
+    while (high != n) {
+        if (sum >= target) {
+            sum -= nums[low];
+            ans = min(ans, high - low + 1);
+            low++;
+        }
+        else {
+            high++;
+            if (high != n) {
+                sum += nums[high];
+            }
+        }
+    }
+    if(ans>n)return 0;
+    else return ans;
+}
+```
+
+#### [713. 乘积小于 K 的子数组](https://leetcode.cn/problems/subarray-product-less-than-k/)
+
+```c++
+int numSubarrayProductLessThanK(vector<int>& nums, int k) {
+    if (k <= 1)return false;
+    int ans = 0;
+    int low = 0;
+    int high = low;
+    int mul = nums[low];
+    while (high != nums.size()) {
+        if (mul >= k) {
+            mul /= nums[low];
+            low++;
+        }
+        else {
+            ans += high - low + 1;//固定了左端点
+            high++;
+            if (high != nums.size()) {
+                mul *= nums[high];
+            }
+        }
+    }
+    return ans;
+}
+ int numSubarrayProductLessThanK(vector<int>& nums, int k) {
+    if (k <= 1)return false;
+    int ans = 0;
+    int mul = 1;
+    int low = 0;
+    for (int high = 0; high < nums.size(); high++) {
+        mul *= nums[high];
+        while(mul >= k) {
+            mul /= nums[low];
+            low++;
+        }
+        ans += high - low + 1;//固定了右端点
+    }
+    return ans;
+}
+```
+
+#### [3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/)
+
+```c++
+int lengthOfLongestSubstring(string s) {
+    int ans = 0;
+    if(s.size()==1)return 1;
+    map<char, int> m;
+    int low = 0;
+    int high = low + 1;
+    int num=1;
+    m[s[low]]++;
+    while (high < s.size()) {
+        if (m[s[high]] == 0) {
+            m[s[high]]++;
+            num++;
+            ans = max(ans, num);
+            high++;
+        }
+        else {
+            m[s[low]]--;
+            num--;
+            low++;
+        }
+    }
+    return ans;
+}
+int lengthOfLongestSubstring(string s) {
+    int ans = 0;
+    if (s.size() == 1)return 1;
+    map<char, int> m;
+    int low = 0;
+    for (int high = 0; high < s.size(); high++) {
+        m[s[high]]++;
+        while (m[s[high]] > 1) {
+            m[s[low]]--;
+            low++;
+        }
+        ans = max(ans, high - low + 1);
+    }
+    return ans;
+}
+```
 
 
 
 ### **快慢指针
 
+#### [141. 环形链表](https://leetcode.cn/problems/linked-list-cycle/)
 
+判断一个链表是否是有环
+
+```c++
+bool hasCycle(ListNode *head) {
+    ListNode* slow, * fast;
+    slow = fast = head;
+    while (slow != nullptr && fast != nullptr) {
+        fast = fast->next;
+        if (fast != nullptr)
+            fast = fast->next;
+        else return false;
+        slow = slow->next;
+        if (slow == fast)
+            return true;
+    }
+    return false;
+}
+```
+
+#### [142. 环形链表 II](https://leetcode.cn/problems/linked-list-cycle-ii/)
+
+找到链表中环(至多一个)的入口结点下标(NULL表示无环)
+
+插入图片
+
+```c++
+ListNode *detectCycle(ListNode *head) {
+    ListNode* slow, * fast;
+    slow = fast = head;
+    while (slow != nullptr && fast != nullptr) {
+        fast = fast->next;
+        if (fast != nullptr) {
+            fast = fast->next;
+        }
+        else return NULL;
+        slow = slow->next;
+        if (slow == fast) {
+            while (head != slow) {
+                head = head->next;
+                slow = slow->next;
+            }
+            return slow;
+        }
+    }
+    return NULL;
+}
+```
 
 ### **前后指针
+
+#### [19. 删除链表的倒数第 N 个结点](https://leetcode.cn/problems/remove-nth-node-from-end-of-list/)
+
+```c++
+ListNode* List::removeNthFromEnd(ListNode* head, int n) {
+	ListNode* dummy = new ListNode(head);
+	ListNode* front, * back;
+	front = back = dummy;
+	while (n != 0) {
+		front = front->next;
+		n--;
+	}
+	while (front->next != nullptr) {
+		front = front->next;
+		back = back->next;
+	}
+	back->next = back->next->next;
+	return dummy->next;
+}
+```
+
+#### [83. 删除排序链表中的重复元素](https://leetcode.cn/problems/remove-duplicates-from-sorted-list/)
+
+删除有序链表中的多余的重复结点
+
+```c++
+ListNode* deleteDuplicates(ListNode* head) {
+        if(head==nullptr)return head;
+ 		ListNode* front = head->next;
+        ListNode* back = head;
+        while (front != nullptr) {
+            if (front->val != back->val) {
+                back->next = front;
+                back = front;
+            }
+            front = front->next;
+        }
+        back->next = nullptr;
+        return head;
+}
+```
+
+[82. 删除排序链表中的重复元素 II](https://leetcode.cn/problems/remove-duplicates-from-sorted-list-ii/)删除有序链表中重复出现的结点，仅剩下没有重复的结点
+
+```c++
+ListNode* deleteDuplicates(ListNode* head) {
+    if (head == nullptr)return head;
+        ListNode * pre, * front, * back;
+        ListNode* dummy=new ListNode(0,head);
+        pre = dummy;
+        back = dummy->next;
+        front = back->next;
+        while (front != nullptr) {
+            if (front->val != back->val) {
+                if (back->next->val != back->val) {
+                    pre->next = back;
+                    pre = back;
+                }
+                back = front;
+            }
+            front = front->next;
+        }
+        if (back->next == nullptr) {
+            pre->next = back;
+        }
+        else {
+            pre->next = nullptr;
+        }
+        return dummy->next;
+}
+```
 
 
 
@@ -354,37 +775,695 @@ sumd2: 1,6,10,8,2
 
 ## *回溯
 
+```
+用一个path记录路径上的选择
+回溯三问：
+1.当前的操作？枚举path[i]的选择
+
+2.子问题？构造>=i的部分
+
+3.下一个子问题？构造>=i+1的部分
+```
+
+```c++
+模板一：输入的视角(选不选)
+```
+
+插入图片
+
+```
+模板二：答案的视角(枚举)
+```
+
+插入图片
+
+```
+排列型模板:数组path记录路径上的数(已选数字)集合s记录剩余未选数字
+```
+
+插入图片
+
 ### **子集型
+
+#### [78. 子集](https://leetcode.cn/problems/subsets/)
+
+```c++
+//模板一
+vector<vector<int>> subsets(vector<int>& nums) {
+    vector<vector<int>>ans;
+    vector<int>path;
+    int n = nums.size();
+    std::function<void(int)> dfs = [&](int i) {
+        if (i == n) {
+            ans.push_back(path);
+            return;
+        }
+        //不选nums[i]
+        dfs(i + 1);
+        //选nums[i]
+        path.push_back(nums[i]);
+        dfs(i + 1);
+        path.pop_back();//恢复现场！
+    };
+    dfs(0);
+    return ans;
+}
+```
+
+```c++
+ //模板二
+ vector<vector<int>> subsets(vector<int>& nums) {
+    vector<vector<int>>ans;
+    vector<int>path;
+    int n = nums.size();
+    std::function<void(int)> dfs = [&](int i) {
+        ans.push_back(path);
+        //if (i == n)return;
+        for (int j = i; j < n; j++) {
+            path.push_back(nums[j]);
+            dfs(j + 1);
+            path.pop_back();//恢复现场！
+        }
+    };
+    dfs(0);
+    return ans;
+}
+```
+
+### **分割型
+
+#### [17. 电话号码的字母组合](https://leetcode.cn/problems/letter-combinations-of-a-phone-number/)
+
+```c++
+vector<string> letterCombinations(string digits) {
+    vector<string>a = { "","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz" };
+    vector<string>ans;
+    int n = digits.size();
+    if (digits.empty())return ans;
+    string path;
+    path.resize(n);
+    std::function<void(int)> dfs = [&](int i) {
+        if (i == n) {
+            ans.push_back(path);
+            return;
+        }
+        for (const auto& c : a[int(digits[i]) - 48]) {
+            path[i] = c;
+            dfs(i + 1);
+        }
+    };
+    dfs(0);
+    return ans;
+}
+```
+
+#### [131. 分割回文串](https://leetcode.cn/problems/palindrome-partitioning/)
+
+```c++
+ vector<vector<string>> partition(string s) {
+    vector<vector<string>>ans;
+    vector<string>path;
+    int n = s.size();
+    std::function<bool(string)> isok = [](string a)->bool {
+        string b = a;
+        reverse(b.begin(), b.end());
+        if (a == b) return true;
+        else return false;
+    };
+    std::function<void(int i)> dfs = [&](int i) {
+        if (i == n) {
+            ans.push_back(path);
+            return;
+        }
+        for (int j = i; j < n; j++) {
+            string temp = s.substr(i, j -i+ 1);
+            if (isok(temp)) {
+                path.push_back(temp);
+                dfs(j + 1);
+                path.pop_back();
+            }
+        }
+    };
+    dfs(0);
+    return ans;
+}
+```
 
 
 
 ### **组合型
 
+剪枝技巧： 逆序枚举
+
+```
+设path长为m
+那么还需选d=k-m个数
+设当前要从[1,i]这i个数中选数
+如果i<d最后必然没法选够k个数 不需要继续递归
+```
+
+#### [216. 组合总和 III](https://leetcode.cn/problems/combination-sum-iii/)
+
+从1-9中选择k个数(最多选一次)使其和为n
+
+```c++
+ //模板二+剪枝技巧：
+vector<vector<int>> combinationSum3(int k, int n) {
+    vector<vector<int>>ans;
+	vector<int>path;
+	int sum = 0;
+	std::function<void(int)> dfs = [&](int i) {
+		if (path.size() == k && sum == n) {
+			ans.push_back(path);
+			return;
+		}
+		if (9 - i < k - path.size())
+			return;
+		//枚举当前可以选的数
+		for (int j = i+1; j < 10; j++) {
+			path.push_back(j);
+			sum += j;
+			dfs(j);
+			//恢复现场
+			path.pop_back();
+			sum -= j;
+		}
+	};
+	dfs(0);
+	return ans;
+}
+```
+
+#### [39. 组合总和](https://leetcode.cn/problems/combination-sum/)
+
+从一个数组中选取一些可重复数使得其和为target，返回所有组合
+
+```c++
+vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+	vector<vector<int>>ans;
+    vector<int>path;
+    int sum = 0;
+    sort(candidates.begin(), candidates.end());
+    int n = candidates.size();
+    std::function<void(int)> dfs = [&](int i) {
+        if (i == n || sum > target)return;
+        if (sum == target) {
+            ans.push_back(path);
+            return;
+        }
+        if (candidates[i] > target)return;
+        //不选
+        dfs(i + 1);
+        //选
+        sum += candidates[i];
+        path.push_back(candidates[i]);
+        dfs(i);
+        sum -= candidates[i];
+        path.pop_back();	
+    };
+    dfs(0);
+    return ans;
+}
+```
+
+#### [40. 组合总和 II](https://leetcode.cn/problems/combination-sum-ii/)
+
+从一个元素数组中选取一些元素组合(组合中每个数组元素只使用一次，但是有多个元素值相同)使得其和为target，返回所有组合
+
+```c++
+vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+    vector<vector<int>>ans;
+    vector<int>path;
+    int sum = 0;
+    map<int, int> m;
+    vector<int> nums;
+    for (const auto& c : candidates) {
+        m[c]++;
+    }
+    for (const auto& v : m) {
+        nums.push_back(v.first);
+    }
+    int n = nums.size();
+    std::function<void(int)> dfs = [&](int i) {
+        if (sum > target)return;
+        if (sum == target) {
+            ans.push_back(path);
+            return;
+        }
+        if (i == n)return;
+        if(nums[i]>target)return;
+        //不选
+        dfs(i + 1);
+        //选 /选k次
+        for (int k = 1; k <= m[nums[i]]; k++) {
+            sum += nums[i] * k;
+            if (sum > target) {
+                sum -= nums[i] * k;
+                break; 
+            }
+            for (int kk = 0; kk < k; kk++) {
+                path.push_back(nums[i]);
+            }
+            dfs(i + 1);
+            sum -= nums[i] * k;
+            for (int kk = 0; kk < k; kk++) {
+                path.pop_back();
+            }
+        }
+    };
+    dfs(0);
+    return ans;
+}
+```
+
 
 
 ### **排列型
+
+不同于组合型，(i,j)!=(j,i)
+
+插入图片
+
+时间复杂度为所有叶子结点到根节点的路径和O(n*n!)
+
+#### [47. 全排列 II](https://leetcode.cn/problems/permutations-ii/)
+
+给一个含重复数字的数组，给出它所有的不重复的全排列
+
+```c++
+vector<vector<int>> permuteUnique(vector<int>& nums) {
+    vector<vector<int>>ans;
+    vector<int>path;
+    int n = nums.size();
+    vector<int>on_path(n, 0);
+    std::function<void(int)> dfs = [&](int i) {
+        if (i == n) {
+            ans.push_back(path);
+            return;
+        }
+        for (int j = 0; j < n; j++) {
+            if (on_path[j] == 0) {
+                path.push_back(nums[j]);
+                on_path[j] = 1;
+                dfs(i + 1);
+                path.pop_back();
+                on_path[j] = 0;
+            }
+        }
+    };
+    dfs(0);
+    sort(ans.begin(),ans.end());
+    auto end = unique(ans.begin(), ans.end());
+    ans.erase(end, ans.end());
+    return ans;
+}
+```
+
+#### [51. N 皇后](https://leetcode.cn/problems/n-queens/)
+
+```c++
+vector<vector<string>> solveNQueens(int n) {
+    string temps = "";
+	for (int i = 0; i < n; i++) {
+		temps += ".";
+	}
+	vector<string> temp(n, temps);
+	vector<vector<string>>ans;
+	vector<int>col(n);//表示该行在第几列放入
+	vector<int>on_col(n, 0);//表示这列是否放入
+	std::function<bool(int Row, int Col)> isok =
+		[&](int Row, int Col)->bool {
+		//判断左上 行号-列号相同 右上 行号+列号相同
+		for (int r = 0; r < Row; r++) {
+			int c = col[r];
+			if (Row + Col == r + c || Row - Col == r - c)
+				return false;
+		}
+		return true;
+	};
+	std::function<void(int)> dfs = [&](int i) {
+		if (i == n) {
+			for (int k = 0; k < n; k++) {
+				temp[k][col[k]] = 'Q';
+			}
+			ans.push_back(temp);
+            for (int k = 0; k < n; k++) {
+				temp[k][col[k]] = '.';
+			}
+		}
+		for (int j = 0; j < n; j++) {
+			if (on_col[j] == 0 && isok(i, j)) {
+				col[i] = j;
+				on_col[j] = 1;
+				dfs(i + 1);
+				on_col[j] = 0;//恢复现场
+			}
+		}
+	};
+	dfs(0);
+	return ans;
+}
+```
 
 
 
 ## *动态规划
 
+定义状态 状态转移方程 时间复杂度：状态的个数*计算状态的时间
+
+回溯+记忆化搜索->动态规划  记忆化搜索->循环递推
+
+[1155. 掷骰子等于目标和的方法数](https://leetcode.cn/problems/number-of-dice-rolls-with-target-sum/)
+
+```c++
+int numRollsToTarget(int n, int k, int target) {
+    const int mod = 1000000007;//数据太大，取模
+    int ans = 0;
+    //dp[i][j]表示第i步到达j的数量
+    vector<vector<int>>dp(31, vector <int>(1001, 0));
+    for (int t = 1; t <= k; t++) {//边界条件
+        dp[1][t] = 1;
+    }
+    for (int i = 2; i <= n; i++) {
+        for (int j = i; j <= 1000 && j <= i * k; j++) {
+            for (int p = 1; p <= k; p++) {
+                if (j >= p) {//转移方程dp[i][j]+=dp[i-1][j-(1-k)]
+                    dp[i][j] = (dp[i][j] + dp[i - 1][j - p]) % mod;
+                }
+                else break;
+            }
+        }
+    }
+    return dp[n][target];
+}
+```
+
 
 
 ### **打家劫舍
 
+[198. 打家劫舍](https://leetcode.cn/problems/house-robber/)
 
+从数组中选取一些数(数之间在数组中不能相邻)使得这些数和最大 
+
+```
+dfs(i)=max(dfs(i-1),dfs(i-2)+nums[i])
+```
+
+选：nums[i]+进入dfs(i-2)(从最后一个开始选) 不选进入上一层
+
+从后向前算：记忆化搜索递归(左边普通回溯，右边记忆化搜索后的回溯)
+
+插入图片
+
+```c++
+int rob(vector<int>& nums) {
+    //时间复杂度=空间复杂度=O(n)
+    int n = nums.size();
+	vector<int>path(n, -1);//记录dfs[i]的值 优化时间
+	std::function<int(int)> dfs = [&](int i)->int {
+		if (i <0) {
+			return 0;
+		}
+		if (path[i] != -1)return path[i];
+		int ans = max(dfs(i - 1), nums[i] + dfs(i - 2));
+		path[i] = ans;
+		return ans;
+	};
+	return dfs(n - 1);
+}
+```
+
+插入图片
+
+1：1 dfs->f数组循环递推
+
+```c++
+ int rob(vector<int>& nums) {
+    //时间复杂度=O(n) 空间复杂度=O(n)
+    int n = nums.size();
+    vector<int>path(n + 2, 0);
+    for (int i = 0; i < nums.size(); i++) {
+        path[i + 2] = max(path[i + 1], path[i] + nums[i]);
+    }
+    return path[n + 1];
+}
+```
+
+空间复杂度优化为O(1) f数组循环递推->滚动数组
+
+```c++
+ int rob(vector<int>& nums) {
+    //时间复杂度=O(n) 空间复杂度=O(1)
+	int n = nums.size();
+	int f0, f1,f;
+	f0 = f1 = f = 0;
+	for (const auto& v : nums) {
+		f = max(f1, f0 + v);
+		f0 = f1;
+		f1 = f;
+	}
+	return f1;
+}
+```
 
 ### **0/1背包
+
+```
+0/1背包：有n个物品  第i个物品的体积为w[i]  价值为v[i]
+每个物品至多选一个  求体积和不超过capacity时的最大价值和
+dfs(i,c)=max(dfs(i-1,c),dfs(i-1,c-w[i])+v[i])
+```
+
+```c++
+//0-1背包问题 记忆化搜索数组递归版
+std::function<int(int capacity, vector<int> w, vector<int>v)> zero_one_knapsack =
+[](int capacity, vector<int> w, vector<int>v)->int {
+	int n = w.size();
+	vector<vector<int>>path(n, vector<int>(n, -1));//记忆化:使用二维数组表示两个参数
+	std::function<int(int, int)> dfs = [&](int i, int c)->int {
+		if (i < 0)return 0;
+		if (c < w[i]) {//物体体积大于剩余容量，只能不选
+			if (path[i - 1][c] != -1) return path[i - 1][c];
+			else {
+				path[i - 1][c] = dfs(i - 1, c);
+				return path[i - 1][c];
+			}
+		}
+		if (path[i - 1][c] == -1)path[i - 1][c] = dfs(i - 1, c);
+		if (path[i - 2][c - w[i]] == -1)path[i - 2][c - w[i]] = dfs(i - 2, c - w[i]);
+		return max(path[i - 1][c], path[i - 2][c - w[i]] + v[i]);
+	};
+	return dfs(n - 1, capacity);
+};
+```
+
+```
+常见变形：
+1、至多装capacity 求方案数/最大价值和
+2、恰好装capacity 求方案数/最大/最小价值和
+3、至少装capacity 求方案数/最小价值和
+```
+
+#### [494. 目标和](https://leetcode.cn/problems/target-sum/)
+
+在非负整数数组 nums的每个数前加+/-使得数组和为target
+
+```c++
+//记忆化搜索
+//dfs(i,c)=dfs(i-1,c)+dfs(i-1,c-w[i])
+int findTargetSumWays(vector<int>& nums, int target) {
+    //所有前面为+号的数之和为p
+    //所有数之和为s
+    //所有前面为-号的数之和为s-p
+    //-(s-p)+p=target => p=(s+t)/2 => s+t为非负偶数
+    for (const auto& v : nums) {//target=s+t
+        target += v;
+    }
+    if (target < 0 || target % 2 == 1)return 0;
+    target /= 2;
+    int n = nums.size();
+    //记忆化搜搜
+    vector<vector<int>> cache(n, vector<int>(target+1, -1));
+    //dfs(i,j)表示从前i个数中选出恰好为j的方案数 j取值[0,target]故记忆化target+1
+    std::function<int(int, int)> dfs = [&](int i, int j)->int {
+        if (i < 0) {
+            if (j == 0)return 1;
+            else return 0;
+        }
+        int& res = cache[i][j];
+        if (res != -1)return res;
+        if (j < nums[i]) {//物体体积大于剩余容量，只能不选
+            res = dfs(i - 1, j);
+            return res;
+        }
+        else {
+            res = dfs(i - 1, j) + dfs(i - 1, j - nums[i]);
+            return res;
+        }
+    };
+    return dfs(n - 1, target);
+}
+```
+
+```c++
+//递推
+//f[i][c]=f[i-1][c]+f[i-1][c-w[i]]
+//f[i+1][c]=f[i][c]+f[i][c-w[i]]
+//数组初始值为边界条件
+vector<vector<int>> f(n + 1, vector<int>(target + 1, 0));
+f[0][0] = 1;//边界条件作为初始值
+for (int i = 0; i < n; i++) {
+    for (int j = 0; j < target+1; j++) {
+        if (j < nums[i]) {
+            f[i + 1][j] = f[i][j];//只能不选
+        }
+        else {
+            //前面 不选的方案数+选的方案数
+            f[i + 1][j] = f[i][j] + f[i][j - nums[i]];
+        }
+    }
+}
+return f[n][target];
+```
+
+```c++
+//滚动数组递推
+vector<vector<int>> f(2, vector<int>(target + 1, 0));
+f[0][0] = 1;//边界条件作为初始值
+for (int i = 0; i < n; i++) {
+    for (int j = 0; j < target+1; j++) {
+        if (j < nums[i]) {
+            f[(i + 1)%2][j] = f[i%2][j];//只能不选
+        }
+        else {
+            //前面 不选的方案数+选的方案数
+            f[(i + 1) % 2][j] = f[i % 2][j] + f[i % 2][j - nums[i]];
+        }
+    }
+}
+return f[n % 2][target];
+```
+
+```c++
+ //一个数组递推
+vector<int> f(target + 1, 0);
+f[0] = 1;//边界条件作为初始值
+for (int i = 0; i < n; i++) {
+    //从后向前遍历
+    for (int j = target; j >= nums[i]; j--) {
+        f[j] += f[j - nums[i]];
+    }
+}
+return f[target];
+```
 
 
 
 ### **完全背包
 
+```
+完全背包：有n个物品  第i个物品的体积为w[i]  价值为v[i]
+每个物品无限次重复选  求体积和不超过capacity时的最大价值和
+dfs(i,c)=max(dfs(i-1,c),dfs(i,c-w[i])+v[i])
+```
+
+#### [322. 零钱兑换](https://leetcode.cn/problems/coin-change/)
+
+数组 coins 元素表示不同面额的硬币 返回使用最少的硬币达到 amount
+
+```c++
+int coinChange(vector<int>& coins, int amount) {
+    int n = coins.size();
+    //滚动数组递推
+    vector<vector<long>>f(2, vector<long>(amount + 1, INT_MAX));
+    f[0][0] = 0;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < amount + 1; j++) {
+            if (j < coins[i])f[(i + 1) % 2][j] = f[i % 2][j];
+            else {
+                f[(i + 1)%2][j] = min(f[i % 2][j], f[(i + 1) % 2][j - coins[i]] + 1);
+            }
+        }
+    }
+    int ans = f[n % 2][amount];
+    return ans < INT_MAX ? ans : -1;
+}
+```
+
 
 
 ### **子序列(连续)
 
+#### [1143. 最长公共子序列](https://leetcode.cn/problems/longest-common-subsequence/)
 
+```c++
+//记忆化搜索
+int longestCommonSubsequence(string text1, string text2) {
+    int l1 = text1.size();
+    int l2 = text2.size();
+    vector<vector<int>>path(l1, vector<int>(l2, -1));
+    std::function<int(int, int)>dfs = [&](int i, int j)->int {
+        if (i < 0 || j < 0)return 0;
+        if (path[i][j] != -1)return path[i][j];
+        if (text1[i] == text2[j]) {
+            path[i][j] = dfs(i - 1, j - 1) + 1;
+            return path[i][j];
+        }
+        else {
+            path[i][j] = max(dfs(i - 1, j), dfs(i, j - 1));
+            return path[i][j];
+        }
+    };
+    return dfs(l1 - 1, l2 - 1);
+```
+
+```c++
+//递推
+int longestCommonSubsequence(string text1, string text2) {
+    int l1 = text1.size();
+    int l2 = text2.size();
+    vector<vector<int>>f(l1+1, vector<int>(l2+1, 0));
+    for (int i = 0; i < l1; i++) {
+        for (int j = 0; j < l2; j++) {
+            if (text1[i] == text2[j]) {
+                f[i + 1][j + 1] = f[i][j] + 1;
+
+            }
+            else {
+                f[i + 1][j + 1] = max(f[i][j + 1], f[i + 1][j]);
+            }
+        }
+    }
+    return f[l1][l2];
+}
+```
 
 ## *贪心
+
+[1402. 做菜顺序](https://leetcode.cn/problems/reducing-dishes/)
+
+```c++
+int maxSatisfaction(vector<int>& satisfaction) {
+    int ans = 0;
+    int pre = 0;
+    int f = 0;
+    vector<int>& a = satisfaction;
+    class mycompare {
+    public:
+        bool operator()(int a, int b) {
+            return a > b;
+        }
+    };
+    sort(a.begin(), a.end(), mycompare());
+    int n = a.size();
+    for (int i = 0; i < n; i++) {
+        if (pre < 0)break;
+        pre += a[i];
+        f += pre;
+        ans = max(ans, f);
+    }
+    return ans;
+}
+```
 

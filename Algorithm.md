@@ -7,8 +7,7 @@
 ###  **插入排序（空间复杂度为O(1)，不适用链表）
 
 #### ***直接插入排序O(n^2)（gap为1的希尔排序）
-
-![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/cb7140a6-945d-4d7e-b6bd-88d56ade37f1)
+![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/5424a3b5-c000-428e-9602-b035ed77f9cd)
 
 ```c++
 //直接插入排序
@@ -669,8 +668,18 @@ bool hasCycle(ListNode *head) {
 
 找到链表中环(至多一个)的入口结点下标(NULL表示无环)
 
-插入图片
-
+![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/9717c05f-6598-43eb-ac62-e242363fe64a)
+```c++
+快指针移动距离是慢指针的两倍
+=>2(a+b) = a + b + k(b+c)
+=>2a + 2b = a + b + b + c + (k - 1)(b + c)
+=>a - c = (k - 1)(b + c) //head到入口的距离恰好是环长的倍速
+slow从相遇电出发
+head从头结点出发
+走c步后 slow在入口
+head到入口的距离恰好是环长的倍速
+两者相遇处即是入口
+```
 ```c++
 ListNode *detectCycle(ListNode *head) {
     ListNode* slow, * fast;
@@ -787,21 +796,20 @@ ListNode* deleteDuplicates(ListNode* head) {
 
 ```c++
 模板一：输入的视角(选不选)
+dfs(i)->dfs(i+1)
 ```
-
-插入图片
+![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/37100645-939f-4ece-b679-754e2bcfaff1)
 
 ```
 模板二：答案的视角(枚举)
 ```
-
-插入图片
+![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/e3773247-e287-4270-a8b7-543b889da942)
+![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/71781975-58d6-45f0-a614-c71870672fd4)
 
 ```
 排列型模板:数组path记录路径上的数(已选数字)集合s记录剩余未选数字
 ```
-
-插入图片
+![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/f00d3275-304e-4490-a7eb-0e7e03ccbeba)
 
 ### **子集型
 
@@ -1041,8 +1049,7 @@ vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
 ### **排列型
 
 不同于组合型，(i,j)!=(j,i)
-
-插入图片
+![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/51adcf91-e69c-466d-839f-1fb280e7734d)
 
 时间复杂度为所有叶子结点到根节点的路径和O(n*n!)
 
@@ -1172,10 +1179,11 @@ dfs(i)=max(dfs(i-1),dfs(i-2)+nums[i])
 
 选：nums[i]+进入dfs(i-2)(从最后一个开始选) 不选进入上一层
 
-从后向前算：记忆化搜索递归(左边普通回溯，右边记忆化搜索后的回溯)
-
-插入图片
-
+从后向前算：记忆化搜索递归
+普通回溯
+![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/cc18f256-6184-49a5-892a-23f1b1051c52)
+记忆化搜索后的回溯
+![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/f2a23cc9-f1de-4b68-8e1e-0320e17c70f8)
 ```c++
 int rob(vector<int>& nums) {
     //时间复杂度=空间复杂度=O(n)
@@ -1193,9 +1201,7 @@ int rob(vector<int>& nums) {
 	return dfs(n - 1);
 }
 ```
-
-插入图片
-
+![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/22c30b1d-d6b7-4f30-bd39-7b3ad23c4225)
 1：1 dfs->f数组循环递推
 
 ```c++

@@ -1457,7 +1457,7 @@ int coinChange(vector<int>& coins, int amount) {
 
 
 
-### **子序列(不连续)
+### **子序列
 
 #### [1143. 最长公共子序列](https://leetcode.cn/problems/longest-common-subsequence/)
 
@@ -1503,7 +1503,6 @@ int longestCommonSubsequence(string text1, string text2) {
 }
 ```
 
-### **子序列(连续)
 #### [300. 最长递增子序列](https://leetcode.cn/problems/longest-increasing-subsequence/)
 
 将nums排序去重以后与原来的nums求一个最长公共子序列(LCS)就可以得到nums的最长递增子序列(LIS)

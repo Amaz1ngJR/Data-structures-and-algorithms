@@ -1585,7 +1585,11 @@ int minDistance(string word1, string word2) {
 
 #### [583. 两个字符串的删除操作](https://leetcode.cn/problems/delete-operation-for-two-strings/)
 
+### 状态机DP
 
+### 区间DP
+
+### 树形DP
 
 ## *贪心
 

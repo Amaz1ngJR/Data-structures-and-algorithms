@@ -1509,6 +1509,7 @@ int longestCommonSubsequence(string text1, string text2) {
 #### [300. 最长递增子序列](https://leetcode.cn/problems/longest-increasing-subsequence/)
 ```c++
 int lengthOfLIS(vector<int>& nums) {
+	//时间复杂度O(n^2) 空间复杂度O(n)
 	int n = nums.size();
 	//dfs(i)表示以第i个位置结尾的LIS
 	vector<int>path(n, -1);//记忆化搜索

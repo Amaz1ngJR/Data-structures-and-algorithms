@@ -1459,7 +1459,7 @@ int coinChange(vector<int>& coins, int amount) {
 
 
 
-### **子序列(连续)
+### **子序列(不连续)
 
 #### [1143. 最长公共子序列](https://leetcode.cn/problems/longest-common-subsequence/)
 
@@ -1504,6 +1504,9 @@ int longestCommonSubsequence(string text1, string text2) {
     return f[l1][l2];
 }
 ```
+
+### **子序列(连续)
+#### [300. 最长递增子序列](https://leetcode.cn/problems/longest-increasing-subsequence/)
 
 ## *贪心
 

@@ -1424,8 +1424,6 @@ for (int i = 0; i < n; i++) {
 return f[target];
 ```
 
-
-
 ### **完全背包
 
 ```
@@ -1508,6 +1506,7 @@ int longestCommonSubsequence(string text1, string text2) {
 ### **子序列(连续)
 #### [300. 最长递增子序列](https://leetcode.cn/problems/longest-increasing-subsequence/)
 ```c++
+//将nums排序去重以后与原来的nums求一个最长公共子序列(LCS)就可以得到nums的最长递增子序列(LIS)
 int lengthOfLIS(vector<int>& nums) {
 	//时间复杂度O(n^2) 空间复杂度O(n)
 	int n = nums.size();
@@ -1527,6 +1526,29 @@ int lengthOfLIS(vector<int>& nums) {
 	int ans = 0;
 	for (int i = 0; i < n; i++) {
 		ans = max(ans, dfs(i));
+	}
+	return ans;
+}
+```
+
+```c++
+int lengthOfLIS(vector<int>& nums) {
+	//递推
+	//时间复杂度O(n^2) 空间复杂度O(n)
+	int n = nums.size();
+	//dfs(i)表示以第i个位置结尾的LIS
+	vector<int>path(n, 0);//数组递推
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < i; j++) {
+			if (nums[j] < nums[i]) {
+				path[i] = max(path[i], path[j]);
+			}
+		}
+		path[i] += 1;
+	}
+	int ans = 0;
+	for (const auto& v : path) {
+		ans = max(ans, v);
 	}
 	return ans;
 }
@@ -1558,4 +1580,19 @@ int maxSatisfaction(vector<int>& satisfaction) {
     return ans;
 }
 ```
-
+[300. 最长递增子序列](https://leetcode.cn/problems/longest-increasing-subsequence/)
+```c++
+int lengthOfLIS(vector<int>& nums) {
+	//贪心+二分
+	//时间复杂度O(nlogn) 空间复杂度O(n)
+	vector<int>f;
+	for (const auto& v : nums) {
+		auto it = lower_bound(f.begin(), f.end(), v);//在数组中查找元素v
+		if (it == f.end()) {//v大于f中所有元素 
+			f.emplace_back(v); //插入到数组末尾
+		}
+		else *it = v;//找到或者没找到 该位置是v应该替换的地方
+	}
+	return f.size();
+}
+```

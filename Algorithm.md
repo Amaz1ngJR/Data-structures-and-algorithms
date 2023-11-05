@@ -1505,8 +1505,11 @@ int longestCommonSubsequence(string text1, string text2) {
 
 ### **子序列(连续)
 #### [300. 最长递增子序列](https://leetcode.cn/problems/longest-increasing-subsequence/)
+
+将nums排序去重以后与原来的nums求一个最长公共子序列(LCS)就可以得到nums的最长递增子序列(LIS)
+
 ```c++
-//将nums排序去重以后与原来的nums求一个最长公共子序列(LCS)就可以得到nums的最长递增子序列(LIS)
+//记忆化搜索
 int lengthOfLIS(vector<int>& nums) {
 	//时间复杂度O(n^2) 空间复杂度O(n)
 	int n = nums.size();
@@ -1553,6 +1556,37 @@ int lengthOfLIS(vector<int>& nums) {
 	return ans;
 }
 ```
+### **编辑距离
+
+#### [72. 编辑距离](https://leetcode.cn/problems/edit-distance/)
+
+```c++
+int minDistance(string word1, string word2) {
+	int l1 = word1.size();
+	int l2 = word2.size();
+	vector<vector<int>>path(l1, vector<int>(l2, -1));
+	std::function<int(int, int)>dfs =
+		[&](int i, int j)->int {
+		if (i < 0) return j + 1;
+		else if (j < 0)return i + 1;
+		if (path[i][j] != -1)return path[i][j];
+		if (word1[i] == word2[j]) {
+			path[i][j] = dfs(i - 1, j - 1);
+			return path[i][j];
+		}
+		else {
+			path[i][j] = min(min(dfs(i - 1, j), dfs(i, j - 1)), dfs(i - 1, j - 1)) + 1;
+			return path[i][j];
+		}
+	};
+	return dfs(l1 - 1, l2 - 1);
+}
+```
+
+#### [583. 两个字符串的删除操作](https://leetcode.cn/problems/delete-operation-for-two-strings/)
+
+
+
 ## *贪心
 
 [1402. 做菜顺序](https://leetcode.cn/problems/reducing-dishes/)

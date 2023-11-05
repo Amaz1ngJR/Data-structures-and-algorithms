@@ -1589,7 +1589,7 @@ int minDistance(string word1, string word2) {
 
 ## *贪心
 
-[1402. 做菜顺序](https://leetcode.cn/problems/reducing-dishes/)
+### [1402. 做菜顺序](https://leetcode.cn/problems/reducing-dishes/)
 
 ```c++
 int maxSatisfaction(vector<int>& satisfaction) {
@@ -1614,7 +1614,7 @@ int maxSatisfaction(vector<int>& satisfaction) {
     return ans;
 }
 ```
-[300. 最长递增子序列](https://leetcode.cn/problems/longest-increasing-subsequence/)
+### [300. 最长递增子序列](https://leetcode.cn/problems/longest-increasing-subsequence/)
 ```c++
 int lengthOfLIS(vector<int>& nums) {
 	//贪心+二分

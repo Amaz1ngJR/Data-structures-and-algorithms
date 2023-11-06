@@ -1,6 +1,19 @@
 # Algorithm
 
 ## *位运算
+```c++
+void demo() {
+	int num = 100;
+	for (int i = 0; i < 31; i++) {
+		int a = (num >> i) & 1;//a表示num的第i位是否是1
+		int mask = 1 << i;//设置一个第i位的掩码
+		int result = (num & mask) >> i;//单独将num的第i位取出来
+
+		int ans = 0;
+		ans |= 1 << i;//将ans的第i位置为1
+	}
+}
+```
 
 [2917. 找出数组中的 K-or 值](https://leetcode.cn/problems/find-the-k-or-of-an-array/)
 

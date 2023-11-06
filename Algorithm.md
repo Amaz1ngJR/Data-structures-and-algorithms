@@ -870,7 +870,21 @@ TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
 ```
 [1008. 前序遍历构造二叉搜索树](https://leetcode.cn/problems/construct-binary-search-tree-from-preorder-traversal/)
 ```c++
-
+TreeNode* bstFromPreorder(vector<int>& preorder) {
+	int n = preorder.size();
+	function<TreeNode* (int, int)>dfs = [&](int left, int right)->TreeNode* {
+		if (left > right)return nullptr;
+		TreeNode* root = new TreeNode(preorder[left]);
+		int i;
+		for (i = left + 1; i <= right; i++) {
+			if (preorder[i] > preorder[left])break;
+		}
+		root->left = dfs(left + 1, i - 1);
+		root->right = dfs(i, right);
+		return root;
+	};
+	return dfs(0, n - 1);
+}
 ```
 
 ## *回溯

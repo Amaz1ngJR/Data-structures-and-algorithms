@@ -13,7 +13,7 @@ int findKOr(vector<int>& nums, int k) {
             cnt1 += (v >> i) & 1;//元素右移i位 判断第i位是否是1
         }
         if (cnt1 >= k) {
-            ans |= 1 << i;//将1右移i位与ans| 将第i位的1添加到ans上
+            ans |= 1 << i;//将1左移i位与ans| 将第i位的1添加到ans上
         }
     }
     return ans;

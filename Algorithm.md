@@ -835,8 +835,30 @@ vector<int> twoSum(vector<int>& nums, int target) {
 
 
 ## *递归 二叉树
+[106. 从中序与后序遍历序列构造二叉树](https://leetcode.cn/problems/construct-binary-tree-from-inorder-and-postorder-traversal/)
+```c++
+TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+	int n = inorder.size();
+	if (n == 0)return nullptr;
+	map<int, int> m;
+	for (int i = 0; i < n; i++) {
+	    m[inorder[i]] = i;
+	}
+	function<TreeNode* (int, int,int)> f = [&](int root,int left, int right)->TreeNode* {
+	    if (left > right)return nullptr;
+	    TreeNode* r = new TreeNode(postorder[root]);
+	    int R = m[postorder[root]];
+	    r->left = f(root - (right - R) - 1, left, R - 1);
+	    r->right = f(root - 1, R + 1, right);
+	    return r;
+	};
+	return f(n - 1, 0, n - 1);
+}
+```
+[1008. 前序遍历构造二叉搜索树](https://leetcode.cn/problems/construct-binary-search-tree-from-preorder-traversal/)
+```c++
 
-
+```
 
 ## *回溯
 

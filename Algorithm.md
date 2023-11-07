@@ -1645,6 +1645,7 @@ int minDistance(string word1, string word2) {
 
 第i天的利润为(0:什么都不做 状态不变;prices[i]:卖掉股票 状态变成未持有;-prices[i]:买入股票 状态变成持有)
 ```c++
+//记忆化搜索
 int maxProfit(vector<int>& prices) {
 	int n = prices.size();
 	vector<vector<int>>memo(n, vector<int>(2,-1));//记忆化搜索
@@ -1662,6 +1663,27 @@ int maxProfit(vector<int>& prices) {
 		return memo[i][hold];
 	};
 	return dfs(n - 1, 0);
+}
+//递推
+int maxProfit(vector<int>& prices) {
+	int n = prices.size();
+	vector<vector<int>>f(n+1, vector<int>(2,0));
+	f[0][0] = 0; f[0][1] = INT_MIN;
+	for (int i = 0; i < n; i++) {
+		f[i + 1][0] = max(f[i][0], f[i][1] + prices[i]);
+		f[i + 1][1] = max(f[i][1], f[i][0] - prices[i]);
+	}
+	return f[n][0];
+}
+//滚动数组
+int maxProfit(vector<int>& prices) {
+	int f0 = 0, f1 = INT_MIN;
+	for (const int &p: prices) {
+	    int new_f0 = max(f0, f1 + p);
+	    f1 = max(f1, f0 - p);
+	    f0 = new_f0;
+	}
+	return f0;
 }
 ```
 [309. 买卖股票的最佳时机含冷冻期](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-cooldown/)

@@ -1634,9 +1634,16 @@ int minDistance(string word1, string word2) {
 ```
 
 #### [583. 两个字符串的删除操作](https://leetcode.cn/problems/delete-operation-for-two-strings/)
+```c++
+
+```
 
 ### **状态机DP
 #### [122. 买卖股票的最佳时机 II](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/) (不限交易次数)
+
+从最后一天开始思考：从第0天到第i天结束时的利润 = 从第0天到第i-1天结束时的利润 + 第i天的利润
+
+第i天的利润为(0:什么都不做 状态不变;prices[i]:卖掉股票 状态变成未持有;-prices[i]:买入股票 状态变成持有)
 ```c++
 
 ```

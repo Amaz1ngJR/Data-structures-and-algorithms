@@ -1636,6 +1636,31 @@ int minDistance(string word1, string word2) {
 #### [583. 两个字符串的删除操作](https://leetcode.cn/problems/delete-operation-for-two-strings/)
 
 ### **状态机DP
+#### [122. 买卖股票的最佳时机 II](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/) (不限交易次数)
+```c++
+
+```
+[309. 买卖股票的最佳时机含冷冻期](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-cooldown/)
+```c++
+
+```
+[714. 买卖股票的最佳时机含手续费](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/)
+```c++
+
+```
+
+#### [188. 买卖股票的最佳时机 IV](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iv/)  (至多交易k次)
+```c++
+
+```
+[121. 买卖股票的最佳时机](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/)
+```c++
+
+```
+[123. 买卖股票的最佳时机 III](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iii/)
+```c++
+
+```
 
 ### **区间DP
 

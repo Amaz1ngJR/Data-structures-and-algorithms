@@ -2,7 +2,7 @@
 
 ## *位运算
 ```c++
-void demo() {
+bool demo() {
 	int num = 100;
 	for (int i = 0; i < 31; i++) {
 		int a = (num >> i) & 1;//a表示num的第i位是否是1
@@ -12,6 +12,7 @@ void demo() {
 		int ans = 0;
 		ans |= 1 << i;//将ans的第i位置为1
 	}
+	return n&(n-1)==0;//判断一个正整数是否是2的幂
 }
 ```
 

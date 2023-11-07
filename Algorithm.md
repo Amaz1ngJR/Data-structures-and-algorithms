@@ -1645,7 +1645,24 @@ int minDistance(string word1, string word2) {
 
 第i天的利润为(0:什么都不做 状态不变;prices[i]:卖掉股票 状态变成未持有;-prices[i]:买入股票 状态变成持有)
 ```c++
-
+int maxProfit(vector<int>& prices) {
+	int n = prices.size();
+	vector<vector<int>>memo(n, vector<int>(2,-1));//记忆化搜索
+	//dfs(i,hold) 表示第i天结束时(也就是第i+1天开始时)是否拥有股票
+	function<int(int, bool)>dfs = [&](int i, bool hold)->int {
+		if (i < 0) {//边界条件 第0天开始有股票不合法设为-无穷 未持有股票 利润为0
+			return hold ? INT_MIN : 0;
+		}
+		if (memo[i][hold] != -1)return memo[i][hold];
+		if (hold) {//第i天结束拥有为max(第i-1天持有但什么都不做,第i-1天未持有买入
+			memo[i][hold] = max(dfs(i - 1, 1), dfs(i - 1, 0) - prices[i]);
+			return memo[i][hold];
+		}
+		memo[i][hold] = max(dfs(i - 1, 0), dfs(i - 1, 1) + prices[i]);
+		return memo[i][hold];
+	};
+	return dfs(n - 1, 0);
+}
 ```
 [309. 买卖股票的最佳时机含冷冻期](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-cooldown/)
 ```c++

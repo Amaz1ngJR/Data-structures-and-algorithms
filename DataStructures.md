@@ -100,7 +100,7 @@ bool List::ListDelete(ListNode*& L, int i) {
 反转链表
 
 ```c++
-//反转链表
+//反转链表   206. 反转链表
 ListNode* List::reverseList(ListNode* head) {
 	//头结点存储数据
 	ListNode* pre, * nex;
@@ -118,7 +118,7 @@ ListNode* List::reverseList(ListNode* head) {
 反转链表区间
 
 ```c++
-//反转链表区间
+//反转链表区间  92. 反转链表 II
 ListNode* List::reverseBetween(ListNode* head, int left, int right) {
 	//头结点存储数据
 	ListNode* dummy = new ListNode(head);//哨兵 下标为0

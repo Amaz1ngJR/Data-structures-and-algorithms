@@ -1679,6 +1679,7 @@ int maxProfit(vector<int>& prices) {
 int maxProfit(vector<int>& prices) {
 	int f0 = 0, f1 = INT_MIN;
 	for (const int &p: prices) {
+		//计算f1还需要原来的f0，不能直接将f0覆盖掉 先用new_f0记录
 	    int new_f0 = max(f0, f1 + p);
 	    f1 = max(f1, f0 - p);
 	    f0 = new_f0;

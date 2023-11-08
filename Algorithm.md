@@ -1543,7 +1543,6 @@ int longestCommonSubsequence(string text1, string text2) {
         for (int j = 0; j < l2; j++) {
             if (text1[i] == text2[j]) {
                 f[i + 1][j + 1] = f[i][j] + 1;
-
             }
             else {
                 f[i + 1][j + 1] = max(f[i][j + 1], f[i + 1][j]);

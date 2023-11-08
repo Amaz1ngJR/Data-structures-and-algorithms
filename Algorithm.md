@@ -1688,7 +1688,11 @@ int maxProfit(vector<int>& prices) {
 ```
 [309. 买卖股票的最佳时机含冷冻期](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-cooldown/)
 ```c++
-
+//同122题 仅需修改持有的时候 是从第i-2天未持有转移过来的即可
+if (hold) {//第i天结束拥有为max(第i-1天持有但什么都不做,第i-2天未持有买入
+	memo[i][hold] = max(dfs(i - 1, 1), dfs(i - 2, 0) - prices[i]);
+	return memo[i][hold];
+}
 ```
 [714. 买卖股票的最佳时机含手续费](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/)
 ```c++

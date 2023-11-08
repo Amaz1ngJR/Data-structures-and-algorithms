@@ -1736,11 +1736,11 @@ int maxProfit(int k, vector<int>& prices) {
 ```
 
 ### **区间DP
-#### [516. 最长回文子序列](https://leetcode.cn/problems/longest-palindromic-subsequence/)从两侧向内缩小问题规模 选或不选
+#### [516. 最长回文子序列](https://leetcode.cn/problems/longest-palindromic-subsequence/)     从两侧向内缩小问题规模 选或不选
 ```c++
 
 ```
-#### [1039. 多边形三角剖分的最低得分](https://leetcode.cn/problems/minimum-score-triangulation-of-polygon/)分割成多个规模更小的子问题 枚举选哪个
+#### [1039. 多边形三角剖分的最低得分](https://leetcode.cn/problems/minimum-score-triangulation-of-polygon/)         分割成多个规模更小的子问题 枚举选哪个
 ```c++
 
 ```

@@ -1697,7 +1697,27 @@ if (hold) {//第i天结束拥有为max(第i-1天持有但什么都不做,第i-2�
 
 #### [188. 买卖股票的最佳时机 IV](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iv/)  (至多交易k次)
 ```c++
-
+int maxProfit(int k, vector<int>& prices) {
+        int n = prices.size();
+        vector<vector<vector<int>>>memo(n, vector<vector<int>>(k+1, vector<int>(2, -1)));//记忆化搜索
+        //dfs(i,hold) 表示第i天结束时(也就是第i+1天开始时)是否拥有股票
+        function<int(int, int, bool)>dfs = [&](int i, int j, bool hold)->int {
+            if (j < 0) {
+                return INT_MIN;
+            }
+            if (i < 0) {//边界条件 第0天开始有股票不合法设为-无穷 未持有股票 利润为0
+                return hold ? INT_MIN : 0;
+            }
+            if (memo[i][j][hold] != -1)return memo[i][j][hold];
+            if (hold) {//第i天结束拥有为max(第i-1天持有但什么都不做,第i-1天未持有买入)
+                memo[i][j][hold] = max(dfs(i - 1,j, 1), dfs(i - 1,j, 0) - prices[i]);//这里或下面都可以改成j-1
+                return memo[i][j][hold];
+            }
+            memo[i][j][hold] = max(dfs(i - 1,j, 0), dfs(i - 1,j-1, 1) + prices[i]);//这里改成j-1
+            return memo[i][j][hold];
+        };
+        return dfs(n - 1, k, 0);
+}
 ```
 [121. 买卖股票的最佳时机](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/)
 ```c++

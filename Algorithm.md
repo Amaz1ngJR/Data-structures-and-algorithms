@@ -1719,6 +1719,20 @@ int maxProfit(int k, vector<int>& prices) {
         };
         return dfs(n - 1, k, 0);
 }
+//改成递推+空间优化
+int maxProfit(int k, vector<int>& prices) {
+	vector<vector<int>>f(k + 2, vector<int>(2, -1200));
+	for (int j = 1; j <= k + 1; j++) {
+	    f[j][0] = 0;
+	}
+	for (int p: prices) {
+	    for (int j = k + 1; j > 0; j--) {
+		f[j][0] = max(f[j][0], f[j][1] + p);
+		f[j][1] = max(f[j][1], f[j - 1][0] - p);
+	    }
+	}
+	return f[k + 1][0];
+}
 ```
 
 ### **区间DP

@@ -1736,9 +1736,10 @@ int maxProfit(int k, vector<int>& prices) {
 ```
 
 ### **区间DP
-#### [516. 最长回文子序列](https://leetcode.cn/problems/longest-palindromic-subsequence/)     从两侧向内缩小问题规模 选或不选
+#### [516. 最长回文子序列](https://leetcode.cn/problems/longest-palindromic-subsequence/)
 
 方法一:将s逆置 求与原来的最长公共子序列的长度 即为答案
+方法二: 从两侧向内缩小问题规模 选或不选 (判断s的第一个字符和最后一个字符是否相等 相等的话都选上 不相等的话 变成选第一个 还是选最后一个) 
 ```c++
 
 ```

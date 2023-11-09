@@ -1793,7 +1793,7 @@ vector<vector<int>>f(n, vector<int>(n, 0));
 // f[i][j]=(f[i][k]+f[k][j]+v[i]*v[j]*v[k])min
 // i < k < j 故i倒序枚举 j正序枚举
 for (int i = n - 3; i >= 0; i--) {
-	for (int j = i+2; j < n; j++) {
+	for (int j = i + 2; j < n; j++) {
 		int res = INT_MAX;
 		for (int k = i + 1; k < j; k++) {//枚举第三个顶点k
 			//res=(左边三角形的分数 + 右边三角形的分数 + 当前三角形的分数)min

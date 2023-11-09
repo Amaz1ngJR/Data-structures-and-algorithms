@@ -1786,6 +1786,23 @@ int minScoreTriangulation(vector<int>& values) {
 	};
 	return dfs(0, n - 1);//固定一条以顶点0和顶点n-1两个顶点构成的边 枚举第三个顶点
 }
+//递推
+//时间复杂度O(n^3) 空间复杂度O(n^2)
+int n = values.size();
+vector<vector<int>>f(n, vector<int>(n, 0));
+// f[i][j]=(f[i][k]+f[k][j]+v[i]*v[j]*v[k])min
+// i < k < j 故i倒序枚举 j正序枚举
+for (int i = n - 3; i >= 0; i--) {
+	for (int j = i+2; j < n; j++) {
+		int res = INT_MAX;
+		for (int k = i + 1; k < j; k++) {//枚举第三个顶点k
+			//res=(左边三角形的分数 + 右边三角形的分数 + 当前三角形的分数)min
+			res = min(res, f[i][k] + f[k][j] + values[i] * values[j] * values[k]);
+		}
+		f[i][j] = res;
+	}
+}
+return f[0][n - 1];
 ```
 
 ### **树形DP

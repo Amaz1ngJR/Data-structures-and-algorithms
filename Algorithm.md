@@ -1751,6 +1751,17 @@ int maxProfit(int k, vector<int>& prices) {
 ### **树形DP
 
 ## *贪心
+### [122. 买卖股票的最佳时机 II](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/)
+
+```c++
+int maxProfit(vector<int>& prices) {
+	int ans = 0;
+	for (int i = 0; i < prices.size() - 1; i++) {
+		ans += max(0, prices[i + 1] - prices[i]);
+	}
+	return ans;
+}
+```
 
 ### [1402. 做菜顺序](https://leetcode.cn/problems/reducing-dishes/)
 
@@ -1778,6 +1789,7 @@ int maxSatisfaction(vector<int>& satisfaction) {
 }
 ```
 ### [300. 最长递增子序列](https://leetcode.cn/problems/longest-increasing-subsequence/)
+
 ```c++
 int lengthOfLIS(vector<int>& nums) {
 	//贪心+二分

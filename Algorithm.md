@@ -1819,7 +1819,6 @@ return f[0][n - 1];
 ```
 
 一般树
-#### [1245 plus]
 #### [2246. 相邻字符不同的最长路径](https://leetcode.cn/problems/longest-path-with-different-adjacent-characters/)
 ```c++
 

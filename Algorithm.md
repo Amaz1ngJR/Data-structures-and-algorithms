@@ -1741,7 +1741,27 @@ int maxProfit(int k, vector<int>& prices) {
 方法一:将s逆置 求与原来的最长公共子序列的长度 即为答案
 方法二: 从两侧向内缩小问题规模 选或不选 (判断s的第一个字符和最后一个字符是否相等 相等的话都选上 不相等的话 变成选第一个 还是选最后一个) 
 ```c++
-
+//方法二 记忆化搜索版 时空复杂度O(n^2) 
+int longestPalindromeSubseq(string s) {
+	int n = s.size();
+	vector<vector<int>>memo(n, vector<int>(n, -1));
+	function<int(int, int)>dp = [&](int i, int j)->int {
+		if (i == j) {
+			return 1;
+		}
+		if (i > j)return 0;
+		if (memo[i][j] != -1)return memo[i][j];
+		if (s[i] == s[j]) {
+			memo[i][j] = dp(i + 1, j - 1) + 2;
+			return memo[i][j];
+		}
+		else {
+			memo[i][j] = max(dp(i + 1, j), dp(i, j - 1));
+			return memo[i][j];
+		}
+	};
+	return dp(0, n - 1);
+}
 ```
 #### [1039. 多边形三角剖分的最低得分](https://leetcode.cn/problems/minimum-score-triangulation-of-polygon/)         分割成多个规模更小的子问题 枚举选哪个
 ```c++

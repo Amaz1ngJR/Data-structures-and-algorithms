@@ -1764,6 +1764,7 @@ int longestPalindromeSubseq(string s) {
 }
 ```
 #### [1039. 多边形三角剖分的最低得分](https://leetcode.cn/problems/minimum-score-triangulation-of-polygon/) 
+
 分割成多个规模更小的子问题 枚举选哪个
 ```c++
 int minScoreTriangulation(vector<int>& values) {

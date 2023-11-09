@@ -481,6 +481,10 @@ $$
 (n +1)!n!
 $$
 
+### [739. 每日温度](https://leetcode.cn/problems/daily-temperatures/)
+```c++
+
+```
 
 ## *Heap
 

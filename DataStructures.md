@@ -483,7 +483,24 @@ $$
 
 ### [739. 每日温度](https://leetcode.cn/problems/daily-temperatures/)
 ```c++
-
+vector<int> dailyTemperatures(vector<int>& temperatures) {
+	//从后向前
+	vector<int>& te = temperatures;
+	int n = te.size();
+	vector<int> ans(n, 0);
+	stack<int>s;
+	for (int i = n - 1; i >= 0; i--) {
+		while (!s.empty() && te[i] >= te[s.top()]) {
+			s.pop();
+		}
+		if (!s.empty()) {//te[i]<s.top()
+			ans[i] = s.top() - i;
+		}
+		//栈空 或者当日温度大于栈顶
+		s.emplace(i);
+	}
+	return ans;
+}
 ```
 
 ## *Heap

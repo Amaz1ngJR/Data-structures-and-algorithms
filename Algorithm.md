@@ -1807,6 +1807,24 @@ return f[0][n - 1];
 
 ### **树形DP
 
+二叉树 边权型
+#### [543. 二叉树的直径](https://leetcode.cn/problems/diameter-of-binary-tree/)
+```c++
+
+```
+二叉树 点权型
+#### [124. 二叉树中的最大路径和](https://leetcode.cn/problems/binary-tree-maximum-path-sum/)
+```c++
+
+```
+
+一般树
+#### [1245 plus]
+#### [2246. 相邻字符不同的最长路径](https://leetcode.cn/problems/longest-path-with-different-adjacent-characters/)
+```c++
+
+```
+
 ## *贪心
 ### [122. 买卖股票的最佳时机 II](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/)
 

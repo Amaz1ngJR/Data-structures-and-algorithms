@@ -1765,7 +1765,25 @@ int longestPalindromeSubseq(string s) {
 ```
 #### [1039. 多边形三角剖分的最低得分](https://leetcode.cn/problems/minimum-score-triangulation-of-polygon/)         分割成多个规模更小的子问题 枚举选哪个
 ```c++
-
+int minScoreTriangulation(vector<int>& values) {
+	//时间复杂度O(n^3) 空间复杂度O(n^2)
+	int n = values.size();
+	vector<vector<int>>memo(n, vector<int>(n, -1));
+	function<int(int, int)> dfs = [&](int i, int j)->int {
+		if (i + 1 == j) {
+			return 0;
+		}
+		if (memo[i][j] != -1)return memo[i][j];
+		int res = INT_MAX;
+		for (int k = i + 1; k < j; k++) {//枚举第三个顶点k
+			//res=(左边三角形的分数 + 右边三角形的分数 + 当前三角形的分数)min
+			res = min(res, dfs(i, k) + dfs(k, j) + values[i] * values[j] * values[k]);
+		}
+		memo[i][j] = res;
+		return memo[i][j];
+	};
+	return dfs(0, n - 1);//固定一条以顶点0和顶点n-1两个顶点构成的边 枚举第三个顶点
+}
 ```
 
 ### **树形DP

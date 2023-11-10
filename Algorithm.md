@@ -1797,16 +1797,13 @@ return f[0][n - 1];
 #### [543. 二叉树的直径](https://leetcode.cn/problems/diameter-of-binary-tree/)
 ```c++
 int diameterOfBinaryTree(TreeNode* root) {
-	//从叶节点出发向上 枚举某个节点拐弯向下 
-	//当前节点拐弯的直径长度=左子树的最长链+右子树的最长链+2
-	//不拐弯的节点返回父节点的是max(左子树的最长链,右子树的最长链)+1
 	int ans = 0;
 	function<int(TreeNode*)> dfs = [&](TreeNode* root)->int {
-		if (root == nullptr)return -1;//-1与最后的+1抵消
-		int l_len = dfs(root->left);
-		int r_len = dfs(root->right);
-		ans = max(ans, l_len + r_len + 2);//+2是拐弯节点分别到两颗子树的边
-		return max(l_len, r_len) + 1;//加1表示子树到父节点还有一条边
+		if (root == nullptr)return 0;//节点为空与父节点没有边
+		int l_len = dfs(root->left);//左子树的高度
+		int r_len = dfs(root->right);//右子树的高度
+		ans = max(ans, l_len + r_len);//计算所有节点左子树高度+右子树高度的最大值
+		return max(l_len, r_len) + 1;//加1表示这个非空节点与父节点有一个边 高度+1
 	};
 	dfs(root);
 	return ans;

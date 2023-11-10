@@ -12,6 +12,10 @@ bool demo() {
 		int ans = 0;
 		ans |= 1 << i;//将ans的第i位置为1
 	}
+	int a = 10;//1010
+	int b = 12;//1100
+	int c = a & b;//1000
+	cout << c << endl;//c=8
 	return (n&(n-1))==0;//判断一个正整数是否是2的幂
 }
 ```

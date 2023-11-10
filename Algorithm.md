@@ -44,8 +44,6 @@ for (const auto& v : nums) {
 }
 ```
 
-
-
 ## *排序算法
 
 快速排序和归并排序都是基于分治思想的
@@ -72,8 +70,6 @@ void DirenctlyInsertSort(vector<T>& nums) {
 	}
 }
 ```
-
-
 
 #### ***折半插入排序O(n^2)
 
@@ -105,9 +101,6 @@ void BinarySearchSort(vector<T>& nums) {
 	}
 }
 ```
-
-
-
 #### ***希尔排序/缩小增量排序
 ![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/9bf01f8f-c80a-4ae6-aab2-07c78d9b8d39)
 
@@ -137,8 +130,6 @@ void ShellSort(vector<T>& nums) {
     }
 }
 ```
-
-
 
 ### **交换排序
 
@@ -173,8 +164,6 @@ void QuickSort(vector<T>& nums, int low, int high) {
 }
 ```
 
-
-
 #### ***冒泡排序O(n^2)
 
 ![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/d7b7ba2c-f66c-4c38-8f12-9cde8b7a7488)
@@ -196,8 +185,6 @@ void BubbleSort(vector<T>& nums) {
     }
 }
 ```
-
-
 
 ### ** 选择排序
 
@@ -221,8 +208,6 @@ void SelectSort(vector<T>& nums) {
     }
 }
 ```
-
-
 
 #### ***堆排序O(nlogn)
 
@@ -295,11 +280,7 @@ void MergeSort(vector<T>& a, int low, int high) {
 
 ### ** 基数排序
 
-
-
 ### ** 桶排序
-
-
 
 ##  *查找算法
 
@@ -419,8 +400,6 @@ int search(vector<int>& nums, int target) {
 }
 ```
 
-
-
 ## *前后缀
 
 ### **前缀和 与 差分
@@ -442,8 +421,6 @@ sumd:  1,3,7,5,2
 d2:    1,5,4,-2,-6//仅对d[1]+3 d[4]-3
 sumd2: 1,6,10,8,2
 ```
-
-
 
 ### **前缀和最值
 
@@ -467,8 +444,6 @@ int maxProfit(vector<int>& prices) {
 }
 ```
 
-
-
 ### **分解前后缀
 
 #### [238. 除自身以外数组的乘积](https://leetcode.cn/problems/product-of-array-except-self/)
@@ -480,13 +455,37 @@ vector<int> productExceptSelf(vector<int>& nums) {
     int i, suf;
     suf = 1;
     for (i = 1; i < n; i++) {
-        ans[i] = nums[i - 1] * ans[i - 1];
+        ans[i] = nums[i - 1] * ans[i - 1];//ans是前缀积
     }
     for (i = n - 1; i >= 0; i--) {
         ans[i] *= suf;
-        suf *= nums[i];
+        suf *= nums[i];//suf是后缀积
     }
     return ans;
+}
+```
+#### [42. 接雨水](https://leetcode.cn/problems/trapping-rain-water/)
+
+分别计算每个格子的最大前缀(左向右)和最大后缀(右向左)，存两个数组里，然后取前后缀的最小值减去格子的值即为这个格子所能接的水
+```c++
+int trap(vector<int>& height) {
+	//时空复杂度为O(n)
+	int n = height.size();
+	if (n == 1)return 0;
+	vector<int>maxpre(n), maxsuf(n);
+	maxpre[0] = height[0];
+	maxsuf[n - 1] = height[n - 1];
+	for (int i = 1; i < n; i++) {
+		maxpre[i] = max(height[i], maxpre[i - 1]);
+	}
+	for (int j = n - 2; j >= 0; j--) {
+		maxsuf[j] = max(height[j], maxsuf[j]);
+	}
+	int ans = 0;
+	for (int i = 0; i < n; i++) {
+		ans += min(maxsuf[i], maxpre[i]) - height[i];
+	}
+	return ans;
 }
 ```
 
@@ -520,30 +519,27 @@ vector<int> twoSum(vector<int>& numbers, int target) {
 
 #### [42. 接雨水](https://leetcode.cn/problems/trapping-rain-water/)
 
-Pre前后缀分解:分别计算每个格子的最大前缀(左向右)和最大后缀(右向左)，存两个数组里，然后取前后缀的最小值减去格子的值即为这个格子所能接的水
-
-Final:不用一下子计算完每个格子的最大前缀和后缀，分别从low、high开始更新计算最大前缀、最大后缀，只需要取最小缀即可，最大缀又不会缩小
-
+初始化low、high指向数组两端 再分别记录前缀的最大值premax和后缀的最大值sufmax由于前、后缀最大值不会变小 所以当前缀最大值小于后缀最大值的时候 由于短板效应 low位置能接的水已经确定了
 ```c++
- int trap(vector<int>& height) {
-    int ans = 0;
-    int low = 0;
-    int high = height.size() - 1;
-    int pre_max = 0;
-    int suf_max = 0;
-    while (low <= high) {
-        pre_max = max(pre_max, height[low]);
-        suf_max = max(suf_max, height[high]);
-        if (pre_max <= suf_max) {
-            ans += (pre_max - height[low]);
-            low++;
-        }
-        else {
-            ans += (suf_max - height[high]);
-            high--;
-        }
-    }
-    return ans;
+int trap(vector<int>& height) {
+	//时间复杂度为O(n) 空间复杂度为O(1)
+	int n = height.size();
+	int low = 0, high = n - 1;
+	int premax = 0, sufmax = 0;
+	int ans = 0;
+	while (low <= high) {
+		premax = max(height[low], premax);
+		sufmax = max(height[high], sufmax);
+		if (premax >= sufmax) {//右边能接的雨水能够确定下来
+			ans += sufmax - height[high];
+			high--;
+		}
+		else {
+			ans += premax - height[low];
+			low++;
+		}
+	}
+	return ans;
 }
 ```
 
@@ -567,8 +563,6 @@ int maxArea(vector<int>& height) {
     return ans;
 }
 ```
-
-
 
 ### **同向双指针 滑动窗口
 
@@ -684,8 +678,6 @@ int lengthOfLongestSubstring(string s) {
     return ans;
 }
 ```
-
-
 
 ### **快慢指针
 
@@ -821,8 +813,6 @@ ListNode* deleteDuplicates(ListNode* head) {
         return dummy->next;
 }
 ```
-
-
 
 ## *哈希表
 
@@ -1023,8 +1013,6 @@ vector<string> letterCombinations(string digits) {
 }
 ```
 
-
-
 ### **组合型
 
 剪枝技巧： 逆序枚举
@@ -1149,8 +1137,6 @@ vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
     return ans;
 }
 ```
-
-
 
 ### **排列型
 

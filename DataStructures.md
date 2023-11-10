@@ -519,6 +519,24 @@ for (int i = 0; i < n; i++) {
 }*/  //由于初始化ans为0 所以不需要这段
 return ans;
 ```
+### [42. 接雨水](https://leetcode.cn/problems/trapping-rain-water/)
+```c++
+int trap(vector<int>& height) {
+	int n = height.size();
+	stack<int>s;
+	int ans = 0;
+	for (int i = 0; i < n; i++) {
+		while (!s.empty() && height[i] >= height[s.top()]) {
+			int temp = s.top();
+			s.pop();
+			if (s.empty())break;
+			ans += (i - s.top() - 1) * (min(height[s.top()], height[i]) - height[temp]);
+		}
+		s.emplace(i);
+	}
+	return ans;
+}
+```
 
 ## *Heap
 

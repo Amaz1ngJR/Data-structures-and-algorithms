@@ -501,6 +501,23 @@ vector<int> dailyTemperatures(vector<int>& temperatures) {
 	}
 	return ans;
 }
+//从前向后
+vector<int>& te = temperatures;
+int n = te.size();
+vector<int> ans(n, 0);
+stack<int>s;
+for (int i = 0; i < n; i++) {
+	while (!s.empty() && te[i] > te[s.top()]) {
+		ans[s.top()] = i - s.top();
+		s.pop();
+	}
+	s.emplace(i);
+}
+/*while (!s.empty()) {
+	ans[s.top()] = 0;
+	s.pop();
+}*/  //由于初始化ans为0 所以不需要这段
+return ans;
 ```
 
 ## *Heap

@@ -1797,6 +1797,7 @@ return f[0][n - 1];
 #### [543. 二叉树的直径](https://leetcode.cn/problems/diameter-of-binary-tree/)
 ```c++
 int diameterOfBinaryTree(TreeNode* root) {
+	//时空复杂度都是O(n)
 	int ans = 0;
 	function<int(TreeNode*)> dfs = [&](TreeNode* root)->int {
 		if (root == nullptr)return 0;//节点为空与父节点没有边
@@ -1812,7 +1813,19 @@ int diameterOfBinaryTree(TreeNode* root) {
 二叉树 点权型
 #### [124. 二叉树中的最大路径和](https://leetcode.cn/problems/binary-tree-maximum-path-sum/)
 ```c++
-
+int maxPathSum(TreeNode* root) {
+	//时空复杂度都是O(n)
+	int ans = INT_MIN;
+	function<int(TreeNode*)> dfs = [&](TreeNode* root)->int {
+		if (root == nullptr)return 0;
+		int left_num = dfs(root->left);
+		int right_num = dfs(root->right);
+		ans = max(ans, root->val + left_num + right_num);
+		return max(root->val + max(left_num, right_num), 0);
+	};
+	dfs(root);
+	return ans;
+}
 ```
 
 一般树

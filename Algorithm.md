@@ -1820,8 +1820,8 @@ int maxPathSum(TreeNode* root) {
 		if (root == nullptr)return 0;
 		int left_num = dfs(root->left);
 		int right_num = dfs(root->right);
-		ans = max(ans, root->val + left_num + right_num);
-		return max(root->val + max(left_num, right_num), 0);
+		ans = max(ans, root->val + left_num + right_num);//当前节点与左右子树的最大链条构成一种情况
+		return max(root->val + max(left_num, right_num), 0);//路径和可能为负 所以和0取最大值
 	};
 	dfs(root);
 	return ans;

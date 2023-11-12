@@ -1855,7 +1855,28 @@ int longestPath(vector<int>& parent, string s) {
 ```
 
 树上最大独立集
-
+#### [337. 打家劫舍 III](https://leetcode.cn/problems/house-robber-iii/)
+```c++
+int rob(TreeNode* root) {
+	//时空复杂度为O(n)
+	//dfs 返回pair<选，不选>      
+	function<pair<int, int>(TreeNode*)>dfs = [&](TreeNode* root)->pair<int, int> {
+		if (root == nullptr)return { 0,0 };
+		pair<int, int>left = dfs(root->left);
+		pair<int, int>right = dfs(root->right);
+		//选：当前节点的值+左孩子不选+右孩子不选  =>一般树：选：当前节点的值+ sum(不选子节点)
+		int rob = root->val + left.second + right.second;
+		//不选：左孩子选或不选的最大值+右孩子选或不选的最大值 =>一般树：不选：sum(max(选，不选子节点))
+		int not_rob = max(left.first, left.second) + max(right.first, right.second);
+		return { rob,not_rob };
+	};
+	pair<int, int>ans = dfs(root);
+	return max(ans.first, ans.second);
+}
+```
+[1377. T 秒后青蛙的位置](https://leetcode.cn/problems/frog-position-after-t-seconds/)
+```c++
+```
 树上最小支配集
 
 ## *贪心

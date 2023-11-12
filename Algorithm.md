@@ -1878,7 +1878,10 @@ int rob(TreeNode* root) {
 ```c++
 ```
 树上最小支配集
+#### [968. 监控二叉树](https://leetcode.cn/problems/binary-tree-cameras/)
+```c++
 
+```
 ## *贪心
 ### [122. 买卖股票的最佳时机 II](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/)
 

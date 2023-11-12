@@ -1264,8 +1264,6 @@ int numRollsToTarget(int n, int k, int target) {
 
 [198. 打家劫舍](https://leetcode.cn/problems/house-robber/)
 
-从数组中选取一些数(数之间在数组中不能相邻)使得这些数和最大 
-
 ```
 dfs(i)=max(dfs(i-1),dfs(i-2)+nums[i])
 ```
@@ -1329,7 +1327,7 @@ int rob(vector<int>& nums) {
 	return f1;
 }
 ```
-
+针对环形房子的打家劫舍 只要对[0,n-1)和[1,n) 两个区间求两次 取最大即可
 ### **0/1背包
 
 ```

@@ -1856,6 +1856,10 @@ int longestPath(vector<int>& parent, string s) {
 }
 ```
 
+树上最大独立集
+
+树上最小支配集
+
 ## *贪心
 ### [122. 买卖股票的最佳时机 II](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/)
 

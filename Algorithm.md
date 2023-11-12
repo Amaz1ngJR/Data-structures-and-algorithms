@@ -1880,7 +1880,13 @@ int rob(TreeNode* root) {
 树上最小支配集
 #### [968. 监控二叉树](https://leetcode.cn/problems/binary-tree-cameras/)
 ```c++
-
+//A:选 ：在该节点安装摄像头
+//B:不选 ：在该节点的父节点安装摄像头  
+//C:不选 ：在该节点的左/右孩子安装摄像头  
+//A = min(leftA,leftB,leftC) + min(rightA,rightB,rightC) + 1 (1表示当前节点安装摄像头)
+//B = min(leftA,rightC) + min(rightA,rightC)  (根据B的定义 左右孩子不能为B)
+//C = min(leftA+rightC,leftC+rightA,leftA+rightA) (根据C的定义 左右孩子至少一个为A 且不能为B)
+//ans =min(rootA,rootC)      nuullptrA(∞)nullptrB=nullptrC=0
 ```
 ## *贪心
 ### [122. 买卖股票的最佳时机 II](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/)

@@ -1831,7 +1831,28 @@ int maxPathSum(TreeNode* root) {
 一般树
 #### [2246. 相邻字符不同的最长路径](https://leetcode.cn/problems/longest-path-with-different-adjacent-characters/)
 ```c++
-
+int longestPath(vector<int>& parent, string s) {
+	int n = s.size();
+	vector<vector<int>>list(n);
+	for (int i = 1; i < n; i++) {//parent[0]为-1表示根节点
+		list[parent[i]].emplace_back(i);
+	}
+	int ans = 0;
+	function<int(int)>dfs = [&](int i)->int {
+		int maxlist = 0;//当前节点i的最大链长
+		for (const int& y : list[i]) {
+			int len_y = dfs(y) + 1;//当前子链的最大长度+与当前点的边
+			if (s[y] != s[i]) {//相邻节点没有相同字符
+				//maxlist是之前的最长链 len_y是当前子链 两条子链构成一个路径
+				ans = max(ans, maxlist + len_y);
+				maxlist = max(maxlist, len_y);//更新当前节点的最长链
+			}
+		}
+		return maxlist;//向父节点返回的是一条最长的链
+	};
+	dfs(0);
+	return ans + 1;//ans是边的数量 节点数要+1
+}
 ```
 
 ## *贪心

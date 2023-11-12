@@ -1838,7 +1838,7 @@ int longestPath(vector<int>& parent, string s) {
 		list[parent[i]].emplace_back(i);
 	}
 	int ans = 0;
-	//如果邻居包含父节点 dfs(i,x)其中x是该节点的父节点 遍历邻居的时候判断是父节点 continue
+	//如果邻居包含父节点 dfs(i,x)其中x是该节点的父节点 遍历邻居的时候判断是父节点 continue 递归入口dfs(0,-1)
 	function<int(int)>dfs = [&](int i)->int {
 		int maxlist = 0;//当前节点i的最大链长
 		for (const int& y : list[i]) {//遍历邻居 这里邻居都是孩子

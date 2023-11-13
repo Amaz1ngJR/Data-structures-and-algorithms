@@ -895,8 +895,6 @@ vector<int> twoSum(vector<int>& nums, int target) {
 }
 ```
 
-
-
 ## *递归 二叉树
 [106. 从中序与后序遍历序列构造二叉树](https://leetcode.cn/problems/construct-binary-tree-from-inorder-and-postorder-traversal/)
 ```c++
@@ -935,6 +933,10 @@ TreeNode* bstFromPreorder(vector<int>& preorder) {
 	};
 	return dfs(0, n - 1);
 }
+```
+## *字典树
+### [208. 实现 Trie (前缀树)](https://leetcode.cn/problems/implement-trie-prefix-tree/)
+```c++
 ```
 
 ## *回溯

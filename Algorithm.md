@@ -938,7 +938,9 @@ TreeNode* bstFromPreorder(vector<int>& preorder) {
 ### [208. 实现 Trie (前缀树)](https://leetcode.cn/problems/implement-trie-prefix-tree/)
 ```c++
 ```
-
+### [2416. 字符串的前缀分数和](https://leetcode.cn/problems/sum-of-prefix-scores-of-strings/)
+```c++
+```
 ## *回溯
 
 ```

@@ -1,6 +1,6 @@
 # Data-Structures
 
-## *List
+## *链表
 
 ```c++
 struct ListNode {//单链表结点
@@ -208,7 +208,7 @@ ListNode* List::LocateElem(ListNode* L, int e) {
 }
 ```
 
-## *Stack
+## *栈
 
 n个不同元素进栈，出栈元素不同排列的个数为一个卡特兰数：
 $$
@@ -216,7 +216,7 @@ $$
 (n +1)!n!
 $$
 
-## *Queue
+## *队
 
 ```c++
 struct SequenceQueue {
@@ -305,8 +305,9 @@ bool Queue::PopQueue(LinkQueue& Q) {
 
 
 
-## *Tree
+## *树
 
+### **二叉树
 ```c++
 //二叉树结点
 struct TreeNode {
@@ -331,7 +332,7 @@ struct ThreadTreeNode {
 };
 ```
 
-### **遍历二叉树
+#### 遍历二叉树
 
 前序遍历
 
@@ -466,7 +467,7 @@ void BinaryTree::inOrderThreadTraversal(ThreadTreeNode* root) {
 }
 ```
 
-### **求树的高度
+#### 求树的高度
 
 ```c++
 int BinaryTree::calculateH(TreeNode* root) {
@@ -477,7 +478,7 @@ int BinaryTree::calculateH(TreeNode* root) {
 }
 ```
 
-## *Heap
+### **堆
 
 堆是一个完全二叉树
 
@@ -485,4 +486,8 @@ int BinaryTree::calculateH(TreeNode* root) {
 
 小根堆：每个节点的值都小于或者等于他的左右孩子节点的值
 
-## *Map
+### **线段树
+线段树模板
+```c++
+
+```

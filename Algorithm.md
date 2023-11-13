@@ -1647,7 +1647,6 @@ int lengthOfLIS(vector<int>& nums) {
 	return ans;
 }
 ```
-### **编辑距离
 
 #### [72. 编辑距离](https://leetcode.cn/problems/edit-distance/)
 
@@ -1675,6 +1674,15 @@ int minDistance(string word1, string word2) {
 ```
 
 #### [583. 两个字符串的删除操作](https://leetcode.cn/problems/delete-operation-for-two-strings/)
+```c++
+
+```
+
+#### [647. 回文子串](https://leetcode.cn/problems/palindromic-substrings/)
+```c++
+
+```
+#### [5. 最长回文子串](https://leetcode.cn/problems/longest-palindromic-substring/)
 ```c++
 
 ```

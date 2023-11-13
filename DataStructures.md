@@ -216,63 +216,6 @@ $$
 (n +1)!n!
 $$
 
-### [739. 每日温度](https://leetcode.cn/problems/daily-temperatures/)
-```c++
-vector<int> dailyTemperatures(vector<int>& temperatures) {
-	//从后向前
-	vector<int>& te = temperatures;
-	int n = te.size();
-	vector<int> ans(n, 0);
-	stack<int>s;
-	for (int i = n - 1; i >= 0; i--) {
-		while (!s.empty() && te[i] >= te[s.top()]) {
-			s.pop();
-		}
-		if (!s.empty()) {//te[i]<s.top()
-			ans[i] = s.top() - i;
-		}
-		//栈空 或者当日温度大于栈顶
-		s.emplace(i);
-	}
-	return ans;
-}
-//从前向后
-vector<int>& te = temperatures;
-int n = te.size();
-vector<int> ans(n, 0);
-stack<int>s;
-for (int i = 0; i < n; i++) {
-	while (!s.empty() && te[i] > te[s.top()]) {
-		ans[s.top()] = i - s.top();
-		s.pop();
-	}
-	s.emplace(i);
-}
-/*while (!s.empty()) {
-	ans[s.top()] = 0;
-	s.pop();
-}*/  //由于初始化ans为0 所以不需要这段
-return ans;
-```
-### [42. 接雨水](https://leetcode.cn/problems/trapping-rain-water/)
-```c++
-int trap(vector<int>& height) {
-	int n = height.size();
-	stack<int>s;
-	int ans = 0;
-	for (int i = 0; i < n; i++) {
-		while (!s.empty() && height[i] >= height[s.top()]) {
-			int temp = s.top();
-			s.pop();
-			if (s.empty())break;
-			ans += (i - s.top() - 1) * (min(height[s.top()], height[i]) - height[temp]);
-		}
-		s.emplace(i);
-	}
-	return ans;
-}
-```
-
 ## *Queue
 
 ```c++

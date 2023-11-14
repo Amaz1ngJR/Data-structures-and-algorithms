@@ -486,7 +486,7 @@ int BinaryTree::calculateH(TreeNode* root) {
 
 小根堆：每个节点的值都小于或者等于他的左右孩子节点的值
 
-### **线段数组
+### **树状数组
 #### [307. 区域和检索 - 数组可修改](https://leetcode.cn/problems/range-sum-query-mutable/)
 ```c++
 class NumArray {

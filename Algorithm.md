@@ -937,16 +937,16 @@ TreeNode* bstFromPreorder(vector<int>& preorder) {
 [538. 把二叉搜索树转换为累加树](https://leetcode.cn/problems/convert-bst-to-greater-tree/)
 ```c++
 TreeNode* convertBST(TreeNode* root) {
-       int sum = 0;
-        function<void(TreeNode*)>dfs = [&](TreeNode* root) {
-            if (root == nullptr)return;
-            dfs(root->right);
-            sum += root->val;
-            root->val = sum;
-            dfs(root->left);
-        };
-        dfs(root);
-        return root;
+	int sum = 0;
+	function<void(TreeNode*)>dfs = [&](TreeNode* root) {
+		if (root == nullptr)return;
+		dfs(root->right);
+		sum += root->val;
+		root->val = sum;
+		dfs(root->left);
+	};
+	dfs(root);
+	return root;
 }
 ```
 ## *字典树

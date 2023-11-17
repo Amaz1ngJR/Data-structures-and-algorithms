@@ -934,6 +934,21 @@ TreeNode* bstFromPreorder(vector<int>& preorder) {
 	return dfs(0, n - 1);
 }
 ```
+[538. 把二叉搜索树转换为累加树](https://leetcode.cn/problems/convert-bst-to-greater-tree/)
+```c++
+TreeNode* convertBST(TreeNode* root) {
+       int sum = 0;
+        function<void(TreeNode*)>dfs = [&](TreeNode* root) {
+            if (root == nullptr)return;
+            dfs(root->right);
+            sum += root->val;
+            root->val = sum;
+            dfs(root->left);
+        };
+        dfs(root);
+        return root;
+}
+```
 ## *字典树
 ### [208. 实现 Trie (前缀树)](https://leetcode.cn/problems/implement-trie-prefix-tree/)
 ```c++

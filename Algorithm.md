@@ -896,7 +896,7 @@ vector<int> twoSum(vector<int>& nums, int target) {
 ```
 
 ## *递归 二叉树
-[106. 从中序与后序遍历序列构造二叉树](https://leetcode.cn/problems/construct-binary-tree-from-inorder-and-postorder-traversal/)
+### [106. 从中序与后序遍历序列构造二叉树](https://leetcode.cn/problems/construct-binary-tree-from-inorder-and-postorder-traversal/)
 ```c++
 TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
 	int n = inorder.size();
@@ -916,7 +916,7 @@ TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
 	return f(n - 1, 0, n - 1);
 }
 ```
-[1008. 前序遍历构造二叉搜索树](https://leetcode.cn/problems/construct-binary-search-tree-from-preorder-traversal/)
+### [1008. 前序遍历构造二叉搜索树](https://leetcode.cn/problems/construct-binary-search-tree-from-preorder-traversal/)
 ```c++
 TreeNode* bstFromPreorder(vector<int>& preorder) {
 	int n = preorder.size();
@@ -934,7 +934,7 @@ TreeNode* bstFromPreorder(vector<int>& preorder) {
 	return dfs(0, n - 1);
 }
 ```
-[538. 把二叉搜索树转换为累加树](https://leetcode.cn/problems/convert-bst-to-greater-tree/)
+### [538. 把二叉搜索树转换为累加树](https://leetcode.cn/problems/convert-bst-to-greater-tree/)
 ```c++
 TreeNode* convertBST(TreeNode* root) {
 	int sum = 0;
@@ -946,6 +946,34 @@ TreeNode* convertBST(TreeNode* root) {
 		dfs(root->left);
 	};
 	dfs(root);
+	return root;
+}
+```
+### [450. 删除二叉搜索树中的节点](https://leetcode.cn/problems/delete-node-in-a-bst/)
+```c++
+TreeNode* deleteNode(TreeNode* root, int key) {
+	if (root == nullptr)return nullptr;
+	if (root->val > key) {
+		root->left = deleteNode(root->left, key);
+	}
+	else if (root->val < key) {
+		root->right = deleteNode(root->right, key);
+	}
+	else {//val==key
+		if (!root->left && !root->right)return nullptr;
+		else if (!root->left)return root->right;
+		else if (!root->right)return root->left;
+		else {
+			TreeNode* new_root = root->right;
+			while (new_root->left) {
+				new_root = new_root->left;
+			}
+			root->right = deleteNode(root->right, new_root->val);
+			new_root->right = root->right;
+			new_root->left = root->left;
+			return new_root;
+		}
+	}
 	return root;
 }
 ```

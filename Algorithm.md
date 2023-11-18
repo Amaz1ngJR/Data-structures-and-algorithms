@@ -2003,6 +2003,30 @@ int rob(TreeNode* root) {
 //ans =min(rootA,rootC)      nuullptrA(∞)nullptrB=nullptrC=0
 ```
 ## *贪心
+### [1029. 两地调度](https://leetcode.cn/problems/two-city-scheduling/)
+```c++
+int twoCitySchedCost(vector<vector<int>>& costs) {
+	//先将N个人去A 剩余N个人去B 
+	//如果将其中一个人从A换到B 那么将消耗acost-bcost的钱(可正可负)
+	//故直接按(acost-bcost)从小到大排序 前N个去A 剩余去B
+	int n = costs.size();
+	sort(costs.begin(), costs.end(),
+		[](vector<int>& a, vector<int>& b) {
+			return a[0] - a[1] < b[0] - b[1]; });
+	int ans = 0, i = 0;
+	while (i < n) {
+		if (i < n / 2) {
+			ans += costs[i][0];
+			i++;
+		}
+		else {
+			ans += costs[i][1];
+			i++;
+		}
+	}
+	return ans;
+}
+```
 ### [122. 买卖股票的最佳时机 II](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/)
 
 ```c++

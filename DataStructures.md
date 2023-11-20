@@ -24,7 +24,7 @@ struct DLNode {//双链表结点
 };
 ```
 
-### **增
+### 增
 
 ```c++
 ListNode* head, * tail = &head;
@@ -70,7 +70,7 @@ bool List::ListInsert(ListNode*& L, int i, int val) {
 }
 ```
 
-### **删
+### 删
 
 删除第i个位置元素
 
@@ -95,7 +95,7 @@ bool List::ListDelete(ListNode*& L, int i) {
 
 
 
-### **改
+### 改
 
 反转链表
 
@@ -175,7 +175,7 @@ ListNode* MergeTwoLists(ListNode* a, ListNode* b) {
 
 
 
-### **查
+### 查
 
 按位查找 查找链表第i个元素的值
 
@@ -243,7 +243,7 @@ struct LinkQueue {
 };
 ```
 
-### **入队
+### 入队
 
 ```c++
 //入队
@@ -274,7 +274,7 @@ bool Queue::EnterQueue(LinkQueue& Q, int x) {
 }
 ```
 
-### **出队
+### 出队
 
 ```c++
 //出队

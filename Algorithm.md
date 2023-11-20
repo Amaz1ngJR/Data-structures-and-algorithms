@@ -459,6 +459,29 @@ int trap(vector<int>& height) {
 }
 ```
 ### **单调队
+#### [239. 滑动窗口最大值](https://leetcode.cn/problems/sliding-window-maximum/)
+```c++
+vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+	vector<int>ans;
+	deque<int>q;//单调队列
+	for (int i = 0; i < nums.size(); i++) {
+		//入队
+		while (!q.empty() && nums[q.back()] <= nums[i]) {
+			q.pop_back();
+		}
+		q.emplace_back(i);
+		//出队
+		if (i - q[0] + 1 > k) {
+			q.pop_front();
+		}
+		//记录答案
+		if (i >= k - 1) {
+			ans.emplace_back(nums[q.front()]);
+		}
+	}
+	return ans;
+}
+```
 ## *前后缀
 
 ### **前缀和 与 差分

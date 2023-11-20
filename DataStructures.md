@@ -1,4 +1,5 @@
 # Data-Structures
+![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/40e9814b-54e9-417c-ad3b-90ecbd1ec388)
 
 ## *链表
 

@@ -707,6 +707,8 @@ public:
 ```
 
 ### **字典树/前缀树
+![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/05b88cea-d07f-46c2-a64b-2b25016a1e24)
+
 #### [208. 实现 Trie (前缀树)](https://leetcode.cn/problems/implement-trie-prefix-tree/)
 ```c++
 ```

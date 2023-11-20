@@ -1,5 +1,5 @@
 # Algorithm
-![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/64df2758-6c8f-4c99-a5b1-d90f55db4241)
+![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/3f60b9b4-4d9a-4d77-8bca-82876d343086)
 
 ## *位运算
 ```c++

@@ -211,11 +211,67 @@ ListNode* List::LocateElem(ListNode* L, int e) {
 ## *栈
 
 n个不同元素进栈，出栈元素不同排列的个数为一个卡特兰数：
-$$
-(2n)!/
-(n +1)!n!
-$$
+```
+(2n)!/(n +1)!n!
+```
 
+### **单调栈
+#### [739. 每日温度](https://leetcode.cn/problems/daily-temperatures/)
+```c++
+vector<int> dailyTemperatures(vector<int>& temperatures) {
+	//从后向前
+	vector<int>& te = temperatures;
+	int n = te.size();
+	vector<int> ans(n, 0);
+	stack<int>s;
+	for (int i = n - 1; i >= 0; i--) {
+		while (!s.empty() && te[i] >= te[s.top()]) {
+			s.pop();
+		}
+		if (!s.empty()) {//te[i]<s.top()
+			ans[i] = s.top() - i;
+		}
+		//栈空 或者当日温度大于栈顶
+		s.emplace(i);
+	}
+	return ans;
+}
+//从前向后
+vector<int>& te = temperatures;
+int n = te.size();
+vector<int> ans(n, 0);
+stack<int>s;
+for (int i = 0; i < n; i++) {
+	while (!s.empty() && te[i] > te[s.top()]) {
+		ans[s.top()] = i - s.top();
+		s.pop();
+	}
+	s.emplace(i);
+}
+/*while (!s.empty()) {
+	ans[s.top()] = 0;
+	s.pop();
+}*/  //由于初始化ans为0 所以不需要这段
+return ans;
+```
+#### [42. 接雨水](https://leetcode.cn/problems/trapping-rain-water/)
+```c++
+int trap(vector<int>& height) {
+	int n = height.size();
+	stack<int>s;
+	int ans = 0;
+	for (int i = 0; i < n; i++) {
+		while (!s.empty() && height[i] >= height[s.top()]) {
+			int temp = s.top();
+			s.pop();
+			if (s.empty())break;
+			ans += (i - s.top() - 1) * (min(height[s.top()], height[i]) - height[temp]);
+		}
+		s.emplace(i);
+	}
+	return ans;
+}
+```
 ## *队
 
 ```c++
@@ -302,8 +358,52 @@ bool Queue::PopQueue(LinkQueue& Q) {
 	//return true;
 }
 ```
+### **单调队
+#### [239. 滑动窗口最大值](https://leetcode.cn/problems/sliding-window-maximum/)
+```c++
+vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+	vector<int>ans;
+	deque<int>q;//单调队列
+	for (int i = 0; i < nums.size(); i++) {
+		//入队
+		while (!q.empty() && nums[q.back()] <= nums[i]) {
+			q.pop_back();
+		}
+		q.emplace_back(i);
+		//出队
+		if (i - q[0] + 1 > k) {
+			q.pop_front();
+		}
+		//记录答案
+		if (i >= k - 1) {
+			ans.emplace_back(nums[q.front()]);
+		}
+	}
+	return ans;
+}
+```
 
+## *哈希表
 
+### [1. 两数之和](https://leetcode.cn/problems/two-sum/)
+
+![1699109708486](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/16ba909e-8d2c-4d40-a322-465c26f7f52c)
+
+```c++
+vector<int> twoSum(vector<int>& nums, int target) {
+    unordered_map<int, int>m;//创建一个空哈希表
+    vector<int> ans;
+    for (int i = 0; i < nums.size();i++) {// 枚举 i
+        auto it = m.find(target - nums[i]);// 在左边找target-nums[i]
+        if (it != m.end()) {// 找到了
+            ans = { i,it->second };
+            break;
+        }
+        m[nums[i]] = i;
+    }
+    return ans;
+}
+```
 
 ## *树
 
@@ -477,6 +577,87 @@ int BinaryTree::calculateH(TreeNode* root) {
 	return max(left_treeH, right_treeH) + 1;
 }
 ```
+#### [106. 从中序与后序遍历序列构造二叉树](https://leetcode.cn/problems/construct-binary-tree-from-inorder-and-postorder-traversal/)
+```c++
+TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+	int n = inorder.size();
+	if (n == 0)return nullptr;
+	map<int, int> m;
+	for (int i = 0; i < n; i++) {
+	    m[inorder[i]] = i;
+	}
+	function<TreeNode* (int, int,int)> f = [&](int root,int left, int right)->TreeNode* {
+	    if (left > right)return nullptr;
+	    TreeNode* r = new TreeNode(postorder[root]);
+	    int R = m[postorder[root]];
+	    r->left = f(root - (right - R) - 1, left, R - 1);
+	    r->right = f(root - 1, R + 1, right);
+	    return r;
+	};
+	return f(n - 1, 0, n - 1);
+}
+```
+#### [1008. 前序遍历构造二叉搜索树](https://leetcode.cn/problems/construct-binary-search-tree-from-preorder-traversal/)
+```c++
+TreeNode* bstFromPreorder(vector<int>& preorder) {
+	int n = preorder.size();
+	function<TreeNode* (int, int)>dfs = [&](int left, int right)->TreeNode* {
+		if (left > right)return nullptr;
+		TreeNode* root = new TreeNode(preorder[left]);
+		int i;
+		for (i = left + 1; i <= right; i++) {
+			if (preorder[i] > preorder[left])break;
+		}
+		root->left = dfs(left + 1, i - 1);
+		root->right = dfs(i, right);
+		return root;
+	};
+	return dfs(0, n - 1);
+}
+```
+#### [538. 把二叉搜索树转换为累加树](https://leetcode.cn/problems/convert-bst-to-greater-tree/)
+```c++
+TreeNode* convertBST(TreeNode* root) {
+	int sum = 0;
+	function<void(TreeNode*)>dfs = [&](TreeNode* root) {
+		if (root == nullptr)return;
+		dfs(root->right);
+		sum += root->val;
+		root->val = sum;
+		dfs(root->left);
+	};
+	dfs(root);
+	return root;
+}
+```
+#### [450. 删除二叉搜索树中的节点](https://leetcode.cn/problems/delete-node-in-a-bst/)
+```c++
+TreeNode* deleteNode(TreeNode* root, int key) {
+	if (root == nullptr)return nullptr;
+	if (root->val > key) {
+		root->left = deleteNode(root->left, key);
+	}
+	else if (root->val < key) {
+		root->right = deleteNode(root->right, key);
+	}
+	else {//val==key
+		if (!root->left && !root->right)return nullptr;
+		else if (!root->left)return root->right;
+		else if (!root->right)return root->left;
+		else {
+			TreeNode* new_root = root->right;
+			while (new_root->left) {
+				new_root = new_root->left;
+			}
+			root->right = deleteNode(root->right, new_root->val);
+			new_root->right = root->right;
+			new_root->left = root->left;
+			return new_root;
+		}
+	}
+	return root;
+}
+```
 
 ### **堆
 
@@ -522,4 +703,12 @@ public:
 		return prefixSum(right + 1) - prefixSum(left);
 	}
 };
+```
+
+### *字典树/前缀树
+#### [208. 实现 Trie (前缀树)](https://leetcode.cn/problems/implement-trie-prefix-tree/)
+```c++
+```
+#### [2416. 字符串的前缀分数和](https://leetcode.cn/problems/sum-of-prefix-scores-of-strings/)
+```c++
 ```

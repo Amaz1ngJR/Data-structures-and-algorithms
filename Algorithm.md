@@ -322,14 +322,15 @@ int BinarySearch(vector<T>& nums, T target) {
 	//return high;//找不到就返回target应该插入的位置
 }
 ```
-#### [852. 山脉数组的峰顶索引](https://leetcode.cn/problems/peak-index-in-a-mountain-array/)
+
+### **二分查找的变形
+[852. 山脉数组的峰顶索引](https://leetcode.cn/problems/peak-index-in-a-mountain-array/)
 ```c++
 int peakIndexInMountainArray(vector<int>& arr) {
-	int left = 0, right = arr.size() - 1;
-	int ans = 0;
+	int left = 0, right = nums.size() - 1, ans = 0;
 	while (left < right) {
 		int mid = left + (right - left) / 2;
-		if (arr[mid] > arr[mid + 1]) {
+		if (nums[mid] > nums[mid + 1]) {
 			ans = mid;
 			right = mid - 1;
 		}
@@ -339,17 +340,13 @@ int peakIndexInMountainArray(vector<int>& arr) {
 }
 ```
 
-### **二分查找的变形
-
 #### [162. 寻找峰值](https://leetcode.cn/problems/find-peak-element/)
 
 ```c++
 int findPeakElement(vector<int>& nums) {
-    int low = -1;
-    int high = nums.size() - 1;
-    int mid;
+    int low = -1, high = nums.size() - 1;
     while (low+1 < high) {
-        mid = low + ((high - low) / 2);
+        int mid = low + ((high - low) / 2);
         if (nums[mid] > nums[mid + 1])
             high = mid;
         else

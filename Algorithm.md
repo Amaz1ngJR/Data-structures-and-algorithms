@@ -324,7 +324,7 @@ int BinarySearch(vector<T>& nums, T target) {
 ```
 
 ### **二分查找的变形
-[852. 山脉数组的峰顶索引](https://leetcode.cn/problems/peak-index-in-a-mountain-array/)
+pre [852. 山脉数组的峰顶索引](https://leetcode.cn/problems/peak-index-in-a-mountain-array/)
 ```c++
 int peakIndexInMountainArray(vector<int>& arr) {
 	int left = 0, right = nums.size() - 1, ans = 0;
@@ -339,7 +339,7 @@ int peakIndexInMountainArray(vector<int>& arr) {
 	return ans;
 }
 ```
-
+pre plus [845. 数组中的最长山脉](https://leetcode.cn/problems/longest-mountain-in-array/)
 #### [162. 寻找峰值](https://leetcode.cn/problems/find-peak-element/)
 
 ```c++

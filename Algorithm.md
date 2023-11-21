@@ -322,6 +322,22 @@ int BinarySearch(vector<T>& nums, T target) {
 	//return high;//找不到就返回target应该插入的位置
 }
 ```
+#### [852. 山脉数组的峰顶索引](https://leetcode.cn/problems/peak-index-in-a-mountain-array/)
+```c++
+int peakIndexInMountainArray(vector<int>& arr) {
+	int left = 0, right = arr.size() - 1;
+	int ans = 0;
+	while (left < right) {
+		int mid = left + (right - left) / 2;
+		if (arr[mid] > arr[mid + 1]) {
+			ans = mid;
+			right = mid - 1;
+		}
+		else left = mid;
+	}
+	return ans;
+}
+```
 
 ### **二分查找的变形
 

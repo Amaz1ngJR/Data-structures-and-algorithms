@@ -1508,7 +1508,6 @@ int lengthOfLIS(vector<int>& nums) {
 	//递推
 	//时间复杂度O(n^2) 空间复杂度O(n)
 	int n = nums.size();
-	//dfs(i)表示以第i个位置结尾的LIS
 	vector<int>path(n, 0);//数组递推
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < i; j++) {

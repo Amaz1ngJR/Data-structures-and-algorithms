@@ -725,7 +725,7 @@ bool hasCycle(ListNode *head) {
 =>2(a+b) = a + b + k(b+c)
 =>2a + 2b = a + b + b + c + (k - 1)(b + c)
 =>a - c = (k - 1)(b + c) //head到入口的距离恰好是环长的倍速
-slow从相遇电出发
+slow从相遇点出发
 head从头结点出发
 走c步后 slow在入口
 head到入口的距离恰好是环长的倍速

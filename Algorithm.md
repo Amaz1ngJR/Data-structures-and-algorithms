@@ -724,12 +724,12 @@ bool hasCycle(ListNode *head) {
 快指针移动距离是慢指针的两倍
 =>2(a+b) = a + b + k(b+c)
 =>2a + 2b = a + b + b + c + (k - 1)(b + c)
-=>a - c = (k - 1)(b + c) //head到入口的距离恰好是环长的倍速
+=>a - c = (k - 1)(b + c) 
 slow从相遇点出发
 head从头结点出发
 走c步后 slow在入口
-head到入口的距离恰好是环长的倍速
-两者相遇处即是入口
+head到入口的距离为a-c 恰好是环长的倍速
+继续走 二者相遇处即是入口
 ```
 ```c++
 ListNode *detectCycle(ListNode *head) {

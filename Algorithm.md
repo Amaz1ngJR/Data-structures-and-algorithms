@@ -692,6 +692,30 @@ int lengthOfLongestSubstring(string s) {
 }
 ```
 
+#### [438. 找到字符串中所有字母异位词](https://leetcode.cn/problems/find-all-anagrams-in-a-string/)
+```c++
+vector<int> findAnagrams(string s, string p) {
+	int n = p.size();
+	vector<int>pcount(26), scount(26);
+	vector<int> ans;
+	if (n > s.size())return ans;
+	for (const char& c : p) pcount[c - 'a']++;
+	int i = 0;
+	while (i < s.size()) {
+		if (i < n - 1) {
+			scount[s[i]-'a']++;
+		}
+		else {
+			scount[s[i] - 'a']++;
+			if(scount==pcount)
+				ans.emplace_back(i - n + 1);
+			scount[s[i - n + 1]-'a']--;
+		}
+		i++;
+	}
+	return ans;
+}
+```
 ### **快慢指针
 
 #### [141. 环形链表](https://leetcode.cn/problems/linked-list-cycle/)

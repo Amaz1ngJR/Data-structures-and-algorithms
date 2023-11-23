@@ -702,14 +702,12 @@ vector<int> findAnagrams(string s, string p) {
 	for (const char& c : p) pcount[c - 'a']++;
 	int i = 0;
 	while (i < s.size()) {
-		if (i < n - 1) {
-			scount[s[i]-'a']++;
-		}
+		if (i < n - 1) scount[s[i] - 'a']++;
 		else {
 			scount[s[i] - 'a']++;
-			if(scount==pcount)
+			if (scount == pcount)
 				ans.emplace_back(i - n + 1);
-			scount[s[i - n + 1]-'a']--;
+			scount[s[i - n + 1] - 'a']--;
 		}
 		i++;
 	}

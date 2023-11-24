@@ -505,14 +505,14 @@ int trap(vector<int>& height) {
 ## *双指针
 [160. 相交链表](https://leetcode.cn/problems/intersection-of-two-linked-lists/)
 ```c++
-ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-	ListNode *p=headA,*q=headB;
-        while(p!=q){//正确性用表格法模拟
-            p=p?p->next:headB;
-            q=q?q->next:headA;
-        }
-        return p;
-    }
+ListNode* getIntersectionNode(ListNode* headA, ListNode* headB) {
+	ListNode* p = headA, * q = headB;
+	while (p != q) {//正确性用表格法模拟
+		p = p != nullptr ? p->next : headB;
+		q = q != nullptr ? q->next : headA;
+	}
+	return p;
+}
 ```
 ### **相向双指针
 

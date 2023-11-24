@@ -503,7 +503,21 @@ int trap(vector<int>& height) {
 ```
 
 ## *双指针
-
+[160. 相交链表](https://leetcode.cn/problems/intersection-of-two-linked-lists/)
+```c++
+ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        if (headA == nullptr || headB == nullptr)
+            return nullptr;
+        ListNode *ptrA = headA;
+        ListNode *ptrB = headB;
+	//正确性用表格法模拟
+        while (ptrA != ptrB) {
+            ptrA = ptrA != nullptr?ptrA->next:headB;
+            ptrB = ptrB != nullptr?ptrB->next:headA;
+        }
+        return ptrA;
+    }
+```
 ### **相向双指针
 
 #### [167. 两数之和 II - 输入有序数组](https://leetcode.cn/problems/two-sum-ii-input-array-is-sorted/)

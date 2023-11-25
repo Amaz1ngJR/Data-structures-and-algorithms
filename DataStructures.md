@@ -282,6 +282,26 @@ int trap(vector<int>& height) {
 	return ans;
 }
 ```
+#### [84. 柱状图中最大的矩形](https://leetcode.cn/problems/largest-rectangle-in-histogram/)
+```c++
+int largestRectangleArea(vector<int>& heights) {
+	stack<int>st;
+	heights.emplace(heights.begin(), 0);
+	heights.emplace_back(0);//防止数组递增，没法弹出面积
+	int ans = 0;
+	for (int i = 0; i < heights.size(); i++) {
+		while (!st.empty() && heights[st.top()] > heights[i]) {
+			int cur = st.top();
+			st.pop();
+			int left = st.top() + 1;
+			int right = i - 1;
+			ans = max(ans, (right - left + 1) * heights[cur]);
+		}
+		st.emplace(i);
+	}
+	return ans;
+}
+```
 ## *队
 
 ```c++

@@ -217,6 +217,15 @@ n个不同元素进栈，出栈元素不同排列的个数为一个卡特兰数�
 ```
 括号匹配问题 
 ### **单调栈
+```c++
+stack<int> st;
+for(int i = 0; i < nums.size(); i++){
+	while(!st.empty() && st.top() > nums[i]){
+		st.pop();
+	}
+	st.push(nums[i]);
+}
+```
 #### [739. 每日温度](https://leetcode.cn/problems/daily-temperatures/)
 ```c++
 vector<int> dailyTemperatures(vector<int>& temperatures) {

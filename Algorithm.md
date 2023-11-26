@@ -1600,6 +1600,17 @@ int minDistance(string word1, string word2) {
 
 ```
 
+### 子数组、子串
+#### [907. 子数组的最小值之和](https://leetcode.cn/problems/sum-of-subarray-minimums/)
+```c++
+
+```
+#### [828. 统计子串中的唯一字符](https://leetcode.cn/problems/count-unique-characters-of-all-substrings-of-a-given-string/)
+```c++
+```
+#### [2262. 字符串的总引力](https://leetcode.cn/problems/total-appeal-of-a-string/)
+```c++
+```
 #### [647. 回文子串](https://leetcode.cn/problems/palindromic-substrings/)
 ```c++
 

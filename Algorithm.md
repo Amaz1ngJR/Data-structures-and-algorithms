@@ -1619,7 +1619,7 @@ int uniqueLetterString(string s) {
 	int ans = 0, total = 0;
 	//分别记录字母s[i]上次出现的下标last0 和 上上次出现的下标last1
 	vector<int>last0(26, -1), last1(26, -1);
-	//从s[i-1]到s[i]增加了i−last0[s[i]]
+	//从s[i-1]到s[i]增加了i−last0[s[i]] (s[i] 单独作为一个子串 贡献了 1)
 	//减少了last0[s[i]] - last1[s[i]]
 	//总的变化量 i - 2*last0[s[i]] + last1[s[i]] //初始化为-1
 	for (int i = 0; i < s.size(); i++) {

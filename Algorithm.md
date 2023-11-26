@@ -1600,13 +1600,36 @@ int minDistance(string word1, string word2) {
 
 ```
 
-### 子数组、子串
+### **子数组、子串
+思考子串统计类问题的通用技巧:
+
+将所有子串按照其末尾字符的下标分组
+
+考虑两组相邻的子串：以 s[ i−1 ] 结尾的子串、以 s[ i ] 结尾的子串
+
+以 s[ i ] 结尾的子串，可以看成是以 s[ i−1 ] 结尾的子串，在末尾添加上 s[ i ] 组成
+
 #### [907. 子数组的最小值之和](https://leetcode.cn/problems/sum-of-subarray-minimums/)
 ```c++
 
 ```
 #### [828. 统计子串中的唯一字符](https://leetcode.cn/problems/count-unique-characters-of-all-substrings-of-a-given-string/)
 ```c++
+int uniqueLetterString(string s) {
+	int ans = 0, total = 0;
+	//分别记录字母s[i]上次出现的下标last0 和 上上次出现的下标last1
+	vector<int>last0(26, -1), last1(26, -1);
+	//从s[i-1]到s[i]增加了i−last0[s[i]]
+	//减少了last0[s[i]] - last1[s[i]]
+	//总的变化量 i - 2*last0[s[i]] + last1[s[i]] //初始化为-1
+	for (int i = 0; i < s.size(); i++) {
+		total += i - 2 * last0[s[i] - 'A'] + last1[s[i] - 'A'];
+		ans += total;
+		last1[s[i] - 'A'] = last0[s[i] - 'A'];
+		last0[s[i] - 'A'] = i;
+	}
+	return ans;
+}
 ```
 #### [2262. 字符串的总引力](https://leetcode.cn/problems/total-appeal-of-a-string/)
 ```c++

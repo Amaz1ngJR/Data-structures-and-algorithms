@@ -1624,7 +1624,7 @@ int uniqueLetterString(string s) {
 	//总的变化量 i - 2*last0[s[i]] + last1[s[i]] //初始化为-1
 	for (int i = 0; i < s.size(); i++) {
 		total += i - 2 * last0[s[i] - 'A'] + last1[s[i] - 'A'];
-		ans += total;
+		ans += total;//total是以s[i]结尾的字串的贡献者之和 
 		last1[s[i] - 'A'] = last0[s[i] - 'A'];
 		last0[s[i] - 'A'] = i;
 	}

@@ -1611,7 +1611,36 @@ int minDistance(string word1, string word2) {
 
 #### [907. 子数组的最小值之和](https://leetcode.cn/problems/sum-of-subarray-minimums/)
 ```c++
-
+//单调栈
+int sumSubarrayMins(vector<int>& arr) {
+	constexpr int mod = 1000000007;
+	int n = arr.size();
+	stack<int>st;
+	vector<int>left(n), right(n);
+	//寻找左侧第一个小于该元素的位置
+	for (int i = 0; i < n; i++) {
+		while (!st.empty() && arr[st.top()] > arr[i]) {
+			st.pop();
+		}
+		left[i] = st.empty() ? -1 : st.top();
+		st.emplace(i);
+	}
+	//清空栈
+	while (!st.empty())st.pop();
+	//寻找右侧第一个小于该元素的位置
+	for (int i = n - 1; i >= 0; i--) {
+		while (!st.empty() && arr[st.top()] >= arr[i]) {//这里是大于等于
+			st.pop();
+		}
+		right[i] = st.empty() ? n : st.top();
+		st.emplace(i);
+	}
+	long long ans = 0;
+	for (int i = 0; i < n; i++) {
+		ans = (ans + (long long)arr[i] * (i - left[i]) * (right[i] - i)) % mod;
+	}
+	return ans;
+}
 ```
 #### [828. 统计子串中的唯一字符](https://leetcode.cn/problems/count-unique-characters-of-all-substrings-of-a-given-string/)
 ```c++

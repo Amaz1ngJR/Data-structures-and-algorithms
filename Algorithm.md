@@ -1661,7 +1661,7 @@ int minDistance(string word1, string word2) {
 ```c++
 
 ```
-
+### 子数组、子串
 #### [647. 回文子串](https://leetcode.cn/problems/palindromic-substrings/)
 ```c++
 

@@ -995,7 +995,7 @@ vector<string> letterCombinations(string digits) {
 ```
 
 ### **组合型
-组合数学公式 C(n,k)= n!/(k! * (n-k)!)
+组合数学公式 C(n,k)= n!/(k! * (n-k)!)  组合无序 因此要除以 k!
 
 剪枝技巧： 逆序枚举
 

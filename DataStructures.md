@@ -302,6 +302,11 @@ int largestRectangleArea(vector<int>& heights) {
 	return ans;
 }
 ```
+### **最小栈
+#### [155. 最小栈](https://leetcode.cn/problems/min-stack/)
+```c++
+
+```
 ## *队
 
 ```c++

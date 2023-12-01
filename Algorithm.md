@@ -995,6 +995,7 @@ vector<string> letterCombinations(string digits) {
 ```
 
 ### **组合型
+组合数学公式 C(n,k)= n!/(k! * (n-k)!)
 
 剪枝技巧： 逆序枚举
 
@@ -1120,6 +1121,7 @@ vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
 ```
 
 ### **排列型
+排列数学公式 A(n,k)= n!/(n-k)!
 
 不同于组合型，(i,j)!=(j,i)
 ![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/51adcf91-e69c-466d-839f-1fb280e7734d)

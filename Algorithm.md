@@ -1677,6 +1677,30 @@ int minDistance(string word1, string word2) {
 
 ```
 ### **子数组、子串
+思考子数组、子串统计类问题的通用技巧:
+
+将所有子串按照其末尾字符的下标分组
+
+考虑两组相邻的子串：以 s[ i−1 ] 结尾的子串、以 s[ i ] 结尾的子串
+
+以 s[ i ] 结尾的子串，可以看成是以 s[ i−1 ] 结尾的子串，在末尾添加上 s[ i ] 组成
+#### [152. 乘积最大子数组](https://leetcode.cn/problems/maximum-product-subarray/)
+```c++
+int maxProduct(vector<int>& nums) {
+	//dpmax[i]为下标i结尾的乘积最大子数组 优化空间为dpmax
+	//dpmin[i]为下标i结尾的乘积最小子数组 优化空间为dpmin
+	int n = nums.size();
+	int dpmax, dpmin, ans;
+	dpmax = dpmin = ans = nums[0];
+	for (int i = 1; i < n; i++) {
+		int fmax = max(nums[i], max(nums[i] * dpmax, nums[i] * dpmin));
+		int fmin = min(nums[i], min(nums[i] * dpmax, nums[i] * dpmin));
+		dpmax = fmax; dpmin = fmin;
+		ans = max(ans, fmax);
+	}
+	return ans;
+}
+```
 #### [647. 回文子串](https://leetcode.cn/problems/palindromic-substrings/)
 ```c++
 

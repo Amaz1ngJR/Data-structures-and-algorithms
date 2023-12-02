@@ -1293,33 +1293,6 @@ int uniqueLetterString(string s) {
 
 回溯+记忆化搜索->动态规划  记忆化搜索->循环递推
 
-[1155. 掷骰子等于目标和的方法数](https://leetcode.cn/problems/number-of-dice-rolls-with-target-sum/)
-
-```c++
-int numRollsToTarget(int n, int k, int target) {
-    const int mod = 1000000007;//数据太大，取模
-    int ans = 0;
-    //dp[i][j]表示第i步到达j的数量
-    vector<vector<int>>dp(31, vector <int>(1001, 0));
-    for (int t = 1; t <= k; t++) {//边界条件
-        dp[1][t] = 1;
-    }
-    for (int i = 2; i <= n; i++) {
-        for (int j = i; j <= 1000 && j <= i * k; j++) {
-            for (int p = 1; p <= k; p++) {
-                if (j >= p) {//转移方程dp[i][j]+=dp[i-1][j-(1-k)]
-                    dp[i][j] = (dp[i][j] + dp[i - 1][j - p]) % mod;
-                }
-                else break;
-            }
-        }
-    }
-    return dp[n][target];
-}
-```
-
-
-
 ### **打家劫舍
 
 [198. 打家劫舍](https://leetcode.cn/problems/house-robber/)
@@ -1550,7 +1523,32 @@ int coinChange(vector<int>& coins, int amount) {
 }
 ```
 
+### **组合型
 
+#### [1155. 掷骰子等于目标和的方法数](https://leetcode.cn/problems/number-of-dice-rolls-with-target-sum/)
+
+```c++
+int numRollsToTarget(int n, int k, int target) {
+    const int mod = 1000000007;//数据太大，取模
+    int ans = 0;
+    //dp[i][j]表示第i步到达j的数量
+    vector<vector<int>>dp(31, vector <int>(1001, 0));
+    for (int t = 1; t <= k; t++) {//边界条件
+        dp[1][t] = 1;
+    }
+    for (int i = 2; i <= n; i++) {
+        for (int j = i; j <= 1000 && j <= i * k; j++) {
+            for (int p = 1; p <= k; p++) {
+                if (j >= p) {//转移方程dp[i][j]+=dp[i-1][j-(1-k)]
+                    dp[i][j] = (dp[i][j] + dp[i - 1][j - p]) % mod;
+                }
+                else break;
+            }
+        }
+    }
+    return dp[n][target];
+}
+```
 
 ### **子序列
 

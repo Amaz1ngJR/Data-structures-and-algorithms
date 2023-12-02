@@ -1,7 +1,7 @@
 # Algorithm
 ![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/3f60b9b4-4d9a-4d77-8bca-82876d343086)
 
-## *位运算
+## 位运算
 ```c++
 bool demo() {
 	int num = 100;
@@ -45,13 +45,13 @@ for (const auto& v : nums) {
 }
 ```
 
-## *排序算法
+## 排序算法
 
 快速排序和归并排序都是基于分治思想的
 
-###  **插入排序（空间复杂度为O(1)，不适用链表）
+###  *插入排序（空间复杂度为O(1)，不适用链表）
 
-#### ***直接插入排序O(n^2)（gap为1的希尔排序）
+#### **直接插入排序O(n^2)（gap为1的希尔排序）
 ![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/5424a3b5-c000-428e-9602-b035ed77f9cd)
 
 ```c++
@@ -72,7 +72,7 @@ void DirenctlyInsertSort(vector<T>& nums) {
 }
 ```
 
-#### ***折半插入排序O(n^2)
+#### **折半插入排序O(n^2)
 
 将直接插入排序中，遍历有序序列改为二分查找。
 
@@ -102,7 +102,7 @@ void BinarySearchSort(vector<T>& nums) {
 	}
 }
 ```
-#### ***希尔排序/缩小增量排序
+#### **希尔排序/缩小增量排序
 ![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/9bf01f8f-c80a-4ae6-aab2-07c78d9b8d39)
 
 ```c++
@@ -132,9 +132,9 @@ void ShellSort(vector<T>& nums) {
 }
 ```
 
-### **交换排序
+### *交换排序
 
-#### ***快速排序O（nlogn）（重要）
+#### **快速排序O（nlogn）（重要）
 
 ```c++
 //快速排序
@@ -165,7 +165,7 @@ void QuickSort(vector<T>& nums, int low, int high) {
 }
 ```
 
-#### ***冒泡排序O(n^2)
+#### **冒泡排序O(n^2)
 
 ![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/d7b7ba2c-f66c-4c38-8f12-9cde8b7a7488)
 
@@ -187,9 +187,9 @@ void BubbleSort(vector<T>& nums) {
 }
 ```
 
-### ** 选择排序
+### *选择排序
 
-#### ***简单选择排序O(n^2)
+#### **简单选择排序O(n^2)
 
 ![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/fee239fd-9441-4465-9fc6-73802c73819f)
 
@@ -210,7 +210,7 @@ void SelectSort(vector<T>& nums) {
 }
 ```
 
-#### ***堆排序O(nlogn)
+#### **堆排序O(nlogn)
 
 ```C++
 //堆排序
@@ -244,9 +244,9 @@ void HeapSort(vector<T>& nums) {
 }
 ```
 
-### **归并排序
+### *归并排序
 
-#### ***二路归并
+#### **二路归并
 
 ```c++
 //二路归并排序
@@ -277,15 +277,15 @@ void MergeSort(vector<T>& a, int low, int high) {
 }
 ```
 
-#### ***多路归并（外部排序）
+#### **多路归并（外部排序）
 
-### ** 基数排序
+### * 基数排序
 
-### ** 桶排序
+### * 桶排序
 
-##  *查找算法
+##  查找算法
 
-### **二分/折半查找O（logn）
+### *二分/折半查找O（logn）
 
 适用：排好序的数组
 
@@ -323,7 +323,7 @@ int BinarySearch(vector<T>& nums, T target) {
 }
 ```
 
-### **二分查找的变形
+### *二分查找的变形
 pre [852. 山脉数组的峰顶索引](https://leetcode.cn/problems/peak-index-in-a-mountain-array/)
 ```c++
 int peakIndexInMountainArray(vector<int>& arr) {
@@ -413,9 +413,9 @@ int search(vector<int>& nums, int target) {
     return -1;
 }
 ```
-## *前后缀
+## 前后缀
 
-### **前缀和 与 差分
+### *前缀和 与 差分
 
 ```c++
 前缀和sum[i]=accumulate(arr[0],arr[i])
@@ -450,7 +450,7 @@ bool carPooling(vector<vector<int>>& trips, int capacity) {
 	return true;
 }
 ```
-### **前缀和最值
+### *前缀和最值
 
 #### [121. 买卖股票的最佳时机](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/)
 
@@ -472,7 +472,7 @@ int maxProfit(vector<int>& prices) {
 }
 ```
 
-### **分解前后缀
+### *分解前后缀
 
 #### [238. 除自身以外数组的乘积](https://leetcode.cn/problems/product-of-array-except-self/)
 
@@ -517,7 +517,7 @@ int trap(vector<int>& height) {
 }
 ```
 
-## *双指针
+## 双指针
 [160. 相交链表](https://leetcode.cn/problems/intersection-of-two-linked-lists/)
 ```c++
 ListNode* getIntersectionNode(ListNode* headA, ListNode* headB) {
@@ -529,7 +529,7 @@ ListNode* getIntersectionNode(ListNode* headA, ListNode* headB) {
 	return p;
 }
 ```
-### **相向双指针
+### *相向双指针
 
 #### [167. 两数之和 II - 输入有序数组](https://leetcode.cn/problems/two-sum-ii-input-array-is-sorted/)
 
@@ -602,7 +602,7 @@ int maxArea(vector<int>& height) {
 }
 ```
 
-### **同向双指针 滑动窗口
+### *同向双指针 滑动窗口
 
 #### [209. 长度最小的子数组](https://leetcode.cn/problems/minimum-size-subarray-sum/)
 
@@ -739,7 +739,7 @@ vector<int> findAnagrams(string s, string p) {
 	return ans;
 }
 ```
-### **快慢指针
+### *快慢指针
 
 #### [141. 环形链表](https://leetcode.cn/problems/linked-list-cycle/)
 
@@ -801,7 +801,7 @@ ListNode *detectCycle(ListNode *head) {
 }
 ```
 
-### **前后指针
+### *前后指针
 
 #### [19. 删除链表的倒数第 N 个结点](https://leetcode.cn/problems/remove-nth-node-from-end-of-list/)
 
@@ -874,7 +874,7 @@ ListNode* deleteDuplicates(ListNode* head) {
 }
 ```
 
-## *回溯
+## 回溯
 
 ```
 用一个path记录路径上的选择
@@ -903,7 +903,7 @@ dfs(i)->dfs(i+1)
 ```
 ![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/f00d3275-304e-4490-a7eb-0e7e03ccbeba)
 
-### **子集型
+### *子集型
 
 #### [78. 子集](https://leetcode.cn/problems/subsets/)
 
@@ -950,7 +950,7 @@ vector<vector<int>> subsets(vector<int>& nums) {
 }
 ```
 
-### **分割型
+### *分割型
 
 #### [17. 电话号码的字母组合](https://leetcode.cn/problems/letter-combinations-of-a-phone-number/)
 
@@ -1009,7 +1009,7 @@ vector<string> letterCombinations(string digits) {
 }
 ```
 
-### **组合型
+### *组合型
 组合数学公式 C(n,k)= n!/(k! * (n-k)!)  组合无序 因此要除以 k!
 
 剪枝技巧： 逆序枚举
@@ -1135,7 +1135,7 @@ vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
 }
 ```
 
-### **排列型
+### *排列型
 排列数学公式 A(n,k)= n!/(n-k)!
 
 不同于组合型，(i,j)!=(j,i)
@@ -1223,7 +1223,7 @@ vector<vector<string>> solveNQueens(int n) {
 }
 ```
 
-## *子数组、子串
+## 子数组、子串
 思考子串统计类问题的通用技巧:
 
 将所有子串按照其末尾字符的下标分组
@@ -1287,7 +1287,7 @@ int uniqueLetterString(string s) {
 ```c++
 ```
 
-## *动态规划
+## 动态规划
 
 定义状态 状态转移方程 时间复杂度：状态的个数*计算状态的时间
 
@@ -1361,7 +1361,7 @@ int rob(vector<int>& nums) {
 }
 ```
 针对环形房子的打家劫舍 只要对[0,n-1)和[1,n) 两个区间求两次 取最大即可
-### **0/1背包
+### *0/1背包
 
 ```
 0/1背包：有n个物品  第i个物品的体积为w[i]  价值为v[i]
@@ -1492,7 +1492,7 @@ for (int i = 0; i < n; i++) {
 return f[target];
 ```
 
-### **完全背包
+### *完全背包
 
 ```
 完全背包：有n个物品  第i个物品的体积为w[i]  价值为v[i]
@@ -1523,7 +1523,7 @@ int coinChange(vector<int>& coins, int amount) {
 }
 ```
 
-### **组合型
+### *组合型
 
 #### [1155. 掷骰子等于目标和的方法数](https://leetcode.cn/problems/number-of-dice-rolls-with-target-sum/)
 
@@ -1550,7 +1550,7 @@ int numRollsToTarget(int n, int k, int target) {
 }
 ```
 
-### **子序列
+### *子序列
 
 #### [1143. 最长公共子序列](https://leetcode.cn/problems/longest-common-subsequence/)
 
@@ -1676,7 +1676,7 @@ int minDistance(string word1, string word2) {
 ```c++
 
 ```
-### **子数组、子串
+### *子数组、子串
 思考子数组、子串统计类问题的通用技巧:
 
 将所有子串按照其末尾字符的下标分组
@@ -1710,7 +1710,7 @@ int maxProduct(vector<int>& nums) {
 
 ```
 
-### **状态机DP
+### *状态机DP
 #### [122. 买卖股票的最佳时机 II](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/) (不限交易次数)
 
 从最后一天开始思考：从第0天到第i天结束时的利润 = 从第0天到第i-1天结束时的利润 + 第i天的利润
@@ -1808,7 +1808,7 @@ int maxProfit(int k, vector<int>& prices) {
 }
 ```
 
-### **区间DP
+### *区间DP
 #### [516. 最长回文子序列](https://leetcode.cn/problems/longest-palindromic-subsequence/)
 
 方法一:将s逆置 求与原来的最长公共子序列的长度 即为答案
@@ -1902,7 +1902,7 @@ int longestValidParentheses(string s) {
 	return ans;
 }
 ```
-### **树形DP
+### *树形DP
 
 二叉树 边权型
 #### [543. 二叉树的直径](https://leetcode.cn/problems/diameter-of-binary-tree/)
@@ -2001,7 +2001,7 @@ int rob(TreeNode* root) {
 //C = min(leftA+rightC,leftC+rightA,leftA+rightA) (根据C的定义 左右孩子至少一个为A 且不能为B)
 //ans =min(rootA,rootC)      nuullptrA(∞)nullptrB=nullptrC=0
 ```
-## *贪心
+## 贪心
 ### [1029. 两地调度](https://leetcode.cn/problems/two-city-scheduling/)
 ```c++
 int twoCitySchedCost(vector<vector<int>>& costs) {

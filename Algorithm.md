@@ -434,7 +434,22 @@ sumd:  1,3,7,5,2
 d2:    1,5,4,-2,-6//仅对d[1]+3 d[4]-3
 sumd2: 1,6,10,8,2
 ```
-
+[1094. 拼车](https://leetcode.cn/problems/car-pooling/)
+```c++
+bool carPooling(vector<vector<int>>& trips, int capacity) {
+	vector<int> d(1001, 0);
+	for (const auto& t : trips) {
+		d[t[1]] += t[0];
+		d[t[2]] -= t[0];
+	}
+	int sum = 0;
+	for (const int& v : d) {
+		sum += v;
+		if (sum > capacity)return false;
+	}
+	return true;
+}
+```
 ### **前缀和最值
 
 #### [121. 买卖股票的最佳时机](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/)

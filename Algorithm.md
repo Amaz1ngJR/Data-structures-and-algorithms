@@ -1855,7 +1855,31 @@ for (int i = n - 3; i >= 0; i--) {
 }
 return f[0][n - 1];
 ```
-
+#### [32. 最长有效括号](https://leetcode.cn/problems/longest-valid-parentheses/)
+```c++
+int longestValidParentheses(string s) {
+	int ans = 0, n = s.size();
+	vector<int> dp(n);//dp[i]表示以下标i作为子串的终点
+	for (int i = 1; i < n; ++i) {
+		if (s[i] == ')') {//子串的终点只能是')'
+			if (s[i - 1] == '(') {//情况 ()
+				dp[i] = i >= 2 ? dp[i - 2] + 2 : 2;
+			}
+			else if (dp[i - 1] > 0) {//情况 )) 
+				if (i - 1 - dp[i - 1] >= 0
+					&& s[i - 1 - dp[i - 1]] == '(') {//情况x(...)) x的下标>=0&&x为(
+					dp[i] = dp[i - 1] + 2;  //dp[i]至少为 ((...)) dp[i-1]=(...)
+					if (i - 2 - dp[i - 1] >= 0) { //情况x((...)) 前面还有x
+						dp[i] += dp[i - 2 - dp[i - 1]];
+					}
+				}
+			}
+		}
+		ans = max(ans, dp[i]);
+	}
+	return ans;
+}
+```
 ### **树形DP
 
 二叉树 边权型

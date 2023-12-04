@@ -1513,9 +1513,7 @@ int coinChange(vector<int>& coins, int amount) {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < amount + 1; j++) {
             if (j < coins[i])f[(i + 1) % 2][j] = f[i % 2][j];
-            else {
-                f[(i + 1)%2][j] = min(f[i % 2][j], f[(i + 1) % 2][j - coins[i]] + 1);
-            }
+            else f[(i + 1)%2][j] = min(f[i % 2][j], f[(i + 1) % 2][j - coins[i]] + 1);
         }
     }
     int ans = f[n % 2][amount];

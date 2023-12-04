@@ -1506,19 +1506,18 @@ dfs(i,c)=max(dfs(i-1,c),dfs(i,c-w[i])+v[i])
 
 ```c++
 int coinChange(vector<int>& coins, int amount) {
-    int n = coins.size();
-    //滚动数组递推
-    vector<vector<long>>f(2, vector<long>(amount + 1, INT_MAX));
-    f[0][0] = 0;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < amount + 1; j++) {
-            if (j < coins[i])f[(i + 1) % 2][j] = f[i % 2][j];
-            else f[(i + 1)%2][j] = min(f[i % 2][j], f[(i + 1) % 2][j - coins[i]] + 1);
+        int n = coins.size();
+        vector<int>dp(amount + 1, INT_MAX);
+        dp[0] = 0;
+        for (int i = 1; i <= amount; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (coins[j] <= i && dp[i - coins[j]] != INT_MAX) {
+                    dp[i] = min(dp[i], dp[i - coins[j]] + 1);
+                }
+            }
         }
+        return dp[amount] == INT_MAX ? -1 : dp[amount];
     }
-    int ans = f[n % 2][amount];
-    return ans < INT_MAX ? ans : -1;
-}
 ```
 
 ### *组合型

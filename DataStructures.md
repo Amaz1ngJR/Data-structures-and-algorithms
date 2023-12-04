@@ -741,12 +741,11 @@ private:
 
 	Trie* searchPrefix(string prefix) {//找到prefix在字典树的前缀
 		Trie* node = this;
-		for (char ch : prefix) {
-			ch -= 'a';
-			if (node->children[ch] == nullptr) {
+		for (const char &ch : prefix) {
+			if (node->children[ch - 'a'] == nullptr) {
 				return nullptr;
 			}
-			node = node->children[ch];
+			node = node->children[ch - 'a'];
 		}
 		return node;
 	}
@@ -756,12 +755,11 @@ public:
 
 	void insert(string word) {
 		Trie* node = this;
-		for (char ch : word) {
-			ch -= 'a';
-			if (node->children[ch] == nullptr) {
-				node->children[ch] = new Trie();
+		for (const char &ch : word) {
+			if (node->children[ch - 'a'] == nullptr) {
+				node->children[ch - 'a'] = new Trie();
 			}
-			node = node->children[ch];
+			node = node->children[ch - 'a'];
 		}
 		node->isEnd = true;
 	}

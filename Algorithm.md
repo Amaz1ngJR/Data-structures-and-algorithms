@@ -1519,7 +1519,7 @@ int coinChange(vector<int>& coins, int amount) {
         return dp[amount] == INT_MAX ? -1 : dp[amount];
     }
 ```
-
+类似题目[279. 完全平方数](https://leetcode.cn/problems/perfect-squares/)
 ### *组合型
 
 #### [1155. 掷骰子等于目标和的方法数](https://leetcode.cn/problems/number-of-dice-rolls-with-target-sum/)

@@ -24,9 +24,7 @@ struct DLNode {//双链表结点
 	DLNode(int x, DLNode* prior, DLNode* next) : val(x), prior(prior), next(next) {}
 };
 ```
-
-### 增
-
+增
 ```c++
 ListNode* head, * tail = &head;
 //头插法
@@ -70,11 +68,9 @@ bool List::ListInsert(ListNode*& L, int i, int val) {
 	ListInsertPriorNode(p, val);
 }
 ```
-
-### 删
+删
 
 删除第i个位置元素
-
 ```c++
 //删除第i个位置元素
 bool List::ListDelete(ListNode*& L, int i) {
@@ -93,13 +89,9 @@ bool List::ListDelete(ListNode*& L, int i) {
 //删除倒数第n个位置结点 见算法前后指针
 //删除链表中间的结点 见算法快慢指针
 ```
-
-
-
-### 改
+ 改
 
 反转链表
-
 ```c++
 //反转链表   206. 反转链表
 ListNode* List::reverseList(ListNode* head) {
@@ -173,10 +165,7 @@ ListNode* MergeTwoLists(ListNode* a, ListNode* b) {
     return head.next;
 }
 ```
-
-
-
-### 查
+查
 
 按位查找 查找链表第i个元素的值
 

@@ -1392,13 +1392,6 @@ std::function<int(int capacity, vector<int> w, vector<int>v)> zero_one_knapsack 
 };
 ```
 
-```
-常见变形：
-1、至多装capacity 求方案数/最大价值和
-2、恰好装capacity 求方案数/最大/最小价值和
-3、至少装capacity 求方案数/最小价值和
-```
-
 #### [494. 目标和](https://leetcode.cn/problems/target-sum/)
 
 在非负整数数组 nums的每个数前加+/-使得数组和为target
@@ -1492,6 +1485,46 @@ for (int i = 0; i < n; i++) {
 return f[target];
 ```
 
+```
+常见变形：
+1、至多装capacity 求方案数/最大价值和
+2、恰好装capacity 求方案数/最大/最小价值和
+3、至少装capacity 求方案数/最小价值和
+```
+
+判断是否能恰好装满背包
+#### [416. 分割等和子集](https://leetcode.cn/problems/partition-equal-subset-sum/)
+```c++
+bool canPartition(vector<int>& nums) {
+	int n = nums.size();
+	if (n == 1)return false;
+	int target = 0, Max = 0;
+	for (const int& v : nums) {
+		target += v;
+		Max = max(Max, v);
+	}
+	if ((target % 2 == 1))return false;
+	target /= 2;
+	//求和为target的子序列 => 0/1背包 恰好装capacity 
+	if (Max > target) return false;
+	vector<vector<int>> dp(n, vector<int>(target + 1, 0));
+	for (int i = 0; i < n; i++) {
+		dp[i][0] = true;
+	}
+	dp[0][nums[0]] = true;
+	for (int i = 1; i < n; i++) {
+		for (int j = 1; j <= target; j++) {
+			if (j >= nums[i]) {//可以装
+				dp[i][j] = dp[i - 1][j] | dp[i - 1][j - num];
+			}
+			else { //装不下
+				dp[i][j] = dp[i - 1][j];
+			}
+		}
+	}
+	return dp[n - 1][target];
+}
+```
 ### *完全背包
 
 ```

@@ -1503,7 +1503,7 @@ bool canPartition(vector<int>& nums) {
 		target += v;
 		Max = max(Max, v);
 	}
-	if ((target % 2 == 1))return false;
+	if (target & 1)return false;
 	target /= 2;
 	//求和为target的子序列 => 0/1背包 恰好装capacity 
 	if (Max > target) return false;

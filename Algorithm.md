@@ -2110,3 +2110,37 @@ int lengthOfLIS(vector<int>& nums) {
 	return f.size();
 }
 ```
+## 图
+
+### 深度优先搜索DFS
+#### [1466. 重新规划路线](https://leetcode.cn/problems/reorder-routes-to-make-all-paths-lead-to-the-city-zero/)
+```c++
+int minReorder(int n, vector<vector<int>>& connections) {
+	vector<vector<pair<int, int>>>edges(n);
+	for (const auto& con : connections) {
+		pair<int, int>t = make_pair(con[0], con[1]);
+		edges[con[0]].emplace_back(t);
+		edges[con[1]].emplace_back(t);
+	}
+	int ans = 0;
+	function<void(int, int)>dfs = [&](int i, int p) {
+		for (const auto& ed : edges[i]) {
+			if (ed.first == i) {//i是起点
+				if (ed.second != p && ed.second) {//终点不是父节点 且不是根节点0
+					ans++;
+					dfs(ed.second, i);
+				}
+			}
+			else {//i是终点
+				if (ed.first != p && ed.first) {//起点不是父节点 且不是根节点0
+					dfs(ed.first, i);
+				}
+			}
+		}
+	};
+	dfs(0, -1);
+	return ans;
+}
+
+```
+### 广度优先搜索BFS

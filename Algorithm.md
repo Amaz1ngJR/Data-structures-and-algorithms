@@ -1291,8 +1291,42 @@ int uniqueLetterString(string s) {
 
 定义状态 状态转移方程 时间复杂度：状态的个数*计算状态的时间
 
-回溯+记忆化搜索->动态规划  记忆化搜索->循环递推
-
+回溯/递归+记忆化搜索->动态规划  记忆化搜索->循环递推
+[2008. 出租车的最大盈利](2008. 出租车的最大盈利)
+```c++
+long long maxTaxiEarnings(int n, vector<vector<int>>& rides) {
+	vector<vector<pair<int, int>>>v(n + 1);
+	for (const auto& r : rides) {//v[end]=vector{pair(star,earning)}
+		v[r[1]].emplace_back(r[0], r[1] - r[0] + r[2]);
+	}
+	//递归+记忆化搜索
+	vector<long long>dp(n + 1, -1);
+        dp[0] = 0;
+        function<long long(int)>dfs = [&](int i)->long long {
+            if (dp[i] != -1)return dp[i];
+            if (v[i].size() == 0) {
+                dp[i] = dfs(i - 1);
+                return dp[i];
+            }
+            dp[i] = dfs(i - 1);
+            for (const auto& vv : v[i]) {
+                dp[i] = max(vv.second + dfs(vv.first), dp[i]);
+            }
+            return dp[i];
+        };
+        return dfs(n);
+	//递推
+	vector<long long>dp(n + 1, 0);
+	for (int i = 1; i <= n; i++) {
+		dp[i] = dp[i - 1];
+		for (const auto& vv : v[i]) {
+			dp[i] = max(dp[i], vv.second + dp[vv.first]);
+		}
+	}
+	return dp[n];
+}
+```
+[2830. 销售利润最大化](https://leetcode.cn/problems/maximize-the-profit-as-the-salesman/)
 ### *打家劫舍
 
 [198. 打家劫舍](https://leetcode.cn/problems/house-robber/)

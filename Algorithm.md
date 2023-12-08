@@ -1292,8 +1292,12 @@ int uniqueLetterString(string s) {
 定义状态 状态转移方程 时间复杂度：状态的个数*计算状态的时间
 
 回溯/递归+记忆化搜索->动态规划  记忆化搜索->循环递推
+
 [2008. 出租车的最大盈利](2008. 出租车的最大盈利)
 ```c++
+/*dfs(i) 表示从1到i可以赚的最多的钱
+当没人在i下车的时候dfs(i) = dfs(i−1)
+有人在i下车的时候 枚举以i为终点的起点s 计算子问题dfs(s)*/
 long long maxTaxiEarnings(int n, vector<vector<int>>& rides) {
 	vector<vector<pair<int, int>>>v(n + 1);
 	for (const auto& r : rides) {//v[end]=vector{pair(star,earning)}

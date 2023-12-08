@@ -1293,7 +1293,7 @@ int uniqueLetterString(string s) {
 
 回溯/递归+记忆化搜索->动态规划  记忆化搜索->循环递推
 
-[2008. 出租车的最大盈利](2008. 出租车的最大盈利)
+[2008. 出租车的最大盈利](https://leetcode.cn/problems/maximum-earnings-from-taxi/)
 ```c++
 /*dfs(i) 表示从1到i可以赚的最多的钱
 当没人在i下车的时候dfs(i) = dfs(i−1)

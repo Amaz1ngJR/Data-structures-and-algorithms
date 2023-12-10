@@ -59,7 +59,24 @@ if(n % 2 == 1) => if(n & 1)
 # 区间合并
 [56. 合并区间](https://leetcode.cn/problems/merge-intervals/)
 ```c++
-
+vector<vector<int>> merge(vector<vector<int>>& intervals) {
+	vector<vector<int>> ans;
+	if (intervals.empty()) return ans;
+	sort(intervals.begin(), intervals.end(),
+		[](const vector<int>& a, const vector<int>& b)->bool {
+			if (a[0] == b[0])return a[1] < b[1];
+			return a[0] < b[0];
+		});
+	ans.emplace_back(intervals[0]);
+	for (int i = 1; i < intervals.size(); i++) {
+		if (intervals[i][0] <= ans.back()[1]) {//当前区间的左端点小于数组末的区间的右端点
+			ans.back()[1] = max(ans.back()[1], intervals[i][1]);//更新区间右端点
+		}
+		else
+			ans.emplace_back(intervals[i]);
+	}
+	return ans;
+}
 ```
 [100136. 统计好分割方案的数目](https://leetcode.cn/problems/count-the-number-of-good-partitions/)
 ```c++

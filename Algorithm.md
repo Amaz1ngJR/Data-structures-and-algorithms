@@ -576,13 +576,11 @@ int minSubArrayLen(int target, vector<int>& nums) {
         }
         else {
             high++;
-            if (high != n) {
+            if (high != n) 
                 sum += nums[high];
-            }
         }
     }
-    if(ans>n)return 0;
-    else return ans;
+    return ans > n ? 0 : ans;
 }
 ```
 

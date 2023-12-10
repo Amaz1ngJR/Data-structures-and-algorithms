@@ -590,28 +590,27 @@ int minSubArrayLen(int target, vector<int>& nums) {
 
 ```c++
 int numSubarrayProductLessThanK(vector<int>& nums, int k) {
-    if (k <= 1)return false;
-    int ans = 0, low = 0, high = low;
-    int mul = nums[low];
-    while (high != nums.size()) {
-        if (mul >= k) {
-            mul /= nums[low];
-            low++;
-        }
-        else {
-            ans += high - low + 1;//固定了左端点
-            high++;
-            if (high != nums.size()) {
-                mul *= nums[high];
-            }
-        }
-    }
-    return ans;
+	if (k <= 1)return 0; //nums[i]>=1
+	int ans = 0, low = 0, high = low;
+	int mul = nums[low];//初始化乘积为nums[0]
+	while (high != nums.size()) {//固定左端点low 遍历high
+		if (mul >= k) {//乘积大于k了 移动左端点
+			mul /= nums[low];
+			low++;
+		}
+		else {
+			ans += high - low + 1;//新增的！子数组数量
+			high++;
+			if (high != nums.size()) 
+				mul *= nums[high];
+		}
+	}
+	return ans;
 }
 ```
 ```c++
 int numSubarrayProductLessThanK(vector<int>& nums, int k) {
-    if (k <= 1)return false;
+    if (k <= 1)return false;//nums[i]>=1
     int ans = 0, mul = 1, low = 0;
     for (int high = 0; high < nums.size(); high++) {
         mul *= nums[high];

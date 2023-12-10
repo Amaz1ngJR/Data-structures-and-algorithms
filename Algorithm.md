@@ -621,7 +621,25 @@ int numSubarrayProductLessThanK(vector<int>& nums, int k) {
     return ans;
 }
 ```
-
+#### [100137. 统计最大元素出现至少 K 次的子数组](https://leetcode.cn/problems/count-subarrays-where-max-element-appears-at-least-k-times/)
+```c++
+long long countSubarrays(vector<int>& nums, int k) {//时间复杂度为O(n)
+	int m = INT_MIN, cnt = 0;//窗口中m的个数
+	for (const int& n : nums) m = max(m, n);
+	int low = 0;
+	long long ans = 0;
+	for (const int& x : nums) {
+		if (x == m)cnt++;
+		while (cnt == k) {//以x为右端点的子数组恰好合法 这个时候更新k
+			if (nums[low] == m)
+				cnt--;
+			low++;//将low移动到合法子数组的最左端的m的右边(恰好不合法)
+		}
+		ans += low;//[0,low-1]作为子数组的左端点都是满足条件的
+	}
+	return ans;
+}
+```
 #### [3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/)
 
 ```c++

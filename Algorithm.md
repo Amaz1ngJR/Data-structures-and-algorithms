@@ -542,8 +542,7 @@ int trap(vector<int>& height) {
 ```c++
 int maxArea(vector<int>& height) {
     int ans = 0;
-    int low = 0;
-    int high = height.size() - 1;
+    int low = 0, high = height.size() - 1;
     while (low < high) {      
         if (height[low] <= height[high]) {
             ans = max(ans, height[low] * (high - low));
@@ -566,10 +565,8 @@ int maxArea(vector<int>& height) {
 
 ```c++
 int minSubArrayLen(int target, vector<int>& nums) {
-    int n=nums.size();
-    int low = 0;
-    int high = low;
-    int ans = n+1;
+    int n = nums.size(), ans = n + 1;
+    int low = 0, high = low;
     int sum = nums[low];
     while (high != n) {
         if (sum >= target) {
@@ -594,9 +591,7 @@ int minSubArrayLen(int target, vector<int>& nums) {
 ```c++
 int numSubarrayProductLessThanK(vector<int>& nums, int k) {
     if (k <= 1)return false;
-    int ans = 0;
-    int low = 0;
-    int high = low;
+    int ans = 0, low = 0, high = low;
     int mul = nums[low];
     while (high != nums.size()) {
         if (mul >= k) {
@@ -615,9 +610,7 @@ int numSubarrayProductLessThanK(vector<int>& nums, int k) {
 }
  int numSubarrayProductLessThanK(vector<int>& nums, int k) {
     if (k <= 1)return false;
-    int ans = 0;
-    int mul = 1;
-    int low = 0;
+    int ans = 0, mul = 1, low = 0;
     for (int high = 0; high < nums.size(); high++) {
         mul *= nums[high];
         while(mul >= k) {
@@ -637,8 +630,7 @@ int lengthOfLongestSubstring(string s) {
     int ans = 0;
     if(s.size()==1)return 1;
     map<char, int> m;
-    int low = 0;
-    int high = low + 1;
+    int low = 0, high = low + 1;
     int num=1;
     m[s[low]]++;
     while (high < s.size()) {

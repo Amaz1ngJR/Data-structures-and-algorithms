@@ -52,3 +52,7 @@ for (const auto& v : nums) {
 	int num = bits.to_ulong();//将二进制转成十进制
 }
 ```
+判断一个数是否是奇数
+```c++
+if(n % 2 == 1) => if(n & 1)
+```

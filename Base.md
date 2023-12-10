@@ -56,3 +56,29 @@ for (const auto& v : nums) {
 ```c++
 if(n % 2 == 1) => if(n & 1)
 ```
+# 区间合并
+[56. 合并区间](https://leetcode.cn/problems/merge-intervals/)
+```c++
+
+```
+[100136. 统计好分割方案的数目](https://leetcode.cn/problems/count-the-number-of-good-partitions/)
+```c++
+int numberOfGoodPartitions(vector<int>& nums) {
+	//合并区间：1、遍历数组 维护每个元素最后一次出现的下标
+	//2、再次遍历数组 合并区间
+	unordered_map<int, int>m; int mod = 1000000007;
+	for (int i = 0; i < nums.size(); i++) m[nums[i]] = i;
+	int max_right = 0, ans = 1;
+	for (int i = 0; i < nums.size() - 1; i++) {//少选最后一段区间使得n-1
+		max_right = max(max_right, m[nums[i]]);
+		if (i == max_right) {//达到区间的最大右端点 相当于合并了一个区间
+			//n++;//记录合并后的区间个数
+			//对n个数进行分割最多插入n-1个隔板分成n个
+			//最少插入0个隔板分成1个
+			//也就是有n-1个隔板 每个隔板有 选或不选 两个状态 即pow(2,n-1)
+			ans = ans * 2 % mod;
+		}
+	}
+	return ans;
+}
+```

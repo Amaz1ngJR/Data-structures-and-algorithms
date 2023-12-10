@@ -561,7 +561,7 @@ int maxArea(vector<int>& height) {
 
 #### [209. 长度最小的子数组](https://leetcode.cn/problems/minimum-size-subarray-sum/)
 
-初始为第一个元素，子数组小于目标则加大右端点来增加子数组长度，若子数组和大于等于目标，缩小左端点。直到右端点为数组最后一个。
+初始为第一个元素 子数组小于目标则加大右端点来增加子数组长度 若子数组和大于等于目标 缩小左端点 直到右端点为数组最后一个
 
 ```c++
 int minSubArrayLen(int target, vector<int>& nums) {
@@ -608,7 +608,9 @@ int numSubarrayProductLessThanK(vector<int>& nums, int k) {
     }
     return ans;
 }
- int numSubarrayProductLessThanK(vector<int>& nums, int k) {
+```
+```c++
+int numSubarrayProductLessThanK(vector<int>& nums, int k) {
     if (k <= 1)return false;
     int ans = 0, mul = 1, low = 0;
     for (int high = 0; high < nums.size(); high++) {
@@ -648,6 +650,8 @@ int lengthOfLongestSubstring(string s) {
     }
     return ans;
 }
+```
+```c++
 int lengthOfLongestSubstring(string s) {
     int ans = 0;
     if (s.size() == 1)return 1;

@@ -253,6 +253,31 @@ for (int i = 0; i < n; i++) {
 }*/  //由于初始化ans为0 所以不需要这段
 return ans;
 ```
+#### [2454. 下一个更大元素 IV](https://leetcode.cn/problems/next-greater-element-iv/)
+```c++
+vector<int> secondGreaterElement(vector<int>& nums) {
+	int n = nums.size();
+	if (n == 1)return { -1 };
+	vector<int>ans(n, -1);
+	stack<int>s, t, mid;
+	for (int i = 0; i < n; i++) {
+	    while(!t.empty()&& nums[i] > nums[t.top()]) {
+		ans[t.top()] = nums[i];
+		t.pop();
+	    }
+	    while (!s.empty() && nums[i] >  nums[s.top()]) {
+		mid.emplace(s.top());
+		s.pop();
+	    }
+	    while (!mid.empty()) {
+		t.emplace(mid.top());
+		mid.pop();
+	    }
+	    s.emplace(i);
+	}
+	return ans;
+}
+```
 #### [42. 接雨水](https://leetcode.cn/problems/trapping-rain-water/)
 ```c++
 int trap(vector<int>& height) {

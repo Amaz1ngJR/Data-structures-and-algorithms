@@ -2086,3 +2086,6 @@ int minReorder(int n, vector<vector<int>>& connections) {
 }
 ```
 ### 广度优先搜索BFS
+
+## 贡献法【计算所有子数组的……的和】(正难则反)
+

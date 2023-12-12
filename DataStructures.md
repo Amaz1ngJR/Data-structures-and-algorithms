@@ -218,40 +218,41 @@ for(int i = 0; i < nums.size(); i++){
 #### [739. 每日温度](https://leetcode.cn/problems/daily-temperatures/)
 ```c++
 vector<int> dailyTemperatures(vector<int>& temperatures) {
-	//从后向前
 	vector<int>& te = temperatures;
 	int n = te.size();
 	vector<int> ans(n, 0);
 	stack<int>s;
-	for (int i = n - 1; i >= 0; i--) {
+	for (int i = n - 1; i >= 0; i--) {//从后向前
 		while (!s.empty() && te[i] >= te[s.top()]) {
 			s.pop();
 		}
 		if (!s.empty()) {//te[i]<s.top()
 			ans[i] = s.top() - i;
 		}
-		//栈空 或者当日温度大于栈顶
-		s.emplace(i);
+		s.emplace(i);//栈空 或者当日温度大于栈顶
 	}
 	return ans;
 }
-//从前向后
-vector<int>& te = temperatures;
-int n = te.size();
-vector<int> ans(n, 0);
-stack<int>s;
-for (int i = 0; i < n; i++) {
-	while (!s.empty() && te[i] > te[s.top()]) {
-		ans[s.top()] = i - s.top();
-		s.pop();
+```
+```c++
+vector<int> dailyTemperatures(vector<int>& temperatures) {
+	vector<int>& te = temperatures;
+	int n = te.size();
+	vector<int> ans(n, 0);
+	stack<int>s;
+	for (int i = 0; i < n; i++) {//从前向后
+		while (!s.empty() && te[i] > te[s.top()]) {
+			ans[s.top()] = i - s.top();
+			s.pop();
+		}
+		s.emplace(i);
 	}
-	s.emplace(i);
+	/*while (!s.empty()) {
+		ans[s.top()] = 0;
+		s.pop();
+	}*/  //由于初始化ans为0 所以不需要这段
+	return ans;
 }
-/*while (!s.empty()) {
-	ans[s.top()] = 0;
-	s.pop();
-}*/  //由于初始化ans为0 所以不需要这段
-return ans;
 ```
 #### [2454. 下一个更大元素 IV](https://leetcode.cn/problems/next-greater-element-iv/)
 ```c++

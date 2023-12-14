@@ -388,8 +388,20 @@ sumd:  1,3,7,5,2
 d2:    1,5,4,-2,-6//仅对d[1]+3 d[4]-3
 sumd2: 1,6,10,8,2
 ```
-二维差分
+二维前缀和
+
 ![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/6ca1584e-9a47-4eca-a744-96fdf350ea74)
+二维差分
+
+![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/7fc1590f-f97d-4b3b-8e61-9147b67cfaba)
+在(x1,y1)到(x2,y2)的区间加c等效于
+```c++
+d[x1][y1] += c;  //图中第一行第二个全黄区域都+c
+d[x1][y2+1] -= c; //减去图中第一行第三个蓝色区域
+d[x2+1][y1] -= c;  //减去图中第二行第一个蓝色区域
+d[x2+1][y2+1] += c; //加上两个蓝色区域多减的绿色区域
+```
+其为每个元素到矩阵左上角(0,0)元素的差 (0,0)处的差分为元素(0,0) 本身而不是0
 
 ### *差分
 [1094. 拼车](https://leetcode.cn/problems/car-pooling/)
@@ -407,6 +419,9 @@ bool carPooling(vector<vector<int>>& trips, int capacity) {
 	}
 	return true;
 }
+```
+[2132. 用邮票贴满网格图](https://leetcode.cn/problems/stamping-the-grid/)
+```c++
 
 ```
 ### *前缀和最值

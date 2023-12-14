@@ -210,7 +210,40 @@ bool carPooling(vector<vector<int>>& trips, int capacity) {
 ```
 [2132. 用邮票贴满网格图](https://leetcode.cn/problems/stamping-the-grid/)
 ```c++
-
+bool possibleToStamp(vector<vector<int>>& grid, int stampHeight, int stampWidth) {
+	int m = grid.size(), n = grid[0].size();
+	//1、计算二维前缀和
+	vector<vector<int>>sum(m + 1, vector<int>(n + 1, 0));//二维前缀和 下标从1开始
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < n; j++) {
+			sum[i + 1][j + 1] = sum[i + 1][j] + sum[i][j + 1] - sum[i][j] + grid[i][j];
+		}
+	}
+	//2、计算二维差分
+	vector<vector<int>>dif(m + 2, vector<int>(n + 2, 0));//二维差分数组 扩充第0行 第0列 
+	for (int i = stampHeight; i <= m; i++) {
+		for (int j = stampWidth; j <= n; j++) {
+			//左上角(i0,j0) 右下角(i,j) 
+			int i0 = i - stampHeight + 1;
+			int j0 = j - stampWidth + 1;
+			if (sum[i][j] - sum[i][j0 - 1] - sum[i0 - 1][j] + sum[i0 - 1][j0 - 1] == 0) {//区域内无被占格子
+				//区域内+1表示贴了一张邮票
+				dif[i0][j0]++;
+				dif[i0][j + 1]--;
+				dif[i + 1][j0]--;
+				dif[i + 1][j + 1]++;
+			}
+		}
+	}
+	//3、还原矩阵(原地计算)
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < n; j++) {
+			dif[i + 1][j + 1] += dif[i + 1][j] + dif[i][j + 1] - dif[i][j];
+			if (!grid[i][j] && !dif[i + 1][j + 1])return false;//没被占据&&没有贴邮票
+		}
+	}
+	return true;
+}
 ```
 ### *前缀和最值
 

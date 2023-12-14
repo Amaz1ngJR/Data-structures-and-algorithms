@@ -163,7 +163,8 @@ int s = sum[x][y] - sum[x][j - 1] - sum[i - 1][y] + sum[i - 1][j - 1]; //蓝色�
 
 二维差分
 
-![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/10450ca5-949f-4d69-b182-168c9c9a79bb)
+![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/8357a9c9-8c01-4f0c-b91b-468735aedf26)
+
 ```
 dif[0][0] = matrix[0][0]
 第一行:dif[0][j] = matrix[0][j] - matrix[0][j-1]

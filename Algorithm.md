@@ -150,6 +150,14 @@ sumd2: 1, 6,10, 8, 2
 二维前缀和
 
 ![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/6ca1584e-9a47-4eca-a744-96fdf350ea74)
+```c++
+vector<vector<int>>sum(m + 1, vector<int>(n + 1, 0));//二维前缀和 下标从1开始
+for (int i = 0; i < m; i++) {
+	for (int j = 0; j < n; j++) {
+		sum[i + 1][j + 1] = sum[i + 1][j] + sum[i][j + 1] - sum[i][j] + grid[i + 1][j + 1];
+	}
+}
+```
 
 二维差分
 

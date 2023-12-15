@@ -606,7 +606,22 @@ ListNode *detectCycle(ListNode *head) {
     return NULL;
 }
 ```
-
+#### [287. 寻找重复数](https://leetcode.cn/problems/find-the-duplicate-number/)
+```c++
+int findDuplicate(vector<int>& nums) {
+	int slow = 0, fast = 0;
+	while(slow != fast || (slow == fast && slow == 0)){
+	    slow = nums[slow];
+	    fast = nums[nums[fast]];
+	}
+	slow = 0;
+	while(slow != fast){
+	    slow = nums[slow];
+	    fast = nums[fast];
+	}
+	return slow;
+}
+```
 ### *前后指针
 
 #### [19. 删除链表的倒数第 N 个结点](https://leetcode.cn/problems/remove-nth-node-from-end-of-list/)

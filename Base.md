@@ -78,6 +78,18 @@ vector<vector<int>> merge(vector<vector<int>>& intervals) {
 	return ans;
 }
 ```
+[55. 跳跃游戏](https://leetcode.cn/problems/jump-game/)
+```c++
+bool canJump(vector<int>& nums) {
+	int maxright = nums[0];//maxright为目前所能跳的最远距离
+	int i = 1, n = nums.size();
+	while (i <= maxright && maxright < n) {//遍历所能跳的距离 更新所能跳的最大距离
+		maxright = max(maxright, nums[i] + i);
+		i++;
+	}
+	return maxright >= n - 1;
+}
+```
 [100136. 统计好分割方案的数目](https://leetcode.cn/problems/count-the-number-of-good-partitions/)
 ```c++
 int numberOfGoodPartitions(vector<int>& nums) {

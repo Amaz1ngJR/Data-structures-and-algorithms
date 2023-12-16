@@ -787,7 +787,6 @@ class CountIntervals {
 	int cnt = 0;//所有区间长度和
 public:
 	CountIntervals() {}
-
 	void add(int left, int right) {
 		//遍历所有与[left,right]重叠的区间 区间右端点大于等于left 区间左端点小于等于right
 		for (auto it = m.lower_bound(left); it != m.end() && it->second <= right; m.erase(it++)) {
@@ -799,10 +798,7 @@ public:
 		m[right] = left;//添加新的合并后的区间
 		cnt += right - left + 1;//更新区间长度和
 	}
-
-	int count() {
-		return cnt;
-	}
+	int count() {return cnt;}
 };
 ```
 ### **字典树/前缀树

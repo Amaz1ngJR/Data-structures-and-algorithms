@@ -779,7 +779,32 @@ public:
 	}
 };
 ```
+### **珂朵莉树
+#### [2276. 统计区间中的整数数目](https://leetcode.cn/problems/count-integers-in-intervals/)
+```c++
+class CountIntervals {
+	map<int, int>m;//<区间右端点,区间左端点>
+	int cnt = 0;//所有区间长度和
+public:
+	CountIntervals() {}
 
+	void add(int left, int right) {
+		//遍历所有与[left,right]重叠的区间 区间右端点大于等于left 区间左端点小于等于right
+		for (auto it = m.lower_bound(left); it != m.end() && it->second <= right; m.erase(it++)) {
+			int le = it->second, ri = it->first;
+			left = min(left, le);
+			right = max(right, ri);//合并区间
+			cnt -= ri - le + 1;//删除原区间 m.erase(it++)=m.erase(it)、it++ 防止迭代器失效
+		}
+		m[right] = left;//添加新的合并后的区间
+		cnt += right - left + 1;//更新区间长度和
+	}
+
+	int count() {
+		return cnt;
+	}
+};
+```
 ### **字典树/前缀树
 ![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/05b88cea-d07f-46c2-a64b-2b25016a1e24)
 

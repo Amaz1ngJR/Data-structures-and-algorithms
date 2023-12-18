@@ -60,13 +60,11 @@ pre plus [845. 数组中的最长山脉](https://leetcode.cn/problems/longest-mo
 
 ```c++
 int findPeakElement(vector<int>& nums) {
-    int low = -1, high = nums.size() - 1;
-    while (low+1 < high) {
-        int mid = low + ((high - low) / 2);
-        if (nums[mid] > nums[mid + 1])
-            high = mid;
-        else
-            low = mid ;
+    int low = -1, high = nums.size() - 1, mid; 开区间 (-1, n-1)
+    while (low+1 < high) { // 开区间不为空
+        mid = low + ((high - low) / 2);
+        if (nums[mid] > nums[mid + 1]) high = mid;
+        else low = mid ;
     }
     return high;
 }

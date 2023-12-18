@@ -799,32 +799,33 @@ vector<string> letterCombinations(string digits) {
 #### [131. 分割回文串](https://leetcode.cn/problems/palindrome-partitioning/)
 
 ```c++
- vector<vector<string>> partition(string s) {
-    vector<vector<string>>ans;
-    vector<string>path;
-    int n = s.size();
-    std::function<bool(string)> isok = [](string a)->bool {
-        string b = a;
-        reverse(b.begin(), b.end());
-        if (a == b) return true;
-        else return false;
-    };
-    std::function<void(int i)> dfs = [&](int i) {
-        if (i == n) {
-            ans.push_back(path);
-            return;
-        }
-        for (int j = i; j < n; j++) {
-            string temp = s.substr(i, j -i+ 1);
-            if (isok(temp)) {
-                path.push_back(temp);
-                dfs(j + 1);
-                path.pop_back();
-            }
-        }
-    };
-    dfs(0);
-    return ans;
+vector<vector<string>> partition(string s) {
+	vector<vector<string>>ans;
+	vector<string>path;
+	int n = s.size();
+	function<bool(int, int)>is = [&](int low, int high)->bool {
+		while (low < high) {
+			if (s[low] != s[high])return false;
+			low++; high--;
+		}
+		return true;
+	};
+	function<void(int)>dfs = [&](int index) {
+		if (index >= n) {
+			ans.emplace_back(path);
+			return;
+		}
+		for (int i = index; i < n; i++) {
+			if (is(index, i)) {
+				path.emplace_back(s.substr(index, i - index + 1));
+			}
+			else continue;
+			dfs(i + 1);
+			path.pop_back();//恢复现场
+		}
+	};
+	dfs(0);
+	return ans;
 }
 ```
 

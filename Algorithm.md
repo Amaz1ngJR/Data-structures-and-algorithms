@@ -818,10 +818,9 @@ vector<vector<string>> partition(string s) {
 		for (int i = index; i < n; i++) {
 			if (is(index, i)) {
 				path.emplace_back(s.substr(index, i - index + 1));
+				dfs(i + 1);
+				path.pop_back();//恢复现场
 			}
-			else continue;
-			dfs(i + 1);
-			path.pop_back();//恢复现场
 		}
 	};
 	dfs(0);

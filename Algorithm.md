@@ -127,6 +127,27 @@ int search(vector<int>& nums, int target) {
     return -1;
 }
 ```
+#### [1901. 寻找峰值 II](https://leetcode.cn/problems/find-a-peak-element-ii/)
+```c++
+vector<int> findPeakGrid(vector<vector<int>>& mat) {
+	int m = mat.size();
+	int low = 0, high = m - 1, i, j;
+	while (low <= high) {
+		i = low + (high - low) / 2;
+		j = distance(mat[i].begin(), max_element(mat[i].begin(), mat[i].end()));
+		if (i - 1 >= 0 && mat[i][j] < mat[i - 1][j]) {//小于上方
+			high = i - 1;
+			continue;
+		}
+		if (i + 1 < m && mat[i][j] < mat[i + 1][j]) {//小于下方
+			low = i + 1;
+			continue;
+		}
+		return{ i,j };
+	}
+	return{ -1,-1 };
+}
+```
 ## 前后缀与差分
 
 ```

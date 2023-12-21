@@ -204,7 +204,6 @@ n个不同元素进栈，出栈元素不同排列的个数为一个卡特兰数�
 ```
 (2n)!/(n +1)!n!
 ```
-括号匹配问题 
 ### **单调栈
 ```c++
 stack<int> st;
@@ -293,6 +292,40 @@ int trap(vector<int>& height) {
 			ans += (i - s.top() - 1) * (min(height[s.top()], height[i]) - height[temp]);
 		}
 		s.emplace(i);
+	}
+	return ans;
+}
+```
+#### [2866. 美丽塔 II](https://leetcode.cn/problems/beautiful-towers-ii/)
+```c++
+long long maximumSumOfHeights(vector<int>& maxHeights) {
+	//用单调栈模拟美丽塔两边的塔
+	//pre和suf分别记录下标i的左右两边塔的最大和
+	int n = maxHeights.size(); long long sum = 0, ans = 0;
+	stack<int>stas, stap; 
+	vector<long long>pre(n, 0), suf(n, 0);
+	//枚举左边的塔
+	for (int i = 0; i < n; i++) {
+		int high = maxHeights[i];
+		while (!stap.empty() && maxHeights[stap.top()] > high) {
+			stap.pop();//维护一个递增的单调栈
+		}
+		//栈为空 说明当前值为最小的 那么左边的塔最大只能取high
+		if (stap.empty()) pre[i] = (long long)(i + 1) * high;
+		//栈不为空 说明当前值大于栈顶 中间的下标等于当前值
+		else pre[i] = pre[stap.top()] + (long long)(i - stap.top()) * high;
+		stap.emplace(i);
+	}
+	//枚举右边的塔
+	for (int i = n - 1; i >= 0; i--) {
+		int high = maxHeights[i];
+		while (!stas.empty() && maxHeights[stas.top()] > high) {
+			stas.pop();//维护一个递增的单调栈
+		}
+		if (stas.empty()) suf[i] = (long long)(n - i) * high;
+		else suf[i] = suf[stas.top()] + (long long)(stas.top() - i) * high;
+		stas.emplace(i);
+		ans = max(ans, pre[i] + suf[i] - high);
 	}
 	return ans;
 }

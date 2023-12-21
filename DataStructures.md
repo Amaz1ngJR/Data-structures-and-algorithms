@@ -301,7 +301,7 @@ int trap(vector<int>& height) {
 long long maximumSumOfHeights(vector<int>& maxHeights) {
 	//用单调栈模拟美丽塔两边的塔
 	//pre和suf分别记录下标i的左右两边塔的最大和
-	int n = maxHeights.size(); long long sum = 0, ans = 0;
+	int n = maxHeights.size(); long long ans = 0;
 	stack<int>stas, stap; 
 	vector<long long>pre(n, 0), suf(n, 0);
 	//枚举左边的塔

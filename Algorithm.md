@@ -1919,7 +1919,7 @@ int lengthOfLIS(vector<int>& nums) {
 		if (it == f.end()) {//v大于f中所有元素 
 			f.emplace_back(v); //插入到数组末尾
 		}
-		else *it = v;//找到或者没找到 该位置是v应该替换的地方
+		else *it = v;//找到一个大于等于v的数 将其减少至v 增大了数组变长的潜力
 	}
 	return f.size();
 }

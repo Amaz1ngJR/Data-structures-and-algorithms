@@ -512,7 +512,10 @@ vector<int> twoSum(vector<int>& nums, int target) {
     return ans;
 }
 ```
+### [146. LRU 缓存](https://leetcode.cn/problems/lru-cache/) 哈希+双链表
+```c++
 
+```
 ## *树
 
 ### **二叉树

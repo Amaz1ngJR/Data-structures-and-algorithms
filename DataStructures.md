@@ -514,7 +514,35 @@ vector<int> twoSum(vector<int>& nums, int target) {
 ```
 ### [146. LRU 缓存](https://leetcode.cn/problems/lru-cache/) 哈希+双链表
 ```c++
+class LRUCache {
+public:
+	LRUCache(int capacity) :cap(capacity) {}
 
+	int get(int key) {
+		if (m.find(key) == m.end())return -1;
+		auto pir = *m[key];//链表中的对组
+		cache.erase(m[key]);//将原来的对组删除
+		cache.emplace_front(pir);//放到链表前面
+		m[key] = cache.begin();
+		return pir.second;
+	}
+
+	void put(int key, int value) {
+		if (m.find(key) == m.end()) {//cache中不存在
+			if (cache.size() == cap) {//满了
+				m.erase(cache.back().first);//删除最后一个
+				cache.pop_back();
+			}
+		}
+		else cache.erase(m[key]);
+		cache.emplace_front(key, value);
+		m[key] = cache.begin();
+	}
+private:
+	int cap;
+	list<pair<int, int>>cache;
+	unordered_map<int, list<pair<int, int>>::iterator>m;
+};
 ```
 ## *树
 

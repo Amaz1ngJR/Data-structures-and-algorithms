@@ -797,7 +797,28 @@ TreeNode* deleteNode(TreeNode* root, int key) {
 	return root;
 }
 ```
-
+#### [236. 二叉树的最近公共祖先](https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/)
+```c++
+TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if (!root || root == p || root == q)return root;
+        TreeNode* left = lowestCommonAncestor(root->left, p, q);
+        TreeNode* right = lowestCommonAncestor(root->right, p, q);
+        if (left && right)return root;//p、q分别在root的左右子树中
+        else if (left)return left;//p、q在root的左子树中
+        return right;//p、q在root的右子树中
+}
+```
+#### [235. 二叉搜索树的最近公共祖先](https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-search-tree/)
+```c++
+TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+	if ((p->val <= root->val && q->val >= root->val) 
+		|| (p->val >= root->val && q->val <= root->val))return root;//p、q在root的两侧或其中一个为root
+	else if (p->val - root->val > 0) {//p、q在root的右侧
+		return lowestCommonAncestor(root->right, p, q);
+	}
+	return lowestCommonAncestor(root->left, p, q);//p、q在root的左侧
+}
+```
 ### **堆
 
 堆是一个完全二叉树

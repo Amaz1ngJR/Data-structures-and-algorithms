@@ -45,22 +45,22 @@ int findKOr(vector<int>& nums, int k) {
 获得数字的每一位
 ```c++
 for (const auto& v : nums) {
-    string temp(31, '0');//用长度为31的字符串记录元素的每一位
-    for (int i = 0; i < 31; i++) {
-        if (v >> i & 1)temp[30 - i] = '1';
-    }
-    std::bitset<64> bits(temp);//#include <bitset> 将二进制字符串表示为二进制
-		int num = bits.to_ulong();//将二进制转成十进制
+	string temp(31, '0');//用长度为31的字符串记录元素的每一位
+	for (int i = 0; i < 31; i++) {
+		if (v >> i & 1)temp[30 - i] = '1';
+	}
+	std::bitset<64> bits(temp);//#include <bitset> 将二进制字符串表示为二进制
+	int num = bits.to_ulong();//将二进制转成十进制
 }
 void test() {
-		int a = 7;
-		//使用std::bitset #include<bitset>将整数转换为二进制字符串
-		std::bitset<32> bita(a);
-		for (int i = 0; i < bita.size(); i++) {
-			cout << bita[i];
-		}
-		cout<<endl;
-		cout<<bita<<endl;
+	int a = 7;
+	//使用std::bitset #include<bitset>将整数转换为二进制字符串
+	std::bitset<32> bita(a);
+	for (int i = 0; i < bita.size(); i++) {
+		cout << bita[i];
+	}
+	cout<<endl;
+	cout<<bita<<endl;
 }
 ```
 判断一个数是否是奇数

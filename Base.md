@@ -1,14 +1,3 @@
-# 快速幂
-[50. Pow(x, n)](https://leetcode.cn/problems/powx-n/)
-```c++
-double myPow(double x, int n) {
-    if(n==1) return x;
-    else if(n==-1) return 1/x;
-    else if(n==0) return 1;
-    double tmp = myPow(x,n/2);
-    return tmp*tmp*myPow(x, n%2);
-}
-```
 # 位运算
 ```c++
 bool demo() {
@@ -101,6 +90,7 @@ bool canJump(vector<int>& nums) {
 	return maxright >= n - 1;
 }
 ```
+隔板的插入种数
 [100136. 统计好分割方案的数目](https://leetcode.cn/problems/count-the-number-of-good-partitions/)
 ```c++
 int numberOfGoodPartitions(vector<int>& nums) {
@@ -121,4 +111,23 @@ int numberOfGoodPartitions(vector<int>& nums) {
 	}
 	return ans;
 }
+```
+# 数学
+## 快速幂
+[50. Pow(x, n)](https://leetcode.cn/problems/powx-n/)
+```c++
+double myPow(double x, int n) {
+    if(n==1) return x;
+    else if(n==-1) return 1/x;
+    else if(n==0) return 1;
+    double tmp = myPow(x,n/2);
+    return tmp*tmp*myPow(x, n%2);
+}
+```
+## 最大公因子
+辗转相除法得到两个数的最大公因数
+```
+用较大的数除以较小的数 余数为0则较小的数为最大公因数 余数不为0 则余数和较小的数重复上述
+例：36和24的最大公因数
+36 % 24 == 12 != 0 => 24 % 12 ==0 =>最大公约数为min(24,12)
 ```

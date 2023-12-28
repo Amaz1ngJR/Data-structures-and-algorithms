@@ -214,6 +214,17 @@ for(int i = 0; i < nums.size(); i++){
 	st.push(nums[i]);
 }
 ```
+#### 找到数组中每个元素的前第一个小于该元素的下标
+```c++
+vector<int>pre(n, -1); stack<int>sta;
+for (int i = 0; i < n; i++) {
+	while (!sta.empty() && nums[i] <= nums[sta.top()]) {
+		sta.pop();
+	}
+	if (!sta.empty())pre[i] = sta.top();
+	sta.emplace(i);
+}
+```
 #### [739. 每日温度](https://leetcode.cn/problems/daily-temperatures/)
 ```c++
 vector<int> dailyTemperatures(vector<int>& temperatures) {

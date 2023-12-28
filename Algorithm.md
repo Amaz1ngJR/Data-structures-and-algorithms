@@ -1924,6 +1924,18 @@ int lengthOfLIS(vector<int>& nums) {
 	return f.size();
 }
 ```
+### [334. 递增的三元子序列](https://leetcode.cn/problems/increasing-triplet-subsequence/)
+```c++
+bool increasingTriplet(vector<int>& nums) {
+	vector<int>v(2, INT_MAX);//用来记录最小元素和次最小元素
+	for (const int& num : nums) {
+		if (num <= v[0]) v[0] = num;
+		else if (num <= v[1])v[1] = num;
+		else return true;//说明前面有两个元素小于该元素
+	}
+	return false;
+}
+```
 ## 图
 
 ### 深度优先搜索DFS

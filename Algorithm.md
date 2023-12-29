@@ -416,6 +416,28 @@ int maxArea(vector<int>& height) {
 ```
 
 ### *同向双指针 滑动窗口
+#### [443. 压缩字符串](https://leetcode.cn/problems/string-compression/)
+```c++
+int compress(vector<char>& chars) {
+	int n = chars.size();
+	int write = 0, left = 0;
+	string temp;
+	for (int read = 0; read < n; read++) {
+		if (read == n - 1 || chars[read] != chars[read + 1]) {//读到连续重复字符的末尾
+			chars[write++] = chars[read];//记录当前字符
+			int num = read - left + 1;//当前字符的个数
+			if (num > 1) {
+				temp = to_string(num);
+				for (const char& t : temp) {
+					chars[write++] = t;
+				}
+			}
+			left = read + 1;
+		}
+	}
+	return write;
+}
+```
 
 #### [209. 长度最小的子数组](https://leetcode.cn/problems/minimum-size-subarray-sum/)
 

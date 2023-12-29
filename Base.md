@@ -56,6 +56,10 @@ void test() {
 ```c++
 if(n % 2 == 1) => if(n & 1)
 ```
+判断两个数是否同号
+```c++
+if((a ^ b) < 0)
+```
 # 区间合并
 [56. 合并区间](https://leetcode.cn/problems/merge-intervals/)
 ```c++

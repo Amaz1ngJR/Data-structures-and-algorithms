@@ -438,7 +438,22 @@ int compress(vector<char>& chars) {
 	return write;
 }
 ```
-
+#### [1004. 最大连续1的个数 III](https://leetcode.cn/problems/max-consecutive-ones-iii/)
+```c++
+int longestOnes(vector<int>& nums, int k) {
+	int low = 0, high = 0, ans = 0;
+	while (high != nums.size()) {
+		if (!nums[high]) k--;//遇到0就填
+		while (k < 0) {//多填一个 移动左指针
+			if (!nums[low]) k++;
+			low++;
+		}
+		ans = max(ans, high - low + 1);//时刻记录最大值
+		high++;
+	}
+	return ans;
+}
+```
 #### [209. 长度最小的子数组](https://leetcode.cn/problems/minimum-size-subarray-sum/)
 
 初始为第一个元素 子数组小于目标则加大右端点来增加子数组长度 若子数组和大于等于目标 缩小左端点 直到右端点为数组最后一个

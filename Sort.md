@@ -98,14 +98,14 @@ void QuickSort(vector<T>& nums, int low, int high) {
     //划分
     std::function<int(vector<T>&, int, int)>Parttion =
         [&](vector<T>& nums, int low, int high)->int {
-        int pivot = nums[low];
+        int pivot = nums[low];//每次划分确定基准pivot:nums[low]的位置
         while (low < high) {
             while (low < high && nums[high] >= pivot) --high;
-            nums[low] = nums[high];
+            nums[low] = nums[high];//nums[high]<pivot
             while (low < high && nums[low] <= pivot) ++low;
-            nums[high] = nums[low];
+            nums[high] = nums[low];//nums[low]>pivot
         }
-        nums[low] = pivot;
+        nums[low] = pivot;//基准的位置为当前的low
         return low;
     };
     //排序

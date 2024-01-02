@@ -332,16 +332,60 @@ int trap(vector<int>& height) {
 ```
 
 ## 双指针
-[160. 相交链表](https://leetcode.cn/problems/intersection-of-two-linked-lists/)
+#### [160. 相交链表](https://leetcode.cn/problems/intersection-of-two-linked-lists/)
+消除两个链表的长度差
+```
+指针 p 指向 A 链表 指针 q 指向 B 链表 依次往后遍历
+如果 p 到了末尾 则 p = headB 继续遍历
+如果 q 到了末尾，则 q = headA 继续遍历
+比较长的链表指针指向较短链表head时 长度差就消除了
+```
 ```c++
 ListNode* getIntersectionNode(ListNode* headA, ListNode* headB) {
 	ListNode* p = headA, * q = headB;
-	while (p != q) {//正确性用表格法模拟
+	while (p != q) {
 		p = p != nullptr ? p->next : headB;
 		q = q != nullptr ? q->next : headA;
 	}
 	return p;
 }
+```
+#### [295. 数据流的中位数](https://leetcode.cn/problems/find-median-from-data-stream/)
+```c++
+class MedianFinder {
+public:
+	MedianFinder() :low(us.end()), high(us.end()) {}
+
+	void addNum(int num) {
+		int n = us.size();
+		us.emplace(num);
+		if (!n) {//插入之前为空
+			low = high = us.begin();
+		}
+		else if (n & 1) {//插入之前为奇数
+			if (num < *low) low--;
+			else high++;
+		}
+		else {//插入之前为偶数
+			if (num > *low && num < *high) {//插在俩中位数中间
+				low++;
+				high--;
+			}
+			else if (num >= *high) low++;
+			else {
+				high--;
+				low = high;
+			}
+		}
+	}
+
+	double findMedian() {
+		return (*low + *high) / 2.0;
+	}
+private:
+	multiset<int>us;
+	multiset<int>::iterator low, high;
+};
 ```
 ### *相向双指针
 
@@ -2010,4 +2054,3 @@ int minReorder(int n, vector<vector<int>>& connections) {
 ### 广度优先搜索BFS
 
 ## 贡献法【计算所有子数组的……的和】(正难则反)
-

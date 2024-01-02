@@ -264,6 +264,29 @@ vector<int> dailyTemperatures(vector<int>& temperatures) {
 	return ans;
 }
 ```
+#### [901. 股票价格跨度](https://leetcode.cn/problems/online-stock-span/)
+```c++
+class StockSpanner {
+public:
+	StockSpanner() {
+		this->day = -1;
+		this->s.emplace(-1, INT_MAX);
+	}
+
+	int next(int price) {
+		day++;
+		while (price>=s.top().second) {
+			s.pop();
+		}
+		int ans = day - s.top().first;
+		s.emplace(day, price);
+		return ans;
+	}
+private:
+	int day;
+	stack<pair<int, int>>s;//<day,price>
+};
+```
 #### [2454. 下一个更大元素 IV](https://leetcode.cn/problems/next-greater-element-iv/)
 ```c++
 vector<int> secondGreaterElement(vector<int>& nums) {

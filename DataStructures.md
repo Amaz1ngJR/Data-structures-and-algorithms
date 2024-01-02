@@ -822,7 +822,109 @@ TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
 大根堆：每个节点的值都大于或者等于他的左右孩子节点的值
 
 小根堆：每个节点的值都小于或者等于他的左右孩子节点的值
+#### [215. 数组中的第K个最大元素](https://leetcode.cn/problems/kth-largest-element-in-an-array/)
+```c++
+int findKthLargest(vector<int>& nums, int k) {
+	priority_queue<int, vector<int>, greater<int>>q;//小根堆
+	for (const int& num : nums) q.emplace(num);
+	while (q.size() > k)q.pop();
+	return q.top();
+}
+```
+#### [2542. 最大子序列的分数](https://leetcode.cn/problems/maximum-subsequence-score/)
+```c++
 
+```
+#### [2336. 无限集中的最小数字](https://leetcode.cn/problems/smallest-number-in-infinite-set/)
+```c++
+class SmallestInfiniteSet {
+public:
+	SmallestInfiniteSet() {
+		this->small = 1;
+	}
+
+	int popSmallest() {//O(n)
+		int t = small;
+		us.emplace(t);//移出后加入到us中
+		for (int i = t; i < 1001; i++) {//寻找最小整数
+			if (us.find(i) == us.end()) {
+				small = i;//比之前的最小整数大且不在us中
+				break;
+			}
+		}
+		return t;
+	}
+
+	void addBack(int num) {//O(n)
+		if (us.find(num) != us.end()) {
+			us.erase(num);
+		}
+		this->small = min(num, small);
+	}
+private:
+	int small;//记录集合中的最小整数
+	unordered_set<int>us;//记录集合中没有的整数
+};
+```
+```c++
+class SmallestInfiniteSet {
+public:
+	SmallestInfiniteSet() {}
+
+	int popSmallest() {//O(logn)
+		if (m_pq.empty()) {
+			++m_curValue;
+			return m_curValue;
+		}
+		// 从小根堆中取出最小的整数
+		int res = m_pq.top();
+		m_pq.pop();
+		m_set.erase(res);
+		return res;
+	}
+
+	void addBack(int num) {//O(logn)
+		if (num > m_curValue) return;
+		if (m_set.count(num)) return;
+
+		m_set.insert(num);
+		m_pq.push(num);
+	}
+
+private:
+	int m_curValue = 0;// 当前值 用于在集合为空时返回
+	set<int> m_set;//记录集合中的整数
+	priority_queue<int, vector<int>, greater<int>> m_pq;//小根堆 记录集合中的整数
+};
+```
+#### [100184. 找出出现至少三次的最长特殊子字符串 II](https://leetcode.cn/problems/find-longest-special-substring-that-occurs-thrice-ii/)
+```c++
+int maximumLength(string s) {
+        priority_queue<int, vector<int>, greater<int>>q;//使用小根堆来维护前3大的数
+        q.emplace(0);q.emplace(0);//假设有两个空串
+        vector<priority_queue<int, vector<int>, greater<int>>>group(26, q);
+        int n = s.size(), cnt = 0, ans = 0;
+        for (int i = 0; i < n; i++) {
+            cnt++;
+            if (i == n - 1 || s[i] != s[i + 1]) {
+                group[s[i] - 'a'].emplace(cnt);// 统计连续字符长度
+                cnt = 0;
+                if (group[s[i] - 'a'].size() > 3)group[s[i] - 'a'].pop();
+            }
+        }
+        int g1, g2, g3;
+        for (auto& g : group) {
+            if (g.size() < 3)continue;
+            g1 = g.top();//第三大
+            g.pop();
+            g2 = g.top();//次大
+            g.pop();
+            g3 = g.top();//最大
+            ans = max({ ans,g3 - 2,min(g3 - 1,g2),g1 });
+        }
+        return ans ? ans : -1;
+    }
+```
 ### **树状数组
 #### [307. 区域和检索 - 数组可修改](https://leetcode.cn/problems/range-sum-query-mutable/)
 ```c++

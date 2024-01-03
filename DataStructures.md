@@ -856,7 +856,28 @@ int findKthLargest(vector<int>& nums, int k) {
 ```
 #### [2542. 最大子序列的分数](https://leetcode.cn/problems/maximum-subsequence-score/)
 ```c++
-
+long long maxScore(vector<int>& nums1, vector<int>& nums2, int k) {
+	int n = nums1.size();
+	vector<pair<int, int>>p;//用来排序<nums1,nums2>
+	priority_queue<int, vector<int>, greater<int>>pq;//小根堆维护最大的前k-1个数
+	for (int i = 0; i < n; i++) {
+		p.emplace_back(nums1[i], nums2[i]);
+	}
+	sort(p.begin(), p.end(),
+		[&](const pair<int, int>& a, const pair<int, int>& b) {
+			return a.second > b.second; });
+	long long ans = INT_MIN, sum = 0;
+	for (int i = 0; i < n; i++) {//枚举nums1[1]作为第k个数
+		sum += p[i].first;
+		pq.emplace(p[i].first);//此前有k-1个数 第k个数为nums1[i]
+		if (i >= k - 1) {
+			ans = max(ans, sum * p[i].second);
+			sum -= pq.top();//将小根堆的大小变成[0,i]中最大的前k-1个数
+			pq.pop();//使得堆中数据的和为[0,i]中最大的
+		}
+	}
+	return ans;
+}
 ```
 #### [2336. 无限集中的最小数字](https://leetcode.cn/problems/smallest-number-in-infinite-set/)
 ```c++

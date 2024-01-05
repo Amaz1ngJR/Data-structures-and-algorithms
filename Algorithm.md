@@ -2017,6 +2017,24 @@ bool increasingTriplet(vector<int>& nums) {
 	return false;
 }
 ```
+### [435. 无重叠区间](https://leetcode.cn/problems/non-overlapping-intervals/)
+```c++
+int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+	//按照结束时间从早到晚排序 结束时间相同的 开始时间晚的排在前面
+	sort(intervals.begin(), intervals.end(),
+		[&](const vector<int>& a, const vector<int>& b) {
+			if (a[1] == b[1])return a[0] > b[0];
+			return a[1] < b[1]; });
+	int low = 0, high = 1;
+	while (high < intervals.size()) {
+		if (intervals[high][0] >= intervals[low][1]) {
+			intervals[++low] = intervals[high];
+		}
+		high++;
+	}
+	return high - low - 1;
+}
+```
 ## 图
 
 ### 深度优先搜索DFS

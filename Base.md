@@ -61,6 +61,30 @@ if(n % 2 == 1) => if(n & 1)
 ```c++
 if((a ^ b) < 0)
 ```
+# 重叠区间
+[452. 用最少数量的箭引爆气球](https://leetcode.cn/problems/minimum-number-of-arrows-to-burst-balloons/)
+```c++
+int findMinArrowShots(vector<vector<int>>& points) {
+	//按起点靠前排序 起点相同按终点靠前排序
+	sort(points.begin(), points.end(),
+	    [&](const auto& a, const auto& b) {
+		if (a[0] == b[0]) return a[1] < b[1];
+		return a[0] < b[0]; });
+	int n = points.size(), low = points[0][0], high = points[0][1], ans = 1;
+	for (int i = 1; i < n; i++) {//从左向右遍历寻找重叠区间
+	    if (points[i][0] <= high) {//区间和左侧区间有重叠 
+		low = points[i][0];//更新重叠区间
+		high = min(high, points[i][1]); //更新重叠区间
+	    }
+	    else {//没有重叠
+		ans++;
+		low = points[i][0];
+		high = points[i][1];
+	    }
+	}
+	return ans;
+}
+```
 # 区间合并
 [56. 合并区间](https://leetcode.cn/problems/merge-intervals/)
 ```c++

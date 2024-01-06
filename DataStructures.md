@@ -969,6 +969,56 @@ int maximumLength(string s) {
         return ans ? ans : -1;
     }
 ```
+### **并查集
+
+### **字典树/前缀树
+![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/05b88cea-d07f-46c2-a64b-2b25016a1e24)
+
+#### [208. 实现 Trie (前缀树)](https://leetcode.cn/problems/implement-trie-prefix-tree/)
+```c++
+class Trie {
+private:
+	vector<Trie*> children;//第i位不是nullptr表示第i个字母存在
+	bool isEnd;//表示这一位是不是单词的结尾
+
+	Trie* searchPrefix(string prefix) {//找到prefix在字典树的前缀
+		Trie* node = this;
+		for (const char &ch : prefix) {
+			if (node->children[ch - 'a'] == nullptr) {
+				return nullptr;
+			}
+			node = node->children[ch - 'a'];
+		}
+		return node;
+	}
+
+public:
+	Trie() : children(26), isEnd(false) {}
+
+	void insert(string word) {
+		Trie* node = this;
+		for (const char &ch : word) {
+			if (node->children[ch - 'a'] == nullptr) {
+				node->children[ch - 'a'] = new Trie();
+			}
+			node = node->children[ch - 'a'];
+		}
+		node->isEnd = true;
+	}
+
+	bool search(string word) {
+		Trie* node = this->searchPrefix(word);
+		return node != nullptr && node->isEnd;
+	}
+
+	bool startsWith(string prefix) {
+		return this->searchPrefix(prefix) != nullptr;
+	}
+};
+```
+#### [2416. 字符串的前缀分数和](https://leetcode.cn/problems/sum-of-prefix-scores-of-strings/)
+```c++
+```
 ### **树状数组
 #### [307. 区域和检索 - 数组可修改](https://leetcode.cn/problems/range-sum-query-mutable/)
 ```c++
@@ -1027,52 +1077,4 @@ public:
 	}
 	int count() {return cnt;}
 };
-```
-### **字典树/前缀树
-![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/05b88cea-d07f-46c2-a64b-2b25016a1e24)
-
-#### [208. 实现 Trie (前缀树)](https://leetcode.cn/problems/implement-trie-prefix-tree/)
-```c++
-class Trie {
-private:
-	vector<Trie*> children;//第i位不是nullptr表示第i个字母存在
-	bool isEnd;//表示这一位是不是单词的结尾
-
-	Trie* searchPrefix(string prefix) {//找到prefix在字典树的前缀
-		Trie* node = this;
-		for (const char &ch : prefix) {
-			if (node->children[ch - 'a'] == nullptr) {
-				return nullptr;
-			}
-			node = node->children[ch - 'a'];
-		}
-		return node;
-	}
-
-public:
-	Trie() : children(26), isEnd(false) {}
-
-	void insert(string word) {
-		Trie* node = this;
-		for (const char &ch : word) {
-			if (node->children[ch - 'a'] == nullptr) {
-				node->children[ch - 'a'] = new Trie();
-			}
-			node = node->children[ch - 'a'];
-		}
-		node->isEnd = true;
-	}
-
-	bool search(string word) {
-		Trie* node = this->searchPrefix(word);
-		return node != nullptr && node->isEnd;
-	}
-
-	bool startsWith(string prefix) {
-		return this->searchPrefix(prefix) != nullptr;
-	}
-};
-```
-#### [2416. 字符串的前缀分数和](https://leetcode.cn/problems/sum-of-prefix-scores-of-strings/)
-```c++
 ```

@@ -165,9 +165,28 @@ double myPow(double x, int n) {
 }
 ```
 ## 最大公因子
-辗转相除法得到两个数的最大公因数
+辗转相除法(欧几里得算法)得到两个数的最大公因数
 ```
 用较大的数除以较小的数 余数为0则较小的数为最大公因数 余数不为0 则余数和较小的数重复上述
 例：36和24的最大公因数
 36 % 24 == 12 != 0 => 24 % 12 ==0 =>最大公约数为min(24,12)
+```
+```c++
+function<int(int, int)>gcd = [&](int x, int y)->int {
+	int res;
+	while (y != 0) {
+		res = y;
+		y = x % y;
+		x = res;
+	}
+	return x;
+};
+function<int(int, int)>gcd2 = [&](int x, int y)->int {
+	if (x > y) return gcd2(y, x);
+	if (y % x == 0) return x;
+	return gcd2(y % x, x);
+};
+function<int(int, int)>gcd3 = [&](int x, int y)->int {
+	return y ? gcd3(y, x % y) : x;
+};
 ```

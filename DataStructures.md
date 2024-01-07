@@ -24,7 +24,7 @@ struct DLNode {//双链表结点
 	DLNode(int x, DLNode* prior, DLNode* next) : val(x), prior(prior), next(next) {}
 };
 ```
-增
+### 链表插入
 ```c++
 ListNode* head, * tail = &head;
 //头插法
@@ -68,32 +68,10 @@ bool List::ListInsert(ListNode*& L, int i, int val) {
 	ListInsertPriorNode(p, val);
 }
 ```
-删
 
-删除第i个位置元素
+### 反转链表
+[206. 反转链表](https://leetcode.cn/problems/reverse-linked-list/)
 ```c++
-//删除第i个位置元素
-bool List::ListDelete(ListNode*& L, int i) {
-	if (i < 1)
-		return false;
-	ListNode* p = GetElem(L, i - 1);//找到第i-1个结点
-	if (p == nullptr)//不合法
-		return false;
-	if (p->next == nullptr)
-		return false;
-	ListNode* q = p->next;//用q指向要删除的结点
-	p->next = q->next;
-	delete q;
-	return true;
-}
-//删除倒数第n个位置结点 见算法前后指针
-//删除链表中间的结点 见算法快慢指针
-```
- 改
-
-反转链表
-```c++
-//反转链表   206. 反转链表
 ListNode* List::reverseList(ListNode* head) {
 	//头结点存储数据
 	ListNode* pre, * nex;
@@ -107,11 +85,9 @@ ListNode* List::reverseList(ListNode* head) {
 	return pre;
 }
 ```
-
 反转链表区间
-
+[92. 反转链表 II](https://leetcode.cn/problems/reverse-linked-list-ii/)
 ```c++
-//反转链表区间  92. 反转链表 II
 ListNode* List::reverseBetween(ListNode* head, int left, int right) {
 	//头结点存储数据
 	ListNode* dummy = new ListNode(head);//哨兵 下标为0
@@ -163,38 +139,6 @@ ListNode* MergeTwoLists(ListNode* a, ListNode* b) {
     }
     tail->next = (aPtr ? aPtr : bPtr);
     return head.next;
-}
-```
-查
-
-按位查找 查找链表第i个元素的值
-
-```c++
-//按位查找 查找链表第i个元素的值
-ListNode* List::GetElem(ListNode* L, int i) {
-	if (i < 0)
-		return nullptr;
-	ListNode* p;  //ָ指针p指向当前扫到的结点
-	int count = 0;//记录p指向的是第几个结点，带头结点所以以0开始
-	p = L;
-	while (p != nullptr && count < i) {//循环找到第i个结点
-		p = p->next;
-		count++;
-	}
-	return p;
-}
-```
-
-按值查找 查找链表中值为e的元素
-
-```c++
-//按值查找 查找链表中值为e的元素
-ListNode* List::LocateElem(ListNode* L, int e) {
-	ListNode* p = L->next;
-	while (p != nullptr && p->val != e) {
-		p = p->next;
-	}
-	return p;
 }
 ```
 
@@ -970,7 +914,49 @@ int maximumLength(string s) {
     }
 ```
 ### **并查集
+```c++
+class DSU {
+public:
+	DSU(vector<int> v) {
+		this->fa = v;
+	}
+	int	Find(int x) {
+		//return x == fa[x] ? x : (fa[x] = Find(fa[x]));//压缩路径
+		if (fa[x] == x)
+			return x;
+		else {
+			fa[x] = Find(fa[x]);//压缩路径
+			return fa[x];
+		}
+	}
+	void Union(int i, int j)
+	{
+		fa[Find(i)] = Find(j);
+	}
 
+	void _init_(const vector<int>& v) {
+		int n = v.size();
+		this->fa.resize(n);
+		this->rank.resize(n);
+		for (int i = 0; i < n; i++) {
+			fa[i] = v[i];
+			rank[i] = 1;
+		}
+	}
+	void merge(int i, int j) {
+		int x = Find(i), y = Find(j);    //先找到两个根节点
+		if (rank[x] <= rank[y])
+			fa[x] = y;
+		else
+			fa[y] = x;
+		if (rank[x] == rank[y] && x != y)
+			rank[y]++;//合并的两个集合深度相同时 合并后深度 + 1
+	}
+private:
+	vector<int>fa;
+	vector<int>rank;
+};
+```
 ### **字典树/前缀树
 ![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/05b88cea-d07f-46c2-a64b-2b25016a1e24)
 

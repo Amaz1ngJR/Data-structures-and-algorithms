@@ -918,7 +918,7 @@ int maximumLength(string s) {
 ```c++
 bool equationsPossible(vector<string>& equations) {
 	vector<int>fa(26, 0), rank(26, 1);
-	iota(begin(fa), end(fa), 0);//init//init
+	iota(begin(fa), end(fa), 0);//init
 	function<int(int)>find = [&](int x)->int {
 		return x == fa[x] ? x : (fa[x] = find(fa[x]));//压缩路径
 		/*while (fa[x] != x) {

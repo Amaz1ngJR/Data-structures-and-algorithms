@@ -914,48 +914,41 @@ int maximumLength(string s) {
     }
 ```
 ### **并查集
+#### [990. 等式方程的可满足性](https://leetcode.cn/problems/satisfiability-of-equality-equations/)
 ```c++
-class DSU {
-public:
-	DSU(vector<int> v) {
-		this->fa = v;
-	}
-	int Find(int x) {
-		//return x == fa[x] ? x : (fa[x] = Find(fa[x]));//压缩路径
-		if (fa[x] == x)
-			return x;
-		else {
-			fa[x] = Find(fa[x]);//压缩路径
-			return fa[x];
-		}
-	}
-	void Union(int i, int j)
-	{
-		fa[Find(i)] = Find(j);
-	}
-
-	void _init_(const vector<int>& v) {
-		int n = v.size();
-		this->fa.resize(n);
-		this->rank.resize(n);
-		for (int i = 0; i < n; i++) {
-			fa[i] = v[i];
-			rank[i] = 1;
-		}
-	}
-	void merge(int i, int j) {
-		int x = Find(i), y = Find(j);    //先找到两个根节点
+bool equationsPossible(vector<string>& equations) {
+	vector<int>fa(26, 0), rank(26, 1);
+	for (int i = 0; i < 26; i++) fa[i] = i;//init
+	function<int(int)>find = [&](int x)->int {
+		return x == fa[x] ? x : (fa[x] = find(fa[x]));//压缩路径
+		/*while (fa[x] != x) {
+	            fa[x] = fa[fa[x]];
+	            x = fa[x];
+	        }
+	        return x;*/
+	};
+	function<void(int, int)>merge = [&](int i, int j) {
+		int x = find(i), y = find(j);    //先找到两个根节点
 		if (rank[x] <= rank[y])
 			fa[x] = y;
 		else
 			fa[y] = x;
 		if (rank[x] == rank[y] && x != y)
 			rank[y]++;//合并的两个集合深度相同时 合并后深度 + 1
+	};
+	for (const auto& e : equations) {
+		if (e[1] == '=') {
+			merge((int)e[0] - 'a', (int)e[3] - 'a');
+		}
 	}
-private:
-	vector<int>fa;
-	vector<int>rank;
-};
+	for (const auto& e : equations) {
+		if (e[1] != '=') {
+			cout << find((int)e[0] - 'a') << " " << find((int)e[3] - 'a');
+			if (find((int)e[0] - 'a') == find((int)e[3] - 'a'))return false;
+		}
+	}
+	return true;
+}
 ```
 ### **字典树/前缀树
 ![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/05b88cea-d07f-46c2-a64b-2b25016a1e24)

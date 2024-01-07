@@ -68,7 +68,7 @@ bool List::ListInsert(ListNode*& L, int i, int val) {
 	ListInsertPriorNode(p, val);
 }
 ```
-
+删除链表见算法前后指针
 ### 反转链表
 [206. 反转链表](https://leetcode.cn/problems/reverse-linked-list/)
 ```c++

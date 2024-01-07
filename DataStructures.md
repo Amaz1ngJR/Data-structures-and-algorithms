@@ -934,7 +934,7 @@ bool equationsPossible(vector<string>& equations) {
 		else
 			fa[y] = x;
 		if (rank[x] == rank[y] && x != y)
-			rank[y]++;//合并的两个集合深度相同时 合并后深度 + 1
+			rank[y]++;//当且仅当合并的两个集合深度相同 合并后深度变化 + 1
 	};
 	for (const auto& e : equations) {
 		if (e[1] == '=') {
@@ -949,6 +949,10 @@ bool equationsPossible(vector<string>& equations) {
 	}
 	return true;
 }
+```
+#### [399. 除法求值](https://leetcode.cn/problems/evaluate-division/)
+```c++
+
 ```
 ### **字典树/前缀树
 ![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/05b88cea-d07f-46c2-a64b-2b25016a1e24)

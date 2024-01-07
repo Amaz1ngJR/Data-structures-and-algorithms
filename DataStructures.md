@@ -920,7 +920,7 @@ public:
 	DSU(vector<int> v) {
 		this->fa = v;
 	}
-	int	Find(int x) {
+	int Find(int x) {
 		//return x == fa[x] ? x : (fa[x] = Find(fa[x]));//压缩路径
 		if (fa[x] == x)
 			return x;

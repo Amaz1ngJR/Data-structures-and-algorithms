@@ -922,7 +922,7 @@ bool equationsPossible(vector<string>& equations) {
 	function<int(int)>find = [&](int x)->int {
 		return x == fa[x] ? x : (fa[x] = find(fa[x]));//压缩路径
 		/*while (fa[x] != x) {
-	            fa[x] = fa[fa[x]];
+	            fa[x] = fa[fa[x]];//一边查询一边修改结点指向是并查集的特色
 	            x = fa[x];
 	        }
 	        return x;*/
@@ -952,7 +952,77 @@ bool equationsPossible(vector<string>& equations) {
 ```
 #### [399. 除法求值](https://leetcode.cn/problems/evaluate-division/)
 ```c++
-
+// 带权并查集 + 路径压缩
+class UnionFind {
+	vector<int> parents;
+	vector<double> widths;//权值是x / parents[x] a = 3c a -> c权值为3
+public:
+	// 构造函数初始化
+	UnionFind(int n) {
+		parents = vector<int>(n);
+		widths = vector<double>(n);
+		for (int i = 0; i < n; ++i) { 
+			parents[i] = i;     
+			widths[i] = 1.0;
+		}
+	}
+	void Union(int x, int y, double value) {//x / y = value  
+		int rootx = Find(x), rooty = Find(y);   // 寻找父节点并路径压缩
+		if (rootx == rooty) return;             // 已经在一个集合，不再合并
+		parents[rootx] = rooty;                 // rootx 合并入 rooty
+		//widths[rootx] = rootx / rooty = (x / widths[x]) / (y / widths[y])
+		widths[rootx] = value * widths[y] / widths[x];// 更新权值
+	}
+	int Find(int i) {
+		if (parents[i] != i) {
+			int oldParent = parents[i];
+			parents[i] = Find(parents[i]);      // 路径压缩
+			// widths[old] = old / root; old_widths[i] = i / old;
+			// new_widths[i] = i / root = old_widths[i] * widths[old]
+			widths[i] *= widths[oldParent];     // 更新权值
+		}
+		return parents[i];
+	}
+	bool isConnected(int x, int y) {
+		return Find(x) == Find(y);
+	}
+	double getWidth(int i) {
+		return widths[i];
+	}
+};
+class Solution {
+public:
+	vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
+		int n = equations.size();
+		UnionFind uf(n * 2);         // 不同字符串数量的最大值
+		unordered_map<string, int> mp(n * 2);   // 将字符串映射为整数，方便hash
+		int id = 0;     // 字符串映射值从 0 开始递增 保证唯一映射
+		for (int i = 0; i < n; ++i) {
+			string str1 = equations[i][0], str2 = equations[i][1];
+			if (!mp.count(str1)) mp[str1] = id++;
+			if (!mp.count(str2)) mp[str2] = id++;
+			uf.Union(mp[str1], mp[str2], values[i]);
+		}
+		int N = queries.size();
+		vector<double> ans(N);
+		for (int i = 0; i < N; ++i) {
+			string str1 = queries[i][0], str2 = queries[i][1];
+			// 查询的字符串在已知条件中没有出现
+			if (!mp.count(str1) || !mp.count(str2)) {
+				ans[i] = -1.0; continue;
+			}
+			int id1 = mp[str1], id2 = mp[str2];
+			// 查询的字符串不在同一个集合
+			if (!uf.isConnected(id1, id2)) {
+				ans[i] = -1.0;
+			}
+			else {
+				ans[i] = uf.getWidth(id1) / uf.getWidth(id2);
+			}
+		}
+		return ans;
+	}
+};
 ```
 ### **字典树/前缀树
 ![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/05b88cea-d07f-46c2-a64b-2b25016a1e24)

@@ -925,7 +925,7 @@ vector<vector<int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k
 		pq.emplace(i, 0);
 	}
 	int n = nums2.size();
-	while (k-- > 0 && !pq.empty()) {
+	while (k--) {
 		int x = pq.top().first, y = pq.top().second;
 		pq.pop();
 		ans.emplace_back(initializer_list<int>{nums1[x], nums2[y]});

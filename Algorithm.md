@@ -722,6 +722,25 @@ int findDuplicate(vector<int>& nums) {
 	return slow;
 }
 ```
+#### [202. 快乐数](https://leetcode.cn/problems/happy-number/)
+```c++
+bool isHappy(int n) {
+	function<int(int)>get = [&](int x)->int {
+		int res = 0;
+		while (x) {
+			res += (x % 10) * (x % 10);
+			x /= 10;
+		}
+		return res;
+	};
+	int slow = get(n), fast = get(get(n));
+	while (fast != 1 && fast != slow) {
+		slow = get(slow);
+		fast = get(get(fast));
+	}
+	return fast == 1;
+}
+```
 ### *前后指针
 
 #### [19. 删除链表的倒数第 N 个结点](https://leetcode.cn/problems/remove-nth-node-from-end-of-list/)

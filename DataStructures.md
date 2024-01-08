@@ -913,6 +913,29 @@ int maximumLength(string s) {
         return ans ? ans : -1;
     }
 ```
+#### [373. 查找和最小的 K 对数字](https://leetcode.cn/problems/find-k-pairs-with-smallest-sums/)
+```c++
+vector<vector<int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k) {
+	auto func = [&](auto& a, auto& b) {
+		return nums1[a.first] + nums2[a.second] > nums1[b.first] + nums2[b.second];
+	};//小根堆
+	priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(func)>pq(func);
+	vector<vector<int>>ans;
+	for (int i = 0; i < min((int)nums1.size(), k); i++) {
+		pq.emplace(i, 0);
+	}
+	int n = nums2.size();
+	while (k-- > 0 && !pq.empty()) {
+		int x = pq.top().first, y = pq.top().second;
+		pq.pop();
+		ans.emplace_back(initializer_list<int>{nums1[x], nums2[y]});
+		if (y + 1 < n) {
+			pq.emplace(x, y + 1);
+		}
+	}
+	return ans;
+}
+```
 ### **并查集
 #### [990. 等式方程的可满足性](https://leetcode.cn/problems/satisfiability-of-equality-equations/)
 ```c++

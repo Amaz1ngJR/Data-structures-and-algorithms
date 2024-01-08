@@ -1162,7 +1162,39 @@ vector<vector<string>> solveNQueens(int n) {
 	return ans;
 }
 ```
-
+### *DFS
+#### [332. 重新安排行程](https://leetcode.cn/problems/reconstruct-itinerary/)
+```c++
+vector<string> findItinerary(vector<vector<string>>& tickets) {
+	int n = tickets.size();
+	sort(tickets.begin(), tickets.end(),
+		[&](const vector<string>& a, const vector<string>& b) {
+			return a[1] < b[1]; });//先将票按字典序排好
+	unordered_map<string, vector<pair<string, bool>>>um;//键表示起点 vector存终点以及该票是否没用过
+	for (int i = 0; i < n; i++) {//init
+		um[tickets[i][0]].emplace_back(tickets[i][1], true);
+	}
+	vector<string>path;
+	function<bool(string)>dfs = [&](string s)->bool {
+		if (path.size() > n) return true;
+		string last = "";//票有重复的 防止重复计算回溯 不超时的关键步骤
+		for (auto& ne : um[s]) {
+			if (ne.second && ne.first != last) {
+				last = ne.first;
+				path.emplace_back(ne.first);
+				ne.second = false;
+				if (dfs(ne.first))return true;
+				path.pop_back();
+				ne.second = true;
+			}
+		}
+		return false;
+	};
+	path.emplace_back("JFK");
+	dfs("JFK");
+	return path;
+}
+```
 ## 动态规划
 
 定义状态 状态转移方程 时间复杂度：状态的个数*计算状态的时间

@@ -1092,6 +1092,41 @@ public:
 	}
 };
 ```
+#### [2707. 字符串中的额外字符](https://leetcode.cn/problems/extra-characters-in-a-string/)
+```c++
+class Node {
+    public:
+        vector<Node*>children;
+        bool isend;
+        Node() :children(26), isend(false) {}
+    };
+    int minExtraChar(string s, vector<string>& dictionary) {
+        Node* root = new Node();
+        for (const string& d : dictionary) {
+            Node* node = root;
+            for (int i = d.size() - 1; i >= 0; i--) {//倒着存单词
+                if (!node->children[d[i] - 'a']) {
+                    node->children[d[i] - 'a'] = new Node();
+                }
+                node = node->children[d[i] - 'a'];
+            }
+            node->isend = true;
+        }
+        int n = s.size(); Node* node;
+        //dp[i]表示s前i个字符的最小额外字符数
+        vector<int>dp(n + 1); dp[0] = 0;
+        for (int i = 1; i <= n; i++) {
+            dp[i] = dp[i - 1] + 1;
+            node = root;
+            for (int j = i - 1; ~j; j--) {
+                node = node->children[s[j] - 'a'];
+                if (!node)break;
+                if (node->isend && dp[j] < dp[i])dp[i] = dp[j];
+            }
+        }
+        return dp[n];
+    }
+```
 #### [2416. 字符串的前缀分数和](https://leetcode.cn/problems/sum-of-prefix-scores-of-strings/)
 ```c++
 ```

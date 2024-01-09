@@ -1,4 +1,4 @@
-# Algorithm
+![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/4663be58-2444-4f5c-9511-112c7c4f3716)# Algorithm
 ![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/3f60b9b4-4d9a-4d77-8bca-82876d343086)
 
 ## 二分/折半查找
@@ -1121,40 +1121,36 @@ vector<vector<int>> permuteUnique(vector<int>& nums) {
 
 ```c++
 vector<vector<string>> solveNQueens(int n) {
-    string temps = "";
-	for (int i = 0; i < n; i++) {
-		temps += ".";
-	}
-	vector<string> temp(n, temps);
+	vector<string> temp(n, string(n, '.'));//初始化棋盘
 	vector<vector<string>>ans;
 	vector<int>col(n);//表示该行在第几列放入
-	vector<int>on_col(n, 0);//表示这列是否放入
-	std::function<bool(int Row, int Col)> isok =
-		[&](int Row, int Col)->bool {
+	vector<bool>on_col(n, false);//表示这列是否放入
+	std::function<bool(int, int)> isok =
+		[&](int x, int y)->bool {//判断对角线
 		//判断左上 行号-列号相同 右上 行号+列号相同
-		for (int r = 0; r < Row; r++) {
+		for (int r = 0; r < x; r++) {
 			int c = col[r];
-			if (Row + Col == r + c || Row - Col == r - c)
+			if (x + y == r + c || x - y == r - c)
 				return false;
 		}
 		return true;
 	};
-	std::function<void(int)> dfs = [&](int i) {
+	std::function<void(int)> dfs = [&](int i) {//递推行
 		if (i == n) {
-			for (int k = 0; k < n; k++) {
+			for (int k = 0; k < n; k++) {//画出该棋盘
 				temp[k][col[k]] = 'Q';
 			}
 			ans.push_back(temp);
-            for (int k = 0; k < n; k++) {
+			for (int k = 0; k < n; k++) {//恢复棋盘
 				temp[k][col[k]] = '.';
 			}
 		}
 		for (int j = 0; j < n; j++) {
-			if (on_col[j] == 0 && isok(i, j)) {
+			if (!on_col[j] && isok(i, j)) {//该列没插入过且对角线满足
 				col[i] = j;
-				on_col[j] = 1;
+				on_col[j] = true;
 				dfs(i + 1);
-				on_col[j] = 0;//恢复现场
+				on_col[j] = false;//恢复现场
 			}
 		}
 	};

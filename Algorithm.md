@@ -1171,10 +1171,10 @@ vector<string> findItinerary(vector<vector<string>>& tickets) {
 		[&](const vector<string>& a, const vector<string>& b) {
 			return a[1] < b[1]; });//先将票按字典序排好
 	unordered_map<string, vector<pair<string, bool>>>um;//键表示起点 vector存终点以及该票是否没用过
-	for (int i = 0; i < n; i++) {//init
-		um[tickets[i][0]].emplace_back(tickets[i][1], true);
+	for (const auto& t : tickets) {
+		um[t[0]].emplace_back(t[1], true);
 	}
-	vector<string>path;
+	vector<string>path; path.emplace_back("JFK");
 	function<bool(string)>dfs = [&](string s)->bool {
 		if (path.size() > n) return true;
 		string last = "";//票有重复的 防止重复计算回溯 不超时的关键步骤
@@ -1190,7 +1190,6 @@ vector<string> findItinerary(vector<vector<string>>& tickets) {
 		}
 		return false;
 	};
-	path.emplace_back("JFK");
 	dfs("JFK");
 	return path;
 }

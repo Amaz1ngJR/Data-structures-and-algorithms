@@ -142,6 +142,55 @@ void solveSudoku(vector<vector<char>>& board) {
 	dfs(cnt);
 }
 ```
+```c++
+void solveSudoku(vector<vector<char>>& board) {
+	vector<bitset<9>>rows(9, bitset<9>(0)), cols(9, bitset<9>(0));
+	vector<vector<bitset<9>>>cells(3, vector<bitset<9>>(3, bitset<9>(0)));
+	function<vector<int>()>next = [&]()->vector<int> {//下一个最少回溯的位置
+		vector<int>ret(2); int min_ = 10, cunt;
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 9; j++) {
+				if (board[i][j] == '.') {
+					cunt = (~(rows[i] | cols[j] | cells[i / 3][j / 3])).count();
+					if (cunt < min_) {
+						ret = { i,j };
+						min_ = cunt;
+					}
+				}
+			}
+		}
+		return ret;
+	};
+	function<bool(int)>dfs = [&](int cnt)->bool {
+		if (!cnt)return true;
+		auto it = next();
+		auto status = ~(rows[it[0]] | cols[it[1]] | cells[it[0] / 3][it[1] / 3]);
+		for (int i = 0; i < 9; i++) {
+			if (status.test(i)) {
+				rows[it[0]][i] = cols[it[1]][i] = cells[it[0] / 3][it[1] / 3][i] = true;
+				board[it[0]][it[1]] = i + '1';
+				if (dfs(cnt - 1))return true;
+				board[it[0]][it[1]] = '.';
+				rows[it[0]][i] = cols[it[1]][i] = cells[it[0] / 3][it[1] / 3][i] = false;
+			}
+		}
+		return false;
+	};
+	int cnt = 0, n;
+	for (int i = 0; i < 9; i++) {//init
+		for (int j = 0; j < 9; j++) {
+			cnt += (board[i][j] == '.');
+			if (board[i][j] != '.') {
+				n = board[i][j] - '1';
+				rows[i] |= (1 << n);
+				cols[j] |= (1 << n);
+				cells[i / 3][j / 3] |= (1 << n);
+			}
+		}
+	}
+	dfs(cnt);
+}
+```
 # 重叠区间
 [452. 用最少数量的箭引爆气球](https://leetcode.cn/problems/minimum-number-of-arrows-to-burst-balloons/)
 ```c++

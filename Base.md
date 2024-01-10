@@ -76,8 +76,8 @@ void demo() {
 	//成员函数
 	int size = myBits.size();//获取 bitset 的大小（位数
 	bool isSet = myBits.test(3);//检查第 3 位是否被设置为1
-	myBits.set(2);    // 将第 2 位设置为 1
-	myBits.reset(4);  // 将第 4 位重置为 0
+	myBits.set(2);    // 将第 2 位设置为 1 myBits |= (1 << 2);
+	myBits.reset(4);  // 将第 4 位重置为 0 myBits &= ~(1 << 4);
 	myBits.flip(1);  // 将第 1 位的值取反
 	std::string bitString = myBits.to_string();  // 将 bitset 转换为二进制字符串
 	int num = myBits.to_ulong();//将 bitset 二进制转成十进制

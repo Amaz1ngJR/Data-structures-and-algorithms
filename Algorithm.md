@@ -1,4 +1,4 @@
-![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/4663be58-2444-4f5c-9511-112c7c4f3716)# Algorithm
+# Algorithm
 ![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/3f60b9b4-4d9a-4d77-8bca-82876d343086)
 
 ## 二分/折半查找
@@ -1188,6 +1188,56 @@ vector<string> findItinerary(vector<vector<string>>& tickets) {
 	};
 	dfs("JFK");
 	return path;
+}
+```
+#### [37. 解数独](https://leetcode.cn/problems/sudoku-solver/)
+```c++
+void solveSudoku(vector<vector<char>>& board) {
+	vector<bitset<9>>rows(9, bitset<9>(0)), cols(9, bitset<9>(0));
+	vector<vector<bitset<9>>>cells(3, vector<bitset<9>>(3, bitset<9>(0)));
+	function<vector<int>()>next = [&]()->vector<int> {//下一个最少回溯的位置
+		vector<int>ret(2); int min_ = 10, cunt;
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 9; j++) {
+				if (board[i][j] == '.') {
+					cunt = (~(rows[i] | cols[j] | cells[i / 3][j / 3])).count();
+					if (cunt < min_) {
+						ret = { i,j };
+						min_ = cunt;
+					}
+				}
+			}
+		}
+		return ret;
+	};
+	function<bool(int)>dfs = [&](int cnt)->bool {
+		if (!cnt)return true;
+		auto it = next();
+		auto status = ~(rows[it[0]] | cols[it[1]] | cells[it[0] / 3][it[1] / 3]);
+		for (int i = 0; i < 9; i++) {//(it[0],it[1])的位置
+			if (status.test(i)) {//当前位置的值为i + '1'
+				rows[it[0]][i] = cols[it[1]][i] = cells[it[0] / 3][it[1] / 3][i] = true;
+				board[it[0]][it[1]] = i + '1';
+				if (dfs(cnt - 1))return true;//剪枝
+				board[it[0]][it[1]] = '.';
+				rows[it[0]][i] = cols[it[1]][i] = cells[it[0] / 3][it[1] / 3][i] = false;
+			}
+		}
+		return false;
+	};
+	int cnt = 0, n;
+	for (int i = 0; i < 9; i++) {//init
+		for (int j = 0; j < 9; j++) {
+			cnt += (board[i][j] == '.');
+			if (board[i][j] != '.') {
+				n = board[i][j] - '1';
+				rows[i] |= (1 << n);
+				cols[j] |= (1 << n);
+				cells[i / 3][j / 3] |= (1 << n);
+			}
+		}
+	}
+	dfs(cnt);
 }
 ```
 ## 动态规划

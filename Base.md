@@ -80,6 +80,7 @@ void demo() {
 	myBits.reset(4);  // 将第 4 位重置为 0
 	myBits.flip(1);  // 将第 1 位的值取反
 	std::string bitString = myBits.to_string();  // 将 bitset 转换为二进制字符串
+	int num = myBits.to_ulong();//将 bitset 二进制转成十进制
 }
 ```
 # 重叠区间

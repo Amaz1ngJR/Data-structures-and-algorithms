@@ -116,11 +116,11 @@ void solveSudoku(vector<vector<char>>& board) {
 		if (!cnt)return true;
 		auto it = next();
 		auto stat = status(it[0], it[1]);
-		for (int i = 0; i < 9; i++) {
-			if (stat.test(i)) {
+		for (int i = 0; i < 9; i++) {//(it[0],it[1])的位置
+			if (stat.test(i)) {//当前位置的值为i + '1'
 				fill(it[0], it[1], i, true);
 				board[it[0]][it[1]] = i + '1';
-				if (dfs(cnt - 1))return true;
+				if (dfs(cnt - 1))return true;//剪枝
 				board[it[0]][it[1]] = '.';
 				fill(it[0], it[1], i, false);
 			}
@@ -165,11 +165,11 @@ void solveSudoku(vector<vector<char>>& board) {
 		if (!cnt)return true;
 		auto it = next();
 		auto status = ~(rows[it[0]] | cols[it[1]] | cells[it[0] / 3][it[1] / 3]);
-		for (int i = 0; i < 9; i++) {
-			if (status.test(i)) {
+		for (int i = 0; i < 9; i++) {//(it[0],it[1])的位置
+			if (status.test(i)) {//当前位置的值为i + '1'
 				rows[it[0]][i] = cols[it[1]][i] = cells[it[0] / 3][it[1] / 3][i] = true;
 				board[it[0]][it[1]] = i + '1';
-				if (dfs(cnt - 1))return true;
+				if (dfs(cnt - 1))return true;//剪枝
 				board[it[0]][it[1]] = '.';
 				rows[it[0]][i] = cols[it[1]][i] = cells[it[0] / 3][it[1] / 3][i] = false;
 			}

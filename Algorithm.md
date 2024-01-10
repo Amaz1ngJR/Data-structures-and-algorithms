@@ -2047,6 +2047,20 @@ int twoCitySchedCost(vector<vector<int>>& costs) {
 	return ans;
 }
 ```
+### [134. 加油站](https://leetcode.cn/problems/gas-station/)
+```c++
+int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+	int max_ = INT_MIN, max_i; long sum = 0;
+	for (int i = gas.size() - 1; ~i; i--) {
+		sum += gas[i] - cost[i];//每个位置的后缀和 最终也是总汽油与总花费的差
+		if (sum > max_) {
+			max_ = sum;
+			max_i = i;//记录从哪个位置出发向后能够获得最多的汽油
+		}
+	}
+	return sum >= 0 ? max_i : -1;//如果总花费大于总汽油 肯定没法跑一圈
+}
+```
 ### [122. 买卖股票的最佳时机 II](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/)
 
 ```c++

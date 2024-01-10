@@ -61,6 +61,27 @@ if(n % 2 == 1) => if(n & 1)
 ```c++
 if((a ^ b) < 0)
 ```
+判断i--是否小于0了
+```c++
+for(int i = n;i >= 0; i--) => for(int i = n; ~i; i--) //~(-1) == 0
+```
+## bitset < bitset >
+```c++
+void demo() {
+	//初始化
+	std::bitset<8> a(42);//使用整数值 42 初始化一个包含 8 位的 bitset
+	std::bitset<4> myBits("1010");  // 使用二进制字符串 "1010" 初始化一个包含 4 位的 bitset
+	bool bitValue = myBits[2];  // 获取第 2 位的值
+	myBits <<= 2;  // 将所有位左移两位
+	//成员函数
+	int size = myBits.size();//获取 bitset 的大小（位数
+	bool isSet = myBits.test(3);//检查第 3 位是否被设置为1
+	myBits.set(2);    // 将第 2 位设置为 1
+	myBits.reset(4);  // 将第 4 位重置为 0
+	myBits.flip(1);  // 将第 1 位的值取反
+	std::string bitString = myBits.to_string();  // 将 bitset 转换为二进制字符串
+}
+```
 # 重叠区间
 [452. 用最少数量的箭引爆气球](https://leetcode.cn/problems/minimum-number-of-arrows-to-burst-balloons/)
 ```c++

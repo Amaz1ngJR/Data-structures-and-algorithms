@@ -320,3 +320,26 @@ function<int(int, int)>gcd3 = [&](int x, int y)->int {
 	return y ? gcd3(y, x % y) : x;
 };
 ```
+## 不等式
+均值(算术-几何平均值)不等式
+```
+(x1 + x2 + ... + xn) / n >= (x1*x2*...xn)^(1 / n) 当且仅当x1 = x2 = ... xn取等
+=> S >= n * (x1*x2*...xn)^(1 / n)
+```
+柯西不等式
+```
+(a1^2 + a2^2 + ... + an^2) * (b1^2 + b2^2 + ... + bn^2) >= (a1*b1 + a2*b2 + ... + an*bn)
+当且仅当 a1/b1 = a2/b2 = ... = an/bn 或 b1 = b2 = ... = bn = 0取等
+```
+阿姆斯特朗不等式
+```
+a^2 + b^2 + c^2 >= a*b +b*c +c*a   当且仅当a = b = c 取等
+```
+雅可比不等式
+```
+(a + b + c)^2 >= 3(a*b + b*c + c*a) 当且仅当a = b = c 取等
+```
+[343. 整数拆分](https://leetcode.cn/problems/integer-break/)
+```c++
+
+```

@@ -341,5 +341,20 @@ a^2 + b^2 + c^2 >= a*b +b*c +c*a   当且仅当a = b = c 取等
 ```
 [343. 整数拆分](https://leetcode.cn/problems/integer-break/)
 ```c++
-
+int integerBreak(int n) {
+	int ans = 0;
+	function<int(int, int)>func = [&](int num, int k)->int {
+		int res = 1;
+		while (k > 0) {//将num"平均"分成了k个数 并相乘
+			res *= (num / k);
+			num -= num / k;
+			k--;
+		}
+		return res;
+	};
+	for (int k = 2; k <= n; k++) {
+		ans = max(ans, func(n, k));
+	}
+	return ans;
+}
 ```

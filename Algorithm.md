@@ -1740,10 +1740,7 @@ int countSubstrings(string s) {
 	return ans;
 }
 ```
-#### [5. 最长回文子串](https://leetcode.cn/problems/longest-palindromic-substring/)
-```c++
-
-```
+类似题目[5. 最长回文子串](https://leetcode.cn/problems/longest-palindromic-substring/)
 
 ### *状态机DP
 #### [122. 买卖股票的最佳时机 II](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/) (不限交易次数)

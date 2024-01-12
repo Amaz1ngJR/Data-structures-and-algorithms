@@ -1726,7 +1726,17 @@ int maxProduct(vector<int>& nums) {
 ```
 #### [647. 回文子串](https://leetcode.cn/problems/palindromic-substrings/)
 ```c++
-
+int n = s.size(), ans = 0;
+	vector<vector<bool>>dp(n, vector<bool>(n, false));
+	for (int i = n - 1; ~i; i--) {//从dp[i + 1][j - 1]->dp[i][j] i从最大处n - 1开始
+		for (int j = i; j < n; j++) {//dp[i][j]表示从下标i到下标j的子串
+			if (s[i] == s[j]&&(j - i <= 1 || dp[i + 1][j - 1])) {
+				ans++;
+				dp[i][j] = true;	
+			}
+		}
+	}
+	return ans;
 ```
 #### [5. 最长回文子串](https://leetcode.cn/problems/longest-palindromic-substring/)
 ```c++

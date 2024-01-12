@@ -143,24 +143,47 @@ ListNode* rotateRight(ListNode* head, int k) {
 	return new_head;
 }
 ```
-归并两个有序链表
-
+[86. 分隔链表](https://leetcode.cn/problems/partition-list/)
 ```c++
-//二路归并两个链表
-ListNode* MergeTwoLists(ListNode* a, ListNode* b) {
-    if ((!a) || (!b)) return a ? a : b; //a和b中有一个为空，返回另一个
-    ListNode head, * tail = &head, * aPtr = a, * bPtr = b;
-    while (aPtr && bPtr) {//a,b都不空
-        if (aPtr->val < bPtr->val) {
-            tail->next = aPtr; aPtr = aPtr->next;
-        }
-        else {
-            tail->next = bPtr; bPtr = bPtr->next;
-        }
-        tail = tail->next;
-    }
-    tail->next = (aPtr ? aPtr : bPtr);
-    return head.next;
+ListNode* partition(ListNode* head, int x) {
+	ListNode* pre = new ListNode(), * suf = new ListNode(),
+		* plast = pre, * slast = suf, * p = head;
+	while (p) {
+		if (p->val < x) {
+			plast->next = p;
+			plast = plast->next;
+		}
+		else {
+			slast->next = p;
+			slast = slast->next;
+		}
+		p = p->next;
+	}
+	plast->next = nullptr;
+	slast->next = nullptr;
+	if (pre->next) {
+		plast->next = suf->next;
+		return pre->next;
+	}
+	return suf->next;
+}
+```
+[21. 合并两个有序链表](https://leetcode.cn/problems/merge-two-sorted-lists/)
+```c++
+ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+	if ((!list1) || (!list2)) return list1 ? list1 : list2; //有一个为空 返回另一个
+	ListNode head, * tail = &head, * aPtr = list1, * bPtr = list2;
+	while (aPtr && bPtr) {//都不空
+		if (aPtr->val < bPtr->val) {
+			tail->next = aPtr; aPtr = aPtr->next;
+		}
+		else {
+			tail->next = bPtr; bPtr = bPtr->next;
+		}
+		tail = tail->next;
+	}
+	tail->next = (aPtr ? aPtr : bPtr);
+	return head.next;
 }
 ```
 

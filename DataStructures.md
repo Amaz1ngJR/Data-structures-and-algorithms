@@ -69,7 +69,7 @@ bool List::ListInsert(ListNode*& L, int i, int val) {
 }
 ```
 删除链表见算法前后指针
-### 反转链表
+### 链表操作
 [206. 反转链表](https://leetcode.cn/problems/reverse-linked-list/)
 ```c++
 ListNode* List::reverseList(ListNode* head) {
@@ -120,7 +120,29 @@ ListNode* List::reverseBetween(ListNode* head, int left, int right) {
 	return head;
 }
 ```
-
+[61. 旋转链表](https://leetcode.cn/problems/rotate-list/)
+```c++
+ListNode* rotateRight(ListNode* head, int k) {
+	if (!head || !head->next)return head;//链表为空或长为1直接返回原链表
+	ListNode* old_tail, * fast = head;
+	int len = 1;
+	while (fast->next) {//计算链表长度的同时 找到原链表的尾节点
+		len++;
+		fast = fast->next;
+	}
+	old_tail = fast;
+	k %= len; if (!k)return head;//如果循环次数是链表长的整数倍直接返回原链表
+	int cnt = len - k;//循环k次后 倒数第k个节点也就是第len-k个节点作为新的尾节点
+	ListNode* new_tail = head;//初始化为head第一个节点所以while先--
+	while (--cnt) {//这里是找到倒数第k个节点
+		new_tail = new_tail->next;
+	}
+	ListNode* new_head = new_tail->next;//新的头节点就是新的尾节点的下一个节点(k为0特判故这里比不为空)
+	new_tail->next = nullptr;
+	old_tail->next = head;
+	return new_head;
+}
+```
 归并两个有序链表
 
 ```c++

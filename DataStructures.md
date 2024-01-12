@@ -137,7 +137,7 @@ ListNode* rotateRight(ListNode* head, int k) {
 	while (--cnt) {//这里是找到倒数第k个节点
 		new_tail = new_tail->next;
 	}
-	ListNode* new_head = new_tail->next;//新的头节点就是新的尾节点的下一个节点(k为0特判故这里比不为空)
+	ListNode* new_head = new_tail->next;//新的头节点就是新的尾节点的下一个节点(k为0特判故这里必不为空)
 	new_tail->next = nullptr;
 	old_tail->next = head;
 	return new_head;

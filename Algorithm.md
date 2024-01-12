@@ -1710,8 +1710,8 @@ pre简单题[53. 最大子数组和](https://leetcode.cn/problems/maximum-subarr
 #### [152. 乘积最大子数组](https://leetcode.cn/problems/maximum-product-subarray/)
 ```c++
 int maxProduct(vector<int>& nums) {
-	//dpmax[i]为下标i结尾的乘积最大子数组 优化空间为dpmax
-	//dpmin[i]为下标i结尾的乘积最小子数组 优化空间为dpmin
+	//dpmax[i]为下标i结尾的乘积最大子数组 优化空间为dpmax(以下标i-1为结尾的最大子数组)
+	//dpmin[i]为下标i结尾的乘积最小子数组 优化空间为dpmin(以下标i-1为结尾的最小子数组)
 	int n = nums.size();
 	int dpmax, dpmin, ans;
 	dpmax = dpmin = ans = nums[0];

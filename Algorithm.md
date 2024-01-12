@@ -1705,6 +1705,8 @@ int minDistance(string word1, string word2) {
 考虑两组相邻的子串：以 s[ i−1 ] 结尾的子串、以 s[ i ] 结尾的子串
 
 以 s[ i ] 结尾的子串，可以看成是以 s[ i−1 ] 结尾的子串，在末尾添加上 s[ i ] 组成
+
+pre简单题[53. 最大子数组和](https://leetcode.cn/problems/maximum-subarray/)
 #### [152. 乘积最大子数组](https://leetcode.cn/problems/maximum-product-subarray/)
 ```c++
 int maxProduct(vector<int>& nums) {

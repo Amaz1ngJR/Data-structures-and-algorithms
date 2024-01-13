@@ -53,6 +53,23 @@ void test() {
 	cout<<bita<<endl;
 }
 ```
+[201. 数字范围按位与](https://leetcode.cn/problems/bitwise-and-of-numbers-range/)
+```c++
+int rangeBitwiseAnd(int left, int right) {
+	/*bitset<32>num(left), mask(0);
+	while (num != mask && left < right) {
+		num &= bitset<32>(++left);
+	}
+	return num == mask ? 0 : num.to_ulong();*/ //超时代码
+	int shift = 0;
+	while (left < right) {
+		left >>= 1;
+		right >>= 1;
+		shift++;
+	}
+	return left << shift;
+}
+```
 判断一个数是否是奇数
 ```c++
 if(n % 2 == 1) => if(n & 1)

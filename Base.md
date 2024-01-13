@@ -53,6 +53,17 @@ void test() {
 	cout<<bita<<endl;
 }
 ```
+[190. 颠倒二进制位](https://leetcode.cn/problems/reverse-bits/)
+```c++
+uint32_t reverseBits(uint32_t n) {
+	uint32_t ans = 0;
+	for (int i = 0; i < 32 && n; i++) {
+		ans |= (n & 1) << (31 - i);
+		n >>= 1;
+	}
+	return ans;
+}
+```
 [201. 数字范围按位与](https://leetcode.cn/problems/bitwise-and-of-numbers-range/)
 ```c++
 int rangeBitwiseAnd(int left, int right) {

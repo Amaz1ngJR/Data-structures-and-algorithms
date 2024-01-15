@@ -103,6 +103,7 @@ void demo() {
 	myBits <<= 2;  // 将所有位左移两位
 	//成员函数
 	int size = myBits.size();//获取 bitset 的大小（位数
+	int n = myBits.count();//获取二进制中1的个数
 	bool isSet = myBits.test(3);//检查第 3 位是否被设置为1
 	myBits.set(2);    // 将第 2 位设置为 1 myBits |= (1 << 2);
 	myBits.reset(4);  // 将第 4 位重置为 0 myBits &= ~(1 << 4);

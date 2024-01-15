@@ -788,29 +788,25 @@ ListNode* deleteDuplicates(ListNode* head) {
 
 ```c++
 ListNode* deleteDuplicates(ListNode* head) {
-    if (head == nullptr)return head;
-        ListNode * pre, * front, * back;
-        ListNode* dummy=new ListNode(0,head);
-        pre = dummy;
-        back = dummy->next;
-        front = back->next;
-        while (front != nullptr) {
-            if (front->val != back->val) {
-                if (back->next->val != back->val) {
-                    pre->next = back;
-                    pre = back;
-                }
-                back = front;
-            }
-            front = front->next;
-        }
-        if (back->next == nullptr) {
-            pre->next = back;
-        }
-        else {
-            pre->next = nullptr;
-        }
-        return dummy->next;
+	if (!head)return head;
+	ListNode* dummy = new ListNode(0, head), * pre = dummy, * back, * front;
+	back = dummy->next, front = dummy->next->next;
+	while (back && front) {
+		int val = back->val;
+		if (front->val == val) {
+			while (back && back->val == val) 
+				back = back->next;
+			pre->next = back;
+			if (back)front = back->next;
+		}
+		else {
+			pre->next = back;
+			pre = back;
+			back = front;
+			front = front->next;
+		}
+	}
+	return dummy->next;
 }
 ```
 

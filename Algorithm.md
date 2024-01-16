@@ -2110,6 +2110,31 @@ long long numberOfPowerfulInt(long long start, long long finish, int limit, stri
 	return dfs(0, true, true, false);
 }
 ```
+#### [2719. 统计整数数目](https://leetcode.cn/problems/count-of-integers/)
+```c++
+int count(string num1, string num2, int min_sum, int max_sum) {
+	long mod = 1e9 + 7; int n = num2.size();
+	num1 = string(n - num1.size(), '0') + num1;
+	vector<vector<int>>memo(n, vector<int>(min(9 * n, max_sum) + 1, -1));
+	//截至到第i位 位和为sum 
+	function<int(int, int, bool, bool)>dfs =
+		[&](int i, int sum, bool limit_low, bool limit_high)->int {
+		if (sum > max_sum)return 0;
+		if (i == n)return (sum >= min_sum);
+		if (!limit_low && !limit_high && memo[i][sum] != -1) return memo[i][sum];
+		int res = 0;
+
+		int low_ = limit_low ? (int)(num1[i] - '0') : 0;
+		int high_ = limit_high ? (int)(num2[i] - '0') : 9;
+
+		for (int d = low_; d <= high_; d++)
+			res = (long long)(res + dfs(i + 1, sum + d, limit_low && d == low_, limit_high && d == high_)) % mod;
+		if (!limit_low && !limit_high)memo[i][sum] = res;
+		return res;
+	};
+	return dfs(0, 0, true, true);
+}
+```
 ## 贪心
 ### [1029. 两地调度](https://leetcode.cn/problems/two-city-scheduling/)
 ```c++

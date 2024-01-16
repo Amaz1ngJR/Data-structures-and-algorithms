@@ -2029,6 +2029,87 @@ int rob(TreeNode* root) {
 //C = min(leftA+rightC,leftC+rightA,leftA+rightA) (根据C的定义 左右孩子至少一个为A 且不能为B)
 //ans =min(rootA,rootC)      nuullptrA(∞)nullptrB=nullptrC=0
 ```
+
+### *数位DP
+基础模板 不考虑前导0
+```c++
+string high = to_string(finish), low = to_string(start);//将数字转换成字符串表示
+int n = high.size();//获得最大的位数
+low = string(n - low.size(), '0') + low;//下界补上前导0 与high对齐
+vector<int> memo(n, -1);//记忆化搜索
+//dfs(i, limit_low, limit_high) i表示当前位 limit_为真表示前i-1位和最大/小数前缀相同
+function<int(int, bool, bool)>dfs = [&](int i, bool limit_low, bool limit_high)->int {//第i个位可以枚举的范围 [low_, high_]
+	if (i == n)return 1;
+	if (!limit_low && !limit_high && memo[i] != -1) return memo[i];
+	int res = 0;
+	int low_ = limit_low ? (int)(low[i] - '0') : 0;
+	int high_ = limit_high ? (int)(high[i] - '0') : 9;
+	for (int d = low_; d <= high_; d++)
+		res += dfs(i + 1, limit_low && d == low_, limit_high && d == high_);
+	if (!limit_low && !limit_high)memo[i] = res;
+	return res;
+};
+dfs(0, true, true);
+```
+#### [2999. 统计强大整数的数目](https://leetcode.cn/problems/count-the-number-of-powerful-integers/)
+```c++
+long long numberOfPowerfulInt(long long start, long long finish, int limit, string s) {
+	string high = to_string(finish), low = to_string(start);//将数字转换成字符串表示
+	int n = high.size(), dif = n - s.size();
+	low = string(n - low.size(), '0') + low;//下界补上前导0 与high对齐
+	vector<long long> memo(n, -1);
+	function<long long(int, bool, bool)>dfs = [&](int i, bool limit_low, bool limit_high)->long long {
+		if (i == n)return 1;
+		if (!limit_low && !limit_high && memo[i] != -1) return memo[i];
+		long long res = 0;
+		int	low_ = limit_low ? (int)(low[i] - '0') : 0;
+		int	high_ = limit_high ? (int)(high[i] - '0') : 9;
+		if (i < dif) {//正常模板 约束加在for循环中
+			for (int d = low_; d <= min(limit, high_); d++)
+				res += dfs(i + 1, limit_low && d == low_, limit_high && d == high_);
+		}
+		else {//只能填s[i-dif]
+			int x = s[i - dif] - '0';
+			if (low_ <= x && x <= min(high_, limit))
+				res += dfs(i + 1, limit_low && x == low_, limit_high && x == high_);
+		}
+		if (!limit_low && !limit_high)memo[i] = res;
+		return res;
+	};
+	return dfs(0, true, true);
+}
+//扩展模板 考虑前导0
+long long numberOfPowerfulInt(long long start, long long finish, int limit, string s) {
+	string high = to_string(finish), low = to_string(start);//将数字转换成字符串表示
+	int n = high.size(), dif = n - s.size();
+	low = string(n - low.size(), '0') + low;//下界补上前导0 与high对齐
+	vector<long long> memo(n, -1);
+	function<long long(int, bool, bool, bool)>dfs = [&](int i, bool limit_low, bool limit_high, bool is_num)->long long {
+		if (i == n)return 1;
+		if (!limit_low && !limit_high && memo[i] != -1) return memo[i];
+		long long res = 0;
+		if (!is_num && low[i] == '0') {//is_num 表示前面是否填了非零数 前面都是0 limit_low一定为true
+			if (i < dif)
+				res = dfs(i + 1, true, false, false);//这一位也可以填0
+		}
+		int	low_ = limit_low ? (int)(low[i] - '0') : 0;
+		int	high_ = limit_high ? (int)(high[i] - '0') : 9;
+		int d0 = is_num ? 0 : 1;
+		if (i < dif) {//正常模板 约束加在for循环中
+			for (int d = max(d0, low_); d <= min(limit, high_); d++)
+				res += dfs(i + 1, limit_low && d == low_, limit_high && d == high_, true);
+		}
+		else {//只能填s[i-dif]
+			int x = s[i - dif] - '0';
+			if (max(d0, low_) <= x && x <= min(high_, limit))
+				res += dfs(i + 1, limit_low && x == low_, limit_high && x == high_, true);
+		}
+		if (!limit_low && !limit_high)memo[i] = res;
+		return res;
+	};
+	return dfs(0, true, true, false);
+}
+```
 ## 贪心
 ### [1029. 两地调度](https://leetcode.cn/problems/two-city-scheduling/)
 ```c++

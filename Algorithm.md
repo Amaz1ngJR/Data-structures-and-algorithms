@@ -2062,8 +2062,8 @@ long long numberOfPowerfulInt(long long start, long long finish, int limit, stri
 		if (i == n)return 1;
 		if (!limit_low && !limit_high && memo[i] != -1) return memo[i];
 		long long res = 0;
-		int	low_ = limit_low ? (int)(low[i] - '0') : 0;
-		int	high_ = limit_high ? (int)(high[i] - '0') : 9;
+		int low_ = limit_low ? (int)(low[i] - '0') : 0;
+		int high_ = limit_high ? (int)(high[i] - '0') : 9;
 		if (i < dif) {//正常模板 约束加在for循环中
 			for (int d = low_; d <= min(limit, high_); d++)
 				res += dfs(i + 1, limit_low && d == low_, limit_high && d == high_);
@@ -2092,8 +2092,8 @@ long long numberOfPowerfulInt(long long start, long long finish, int limit, stri
 			if (i < dif)
 				res = dfs(i + 1, true, false, false);//这一位也可以填0
 		}
-		int	low_ = limit_low ? (int)(low[i] - '0') : 0;
-		int	high_ = limit_high ? (int)(high[i] - '0') : 9;
+		int low_ = limit_low ? (int)(low[i] - '0') : 0;
+		int high_ = limit_high ? (int)(high[i] - '0') : 9;
 		int d0 = is_num ? 0 : 1;
 		if (i < dif) {//正常模板 约束加在for循环中
 			for (int d = max(d0, low_); d <= min(limit, high_); d++)

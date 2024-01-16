@@ -2144,6 +2144,30 @@ int count(string num1, string num2, int min_sum, int max_sum) {
 	return dfs(0, 0, true, true);
 }
 ```
+#### [902. 最大为 N 的数字组合](https://leetcode.cn/problems/numbers-at-most-n-given-digit-set/)
+```c++
+int atMostNGivenDigitSet(vector<string>& digits, int n) {
+	string high = to_string(n);
+	int len = high.size();
+	string low = string(len - 1, '0') + digits[0];
+	vector<int> memo(len, -1);//记忆化搜索
+	function<int(int, bool, bool)>dfs = [&](int i, bool limit_high, bool is_num)->int {
+		if (i == len)return is_num;
+		if (!limit_high && is_num && ~memo[i]) return memo[i];
+		int res = 0;
+		if (!is_num)
+			res = dfs(i + 1, false, false);
+		char high_ = limit_high ? high[i] : digits[digits.size() - 1][0];
+		for (const auto& d : digits) {// 枚举要填入的数字 d
+			if (d[0] > high_) break;// d 超过上限
+			res += dfs(i + 1, limit_high && d[0] == high_, true);
+		}
+		if (is_num && !limit_high)memo[i] = res;
+		return res;
+	};
+	return dfs(0, true, false);
+}
+```
 ## 贪心
 ### [1029. 两地调度](https://leetcode.cn/problems/two-city-scheduling/)
 ```c++

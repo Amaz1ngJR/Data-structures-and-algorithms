@@ -2021,13 +2021,22 @@ int rob(TreeNode* root) {
 树上最小支配集
 #### [968. 监控二叉树](https://leetcode.cn/problems/binary-tree-cameras/)
 ```c++
-//A:选 ：在该节点安装摄像头
-//B:不选 ：在该节点的父节点安装摄像头  
-//C:不选 ：在该节点的左/右孩子安装摄像头  
-//A = min(leftA,leftB,leftC) + min(rightA,rightB,rightC) + 1 (1表示当前节点安装摄像头)
-//B = min(leftA,rightC) + min(rightA,rightC)  (根据B的定义 左右孩子不能为B)
-//C = min(leftA+rightC,leftC+rightA,leftA+rightA) (根据C的定义 左右孩子至少一个为A 且不能为B)
-//ans =min(rootA,rootC)      nuullptrA(∞)nullptrB=nullptrC=0
+int minCameraCover(TreeNode* root) {
+	//A:选 ：在该节点安装摄像头 俩孩子都可以是A、B、C
+	//B:不选 ：在该节点的父节点安装摄像头  俩孩子不能是B
+	//C:不选 ：在该节点的左/右孩子安装摄像头  俩孩子不能是B 孩子至少一个A
+	function<vector<int>(TreeNode*)>dfs = [&](TreeNode* root)->vector<int> {
+		if (!root)return { INT_MAX / 2,0,0 };//空结点不能安装摄像头A为无穷大 空结点不需要监控BC返回0
+		vector<int>left = dfs(root->left);
+		vector<int>right = dfs(root->right);
+		int A = min(left[0], min(left[1], left[2])) + min(right[0], min(right[1], right[2])) + 1;
+		int B = min(left[0], left[2]) + min(right[0], right[2]);
+		int C = min(left[0] + right[0], min(left[0] + right[2], left[2] + right[0]));
+		return { A,B,C };
+	};
+	vector<int>ans = dfs(root);
+	return min(ans[0], ans[2]);//根结点没有父节点
+}
 ```
 
 ### *数位DP

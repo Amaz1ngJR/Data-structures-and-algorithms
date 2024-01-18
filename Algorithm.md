@@ -1726,16 +1726,14 @@ int maxProduct(vector<int>& nums) {
 //如果所求子数组在数组中间那么就是maxS
 //如果子数组是由数组两端组成则为S-minS(S!=minS和最小的子数组不能是该数组本身)
 int maxSubarraySumCircular(vector<int>& nums) {
-	int n = nums.size();
-	vector<long long>dp_max(n), dp_min(n);
-	dp_max[0] = dp_min[0] = nums[0];
-	long long sum = nums[0], max_s = nums[0], min_s = nums[0];
-	for (int i = 1; i < n; i++) {
-		sum += nums[i];
-		dp_max[i] = max(dp_max[i - 1] + nums[i], (long long)nums[i]);
-		max_s = max(max_s, dp_max[i]);
-		dp_min[i] = min(dp_min[i - 1] + nums[i], (long long)nums[i]);
-		min_s = min(min_s, dp_min[i]);
+	long long dp_max = 0, dp_min = 0;
+	long long sum = 0, max_s = INT_MIN, min_s = 0;//最大子数组和max_s初始化 不能为空 min_s可以初始化为0
+	for (const int& num : nums) {
+		sum += num;
+		dp_max = max(dp_max, (long long)0) + num;
+		max_s = max(max_s, dp_max);
+		dp_min = min(dp_min, (long long)0) + num;
+		min_s = min(min_s, dp_min);
 	}
 	return (sum == min_s) ? max_s : max(max_s, sum - min_s);
 }

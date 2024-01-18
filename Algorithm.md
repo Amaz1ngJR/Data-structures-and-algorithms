@@ -1720,6 +1720,26 @@ int maxProduct(vector<int>& nums) {
 	return ans;
 }
 ```
+#### [918. 环形子数组的最大和](https://leetcode.cn/problems/maximum-sum-circular-subarray/)
+```c++
+//求出最大子数组和maxS以及最小子数组和minS还有数组和S
+//如果所求子数组在数组中间那么就是maxS
+//如果子数组是由数组两端组成则为S-minS(S!=minS和最小的子数组不能是该数组本身)
+int maxSubarraySumCircular(vector<int>& nums) {
+	int n = nums.size();
+	vector<long long>dp_max(n), dp_min(n);
+	dp_max[0] = dp_min[0] = nums[0];
+	long long sum = nums[0], max_s = nums[0], min_s = nums[0];
+	for (int i = 1; i < n; i++) {
+		sum += nums[i];
+		dp_max[i] = max(dp_max[i - 1] + nums[i], (long long)nums[i]);
+		max_s = max(max_s, dp_max[i]);
+		dp_min[i] = min(dp_min[i - 1] + nums[i], (long long)nums[i]);
+		min_s = min(min_s, dp_min[i]);
+	}
+	return (sum == min_s) ? max_s : max(max_s, sum - min_s);
+}
+```
 #### [647. 回文子串](https://leetcode.cn/problems/palindromic-substrings/)
 ```c++
 int countSubstrings(string s) {

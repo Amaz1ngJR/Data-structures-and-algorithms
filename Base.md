@@ -355,19 +355,6 @@ function<int(int, int)>gcd3 = [&](int x, int y)->int {
 (x1 + x2 + ... + xn) / n >= (x1*x2*...xn)^(1 / n) 当且仅当x1 = x2 = ... xn取等
 => S >= n * (x1*x2*...xn)^(1 / n)
 ```
-柯西不等式
-```
-(a1^2 + a2^2 + ... + an^2) * (b1^2 + b2^2 + ... + bn^2) >= (a1*b1 + a2*b2 + ... + an*bn)
-当且仅当 a1/b1 = a2/b2 = ... = an/bn 或 b1 = b2 = ... = bn = 0取等
-```
-阿姆斯特朗不等式
-```
-a^2 + b^2 + c^2 >= a*b +b*c +c*a   当且仅当a = b = c 取等
-```
-雅可比不等式
-```
-(a + b + c)^2 >= 3(a*b + b*c + c*a) 当且仅当a = b = c 取等
-```
 [343. 整数拆分](https://leetcode.cn/problems/integer-break/)
 ```c++
 int integerBreak(int n) {
@@ -387,3 +374,21 @@ int integerBreak(int n) {
 	return ans;
 }
 ```
+柯西不等式
+```
+(a1^2 + a2^2 + ... + an^2) * (b1^2 + b2^2 + ... + bn^2) >= (a1*b1 + a2*b2 + ... + an*bn)
+当且仅当 a1/b1 = a2/b2 = ... = an/bn 或 b1 = b2 = ... = bn = 0取等
+```
+阿姆斯特朗不等式
+```
+a^2 + b^2 + c^2 >= a*b +b*c +c*a   当且仅当a = b = c 取等
+```
+雅可比不等式
+```
+(a + b + c)^2 >= 3(a*b + b*c + c*a) 当且仅当a = b = c 取等
+```
+排序不等式
+```
+两个递增序列a1, ..., an; b1, ..., bn; ci是bi的乱序 满足：sum(ai*ci)最大是ai与bi正序乘 最小是ai与bi倒序乘 等号在ai==bi取等
+```
+![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/8c9d035c-6650-40c9-a658-2de0ec425b36)

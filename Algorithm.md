@@ -1512,16 +1512,17 @@ bool canPartition(vector<int>& nums) {
 	return dp[n - 1][target];
 }
 ```
-#### [2809. 使数组和小于等于 x 的最少时间](https://leetcode.cn/problems/minimum-time-to-make-array-sum-at-most-x/)
+#### [2809. 使数组和小于等于 x 的最少时间](https://leetcode.cn/problems/minimum-time-to-make-array-sum-at-most-x/) 不等式+贪心+DP
 ```c++
 int minimumTime(vector<int>& nums1, vector<int>& nums2, int x) {
 	//总的时间为t 对于下标i 不做任何操作到结束:nums1[i]+ t*nums2[i]
 	//在第k秒做操作: (t-k)*nums2[i] 
 	//k秒做操作使得数组元素和减少了nums1[i] + k*nums2[i]
+	//k秒选k个元素去减少 时间是从1到k递增的 由排序不等式nums2[i]也要递增
 	int n = nums1.size();
 	vector<int>v(n);
 	iota(begin(v), end(v), 0);
-	sort(begin(v), end(v),
+	sort(begin(v), end(v),//核心 基于排序不等式
 		[&](const int& a, const int& b) {
 			return nums2[a] < nums2[b]; });
 	vector<int>dp(n + 1);

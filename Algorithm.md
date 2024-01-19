@@ -1512,6 +1512,32 @@ bool canPartition(vector<int>& nums) {
 	return dp[n - 1][target];
 }
 ```
+#### [2809. 使数组和小于等于 x 的最少时间](https://leetcode.cn/problems/minimum-time-to-make-array-sum-at-most-x/)
+```c++
+int minimumTime(vector<int>& nums1, vector<int>& nums2, int x) {
+	//总的时间为t 对于下标i 不做任何操作到结束:nums1[i]+ t*nums2[i]
+	//在第k秒做操作: (t-k)*nums2[i] 
+	//k秒做操作使得数组元素和减少了nums1[i] + k*nums2[i]
+	int n = nums1.size();
+	vector<int>v(n);
+	iota(begin(v), end(v), 0);
+	sort(begin(v), end(v),
+		[&](const int& a, const int& b) {
+			return nums2[a] < nums2[b]; });
+	vector<int>dp(n + 1);
+	for (int i = 0; i < n; i++) {//dp[i+1][j]从0-i中选j个下标使减少量最大 最终的dp[n+1][j]是全局的最优
+		int a = nums1[v[i]], b = nums2[v[i]];
+		for (int j = i + 1; j; j--)//j同时也是时间k
+			//dp[i + 1][j] = max(dp[i][j], dp[i][j−1] + nums1[i] + nums2[i]⋅j)
+			dp[j] = max(dp[j], dp[j - 1] + a + b * j);
+	}
+	int s1 = accumulate(nums1.begin(), nums1.end(), 0);
+	int s2 = accumulate(nums2.begin(), nums2.end(), 0);
+	for (int t = 0; t <= n; t++) //s1 + s2⋅t−dp[n][t]≤*x
+		if (s1 + s2 * t - dp[t] <= x)return t;
+	return -1;
+}
+```
 ### *完全背包
 
 ```

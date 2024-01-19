@@ -1520,12 +1520,11 @@ int minimumTime(vector<int>& nums1, vector<int>& nums2, int x) {
 	//k秒做操作使得数组元素和减少了nums1[i] + k*nums2[i]
 	//k秒选k个元素去减少 时间是从1到k递增的 由排序不等式nums2[i]也要递增
 	int n = nums1.size();
-	vector<int>v(n);
+	vector<int>v(n), dp(n + 1);
 	iota(begin(v), end(v), 0);
 	sort(begin(v), end(v),//核心 基于排序不等式
 		[&](const int& a, const int& b) {
 			return nums2[a] < nums2[b]; });
-	vector<int>dp(n + 1);
 	for (int i = 0; i < n; i++) {//dp[i+1][j]从0-i中选j个下标使减少量最大 最终的dp[n+1][j]是全局的最优
 		int a = nums1[v[i]], b = nums2[v[i]];
 		for (int j = i + 1; j; j--)//j同时也是时间k

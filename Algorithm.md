@@ -1,7 +1,8 @@
 # Algorithm
 ![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/3f60b9b4-4d9a-4d77-8bca-82876d343086)
 
-## 二分/折半查找
+## 二分算法
+二分查找
 
 适用：排好序的数组
 ```c++
@@ -39,7 +40,7 @@ int BinarySearch(vector<T>& nums, T target) {
 }
 ```
 
-### *二分查找的变形
+### 二分查找的变形
 pre [852. 山脉数组的峰顶索引](https://leetcode.cn/problems/peak-index-in-a-mountain-array/)
 ```c++
 int peakIndexInMountainArray(vector<int>& arr) {
@@ -148,6 +149,17 @@ vector<int> findPeakGrid(vector<vector<int>>& mat) {
 	return{ -1,-1 };
 }
 ```
+[【题单】二分算法](https://leetcode.cn/circle/discuss/SqopEo/)
+### 二分答案
+看到「最大化最小值」或者「最小化最大值」就要想到二分答案 这是一个固定的套路
+#### [410. 分割数组的最大值](https://leetcode.cn/problems/split-array-largest-sum/)
+```c++
+
+```
+### 最小化最大值
+
+### 最大化最小值
+
 ## 前后缀与差分
 
 ```

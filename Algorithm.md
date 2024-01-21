@@ -154,7 +154,28 @@ vector<int> findPeakGrid(vector<vector<int>>& mat) {
 看到「最大化最小值」或者「最小化最大值」就要想到二分答案 这是一个固定的套路
 #### [410. 分割数组的最大值](https://leetcode.cn/problems/split-array-largest-sum/)
 ```c++
-
+int splitArray(vector<int>& nums, int k) {
+	auto check = [&](int& mx)->bool {//检查子数组的最大和为mx的情况下能不能划分小于等于k段子数组
+		int cnt = 1, s = 0;//cnt为当前划分的段数 s为当前段(子数组)的和
+		for (const int& x : nums) {
+			if (s + x <= mx) s += x;
+			else {// 新划分一段
+				if (cnt++ == k)return false;//cnt为k则已经划分k段了无法新划分了
+				s = x;
+			}
+		}
+		return true;
+	};
+	//开区间写法 
+	int high = accumulate(nums.begin(), nums.end(), 0);//右边界设为S(nums)肯定满足 k最小为1
+	//左边界设为max(nums)-1肯定不满足 每个子数组和都小于S/k也就是(S-1)/k也肯定不满足 k最大为数组长度时也不满足
+	int low = max(*max_element(nums.begin(), nums.end()) - 1, (high - 1) / k);
+	while (low + 1 < high) {//mid越大分段数cnt越小 题意是得到最小的mid且cnt不超过k
+		int mid = low + (high - low) / 2;
+		(check(mid) ? high : low) = mid;
+	}
+	return high;
+}
 ```
 ### 最小化最大值
 

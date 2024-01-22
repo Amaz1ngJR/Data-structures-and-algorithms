@@ -220,7 +220,20 @@ int maximumCandies(vector<int>& candies, long long k) {
 ## 最小化最大值
 ### [2439. 最小化数组中的最大值](https://leetcode.cn/problems/minimize-maximum-of-array/)
 ```c++
-
+int minimizeArrayValue(vector<int>& nums) {
+	int n = nums.size(), low = 0, high = *max_element(begin(nums), end(nums)), mid;
+	auto check = [&](int& mid)->bool {
+		long long extra = 0;
+		for (int i = n - 1; i > 0; i--)
+			extra = max((long long)nums[i] - mid + extra, (long long)0);
+		return nums[0] + extra <= mid;
+	};
+	while (low + 1 < high) {
+		mid = low + (high - low) / 2;
+		(check(mid) ? high : low) = mid;
+	}
+	return high;
+}
 ```
 ### [2560. 打家劫舍 IV](https://leetcode.cn/problems/house-robber-iv/)
 ```c++

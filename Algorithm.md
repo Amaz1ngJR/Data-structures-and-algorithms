@@ -1,7 +1,7 @@
-# Algorithm
+Algorithm
 ![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/3f60b9b4-4d9a-4d77-8bca-82876d343086)
 
-## 二分算法
+# 二分算法
 二分查找
 
 适用：排好序的数组
@@ -40,7 +40,7 @@ int BinarySearch(vector<T>& nums, T target) {
 }
 ```
 
-### 二分查找的变形
+## 二分查找的变形
 pre [852. 山脉数组的峰顶索引](https://leetcode.cn/problems/peak-index-in-a-mountain-array/)
 ```c++
 int peakIndexInMountainArray(vector<int>& arr) {
@@ -57,7 +57,7 @@ int peakIndexInMountainArray(vector<int>& arr) {
 }
 ```
 pre plus [845. 数组中的最长山脉](https://leetcode.cn/problems/longest-mountain-in-array/)
-#### [162. 寻找峰值](https://leetcode.cn/problems/find-peak-element/)
+### [162. 寻找峰值](https://leetcode.cn/problems/find-peak-element/)
 
 ```c++
 int findPeakElement(vector<int>& nums) {
@@ -71,7 +71,7 @@ int findPeakElement(vector<int>& nums) {
 }
 ```
 
-#### [153. 寻找旋转排序数组中的最小值](https://leetcode.cn/problems/find-minimum-in-rotated-sorted-array/)
+### [153. 寻找旋转排序数组中的最小值](https://leetcode.cn/problems/find-minimum-in-rotated-sorted-array/)
 
 ```c++
 int findMin(vector<int>& nums) {
@@ -90,7 +90,7 @@ int findMin(vector<int>& nums) {
 }
 ```
 
-#### [33. 搜索旋转排序数组](https://leetcode.cn/problems/search-in-rotated-sorted-array/)
+### [33. 搜索旋转排序数组](https://leetcode.cn/problems/search-in-rotated-sorted-array/)
 
 可以使用153的方法先找到两个有序数组，再二分。仅一次二分的方法如下
 
@@ -128,7 +128,7 @@ int search(vector<int>& nums, int target) {
     return -1;
 }
 ```
-#### [1901. 寻找峰值 II](https://leetcode.cn/problems/find-a-peak-element-ii/)
+### [1901. 寻找峰值 II](https://leetcode.cn/problems/find-a-peak-element-ii/)
 ```c++
 vector<int> findPeakGrid(vector<vector<int>>& mat) {
 	int m = mat.size();
@@ -150,13 +150,14 @@ vector<int> findPeakGrid(vector<vector<int>>& mat) {
 }
 ```
 [【题单】二分算法](https://leetcode.cn/circle/discuss/SqopEo/)
-### 二分答案
+## 二分答案
 看到「最大化最小值」或者「最小化最大值」就要想到二分答案 这是一个固定的套路
 
-#### [410. 分割数组的最大值](https://leetcode.cn/problems/split-array-largest-sum/)
 pre [1283. 使结果不超过阈值的最小除数](https://leetcode.cn/problems/find-the-smallest-divisor-given-a-threshold/)、
 [2187. 完成旅途的最少时间](https://leetcode.cn/problems/minimum-time-to-complete-trips/)、
+[1870. 准时到达的列车最小时速](https://leetcode.cn/problems/minimum-speed-to-arrive-on-time/)、
 [1011. 在 D 天内送达包裹的能力](https://leetcode.cn/problems/capacity-to-ship-packages-within-d-days/)
+### [410. 分割数组的最大值](https://leetcode.cn/problems/split-array-largest-sum/)
 ```c++
 int splitArray(vector<int>& nums, int k) {
 	auto check = [&](int& mx)->bool {//检查子数组的最大和为mx的情况下能不能划分小于等于k段子数组
@@ -181,7 +182,7 @@ int splitArray(vector<int>& nums, int k) {
 	return high;
 }
 ```
-#### [2226. 每个小孩最多能分到多少糖果](https://leetcode.cn/problems/maximum-candies-allocated-to-k-children/)
+### [2226. 每个小孩最多能分到多少糖果](https://leetcode.cn/problems/maximum-candies-allocated-to-k-children/)
 ```c++
 int maximumCandies(vector<int>& candies, long long k) {
 	int low = 0, high = 1 + (*max_element(begin(candies), end(candies))), mid;
@@ -215,24 +216,21 @@ int maximumCandies(vector<int>& candies, long long k) {
 	return low - 1;
 }
 ```
-[1870. 准时到达的列车最小时速](https://leetcode.cn/problems/minimum-speed-to-arrive-on-time/)
-[]()
-[]()
-### 最小化最大值
-#### [2439. 最小化数组中的最大值](https://leetcode.cn/problems/minimize-maximum-of-array/)
+## 最小化最大值
+### [2439. 最小化数组中的最大值](https://leetcode.cn/problems/minimize-maximum-of-array/)
 ```c++
 
 ```
-#### [2560. 打家劫舍 IV](https://leetcode.cn/problems/house-robber-iv/)
+### [2560. 打家劫舍 IV](https://leetcode.cn/problems/house-robber-iv/)
 ```c++
 
 ```
-### 最大化最小值
-#### [1552. 两球之间的磁力](https://leetcode.cn/problems/magnetic-force-between-two-balls/)
+## 最大化最小值
+### [1552. 两球之间的磁力](https://leetcode.cn/problems/magnetic-force-between-two-balls/)
 ```c++
 
 ```
-## 前后缀与差分
+# 前后缀与差分
 
 ```
 前缀和sum[i] = accumulate(arr[0],arr[i])
@@ -294,7 +292,7 @@ dif[x2+1][y1] -= v;  //减去图中第二行第一个蓝色区域
 dif[x2+1][y2+1] += v; //加上两个蓝色区域多减的绿色区域
 ```
 
-### *差分
+## *差分
 [1094. 拼车](https://leetcode.cn/problems/car-pooling/)
 ```c++
 bool carPooling(vector<vector<int>>& trips, int capacity) {
@@ -348,7 +346,7 @@ bool possibleToStamp(vector<vector<int>>& grid, int stampHeight, int stampWidth)
 	return true;
 }
 ```
-### *前缀和最值
+## *前缀和最值
 
 #### [121. 买卖股票的最佳时机](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/)
 
@@ -370,7 +368,7 @@ int maxProfit(vector<int>& prices) {
 }
 ```
 
-### *分解前后缀
+## *分解前后缀
 
 #### [238. 除自身以外数组的乘积](https://leetcode.cn/problems/product-of-array-except-self/)
 
@@ -390,7 +388,7 @@ vector<int> productExceptSelf(vector<int>& nums) {
     return ans;
 }
 ```
-#### [42. 接雨水](https://leetcode.cn/problems/trapping-rain-water/)
+### [42. 接雨水](https://leetcode.cn/problems/trapping-rain-water/)
 
 分别计算每个格子的最大前缀(左向右)和最大后缀(右向左)，存两个数组里，然后取前后缀的最小值减去格子的值即为这个格子所能接的水
 ```c++
@@ -415,8 +413,8 @@ int trap(vector<int>& height) {
 }
 ```
 
-## 双指针
-#### [160. 相交链表](https://leetcode.cn/problems/intersection-of-two-linked-lists/)
+# 双指针
+### [160. 相交链表](https://leetcode.cn/problems/intersection-of-two-linked-lists/)
 消除两个链表的长度差
 ```
 指针 p 指向 A 链表 指针 q 指向 B 链表 依次往后遍历
@@ -434,7 +432,7 @@ ListNode* getIntersectionNode(ListNode* headA, ListNode* headB) {
 	return p;
 }
 ```
-#### [295. 数据流的中位数](https://leetcode.cn/problems/find-median-from-data-stream/)
+### [295. 数据流的中位数](https://leetcode.cn/problems/find-median-from-data-stream/)
 ```c++
 class MedianFinder {
 public:
@@ -471,9 +469,9 @@ private:
 	multiset<int>::iterator low, high;
 };
 ```
-### *相向双指针
+## *相向双指针
 
-#### [167. 两数之和 II - 输入有序数组](https://leetcode.cn/problems/two-sum-ii-input-array-is-sorted/)
+### [167. 两数之和 II - 输入有序数组](https://leetcode.cn/problems/two-sum-ii-input-array-is-sorted/)
 
 有序排列后，如果low+high>target,low之后所有的数与high相加都大于target，high只能舍去(左移)，如果low+high<target,high之前所有的数加上low也肯定都小于target，所以low舍去(右移)
 
@@ -497,7 +495,7 @@ vector<int> twoSum(vector<int>& numbers, int target) {
 }
 ```
 
-#### [42. 接雨水](https://leetcode.cn/problems/trapping-rain-water/)
+### [42. 接雨水](https://leetcode.cn/problems/trapping-rain-water/)
 初始化low、high指向数组两端 再分别记录前缀的最大值premax和后缀的最大值sufmax由于前、后缀最大值不会变小 所以当前缀最大值小于后缀最大值的时候 由于短板效应 low位置能接的水已经确定了
 ```c++
 int trap(vector<int>& height) {
@@ -521,7 +519,7 @@ int trap(vector<int>& height) {
 	return ans;
 }
 ```
-#### [11. 盛最多水的容器](https://leetcode.cn/problems/container-with-most-water/)
+### [11. 盛最多水的容器](https://leetcode.cn/problems/container-with-most-water/)
 ```c++
 int maxArea(vector<int>& height) {
     int ans = 0;
@@ -539,9 +537,9 @@ int maxArea(vector<int>& height) {
     return ans;
 }
 ```
-### *同向双指针 滑动窗口
+## *同向双指针 滑动窗口
 [题单](https://leetcode.cn/circle/discuss/0viNMK/)
-#### [443. 压缩字符串](https://leetcode.cn/problems/string-compression/)
+### [443. 压缩字符串](https://leetcode.cn/problems/string-compression/)
 ```c++
 int compress(vector<char>& chars) {
 	int n = chars.size();
@@ -563,8 +561,8 @@ int compress(vector<char>& chars) {
 	return write;
 }
 ```
-#### 定长滑动窗口
-##### [438. 找到字符串中所有字母异位词](https://leetcode.cn/problems/find-all-anagrams-in-a-string/)
+### 定长滑动窗口
+#### [438. 找到字符串中所有字母异位词](https://leetcode.cn/problems/find-all-anagrams-in-a-string/)
 ```c++
 vector<int> findAnagrams(string s, string p) {
 	int n = p.size();
@@ -586,8 +584,8 @@ vector<int> findAnagrams(string s, string p) {
 	return ans;
 }
 ```
-#### 不定长滑动窗口(求最长/最大)
-##### [3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/)
+### 不定长滑动窗口(求最长/最大)
+#### [3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/)
 ```c++
 int lengthOfLongestSubstring(string s) {
     int ans = 0;
@@ -629,7 +627,7 @@ int lengthOfLongestSubstring(string s) {
     return ans;
 }
 ```
-##### [1004. 最大连续1的个数 III](https://leetcode.cn/problems/max-consecutive-ones-iii/)
+#### [1004. 最大连续1的个数 III](https://leetcode.cn/problems/max-consecutive-ones-iii/)
 ```c++
 int longestOnes(vector<int>& nums, int k) {
 	int low = 0, high = 0, ans = 0;
@@ -645,8 +643,8 @@ int longestOnes(vector<int>& nums, int k) {
 	return ans;
 }
 ```
-#### 不定长滑动窗口(求最短/最小)
-##### [209. 长度最小的子数组](https://leetcode.cn/problems/minimum-size-subarray-sum/)
+### 不定长滑动窗口(求最短/最小)
+#### [209. 长度最小的子数组](https://leetcode.cn/problems/minimum-size-subarray-sum/)
 
 初始为第一个元素 子数组小于目标则加大右端点来增加子数组长度 若子数组和大于等于目标 缩小左端点 直到右端点为数组最后一个
 
@@ -670,8 +668,8 @@ int minSubArrayLen(int target, vector<int>& nums) {
     return ans > n ? 0 : ans;
 }
 ```
-#### 不定长滑动窗口(求子数组个数)
-##### [713. 乘积小于 K 的子数组](https://leetcode.cn/problems/subarray-product-less-than-k/)
+### 不定长滑动窗口(求子数组个数)
+#### [713. 乘积小于 K 的子数组](https://leetcode.cn/problems/subarray-product-less-than-k/)
 
 ```c++
 int numSubarrayProductLessThanK(vector<int>& nums, int k) {
@@ -708,7 +706,7 @@ int numSubarrayProductLessThanK(vector<int>& nums, int k) {
     return ans;
 }
 ```
-##### [2962. 统计最大元素出现至少 K 次的子数组](https://leetcode.cn/problems/count-subarrays-where-max-element-appears-at-least-k-times/)
+#### [2962. 统计最大元素出现至少 K 次的子数组](https://leetcode.cn/problems/count-subarrays-where-max-element-appears-at-least-k-times/)
 ```c++
 long long countSubarrays(vector<int>& nums, int k) {//时间复杂度为O(n)
 	int m = INT_MIN, cnt = 0;//窗口中m的个数
@@ -727,11 +725,11 @@ long long countSubarrays(vector<int>& nums, int k) {//时间复杂度为O(n)
 	return ans;
 }
 ```
-#### 多指针滑动窗口
+### 多指针滑动窗口
 
-### *快慢指针
+## *快慢指针
 
-#### [141. 环形链表](https://leetcode.cn/problems/linked-list-cycle/)
+### [141. 环形链表](https://leetcode.cn/problems/linked-list-cycle/)
 
 判断一个链表是否是有环
 
@@ -752,7 +750,7 @@ bool hasCycle(ListNode *head) {
 }
 ```
 
-#### [142. 环形链表 II](https://leetcode.cn/problems/linked-list-cycle-ii/)
+### [142. 环形链表 II](https://leetcode.cn/problems/linked-list-cycle-ii/)
 
 找到链表中环(至多一个)的入口结点下标(NULL表示无环)
 
@@ -790,7 +788,7 @@ ListNode *detectCycle(ListNode *head) {
     return NULL;
 }
 ```
-#### [287. 寻找重复数](https://leetcode.cn/problems/find-the-duplicate-number/)
+### [287. 寻找重复数](https://leetcode.cn/problems/find-the-duplicate-number/)
 ```c++
 int findDuplicate(vector<int>& nums) {
 	int slow = 0, fast = 0;
@@ -806,7 +804,7 @@ int findDuplicate(vector<int>& nums) {
 	return slow;
 }
 ```
-#### [202. 快乐数](https://leetcode.cn/problems/happy-number/)
+### [202. 快乐数](https://leetcode.cn/problems/happy-number/)
 ```c++
 bool isHappy(int n) {
 	function<int(int)>get = [&](int x)->int {
@@ -825,9 +823,9 @@ bool isHappy(int n) {
 	return fast == 1;
 }
 ```
-### *前后指针
+## *前后指针
 
-#### [19. 删除链表的倒数第 N 个结点](https://leetcode.cn/problems/remove-nth-node-from-end-of-list/)
+### [19. 删除链表的倒数第 N 个结点](https://leetcode.cn/problems/remove-nth-node-from-end-of-list/)
 
 ```c++
 ListNode* List::removeNthFromEnd(ListNode* head, int n) {
@@ -847,7 +845,7 @@ ListNode* List::removeNthFromEnd(ListNode* head, int n) {
 }
 ```
 
-#### [83. 删除排序链表中的重复元素](https://leetcode.cn/problems/remove-duplicates-from-sorted-list/)
+### [83. 删除排序链表中的重复元素](https://leetcode.cn/problems/remove-duplicates-from-sorted-list/)
 
 删除有序链表中的多余的重复结点
 
@@ -894,7 +892,7 @@ ListNode* deleteDuplicates(ListNode* head) {
 }
 ```
 
-## 回溯
+# 回溯
 
 ```
 用一个path记录路径上的选择
@@ -923,9 +921,9 @@ dfs(i)->dfs(i+1)
 ```
 ![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/f00d3275-304e-4490-a7eb-0e7e03ccbeba)
 
-### *子集型
+## *子集型
 
-#### [78. 子集](https://leetcode.cn/problems/subsets/)
+### [78. 子集](https://leetcode.cn/problems/subsets/)
 
 ```c++
 //模板一
@@ -970,9 +968,9 @@ vector<vector<int>> subsets(vector<int>& nums) {
 }
 ```
 
-### *分割型
+## *分割型
 
-#### [17. 电话号码的字母组合](https://leetcode.cn/problems/letter-combinations-of-a-phone-number/)
+### [17. 电话号码的字母组合](https://leetcode.cn/problems/letter-combinations-of-a-phone-number/)
 
 ```c++
 vector<string> letterCombinations(string digits) {
@@ -997,7 +995,7 @@ vector<string> letterCombinations(string digits) {
 }
 ```
 
-#### [131. 分割回文串](https://leetcode.cn/problems/palindrome-partitioning/)
+### [131. 分割回文串](https://leetcode.cn/problems/palindrome-partitioning/)
 
 ```c++
 vector<vector<string>> partition(string s) {
@@ -1029,7 +1027,7 @@ vector<vector<string>> partition(string s) {
 }
 ```
 
-### *组合型
+## *组合型
 组合数学公式 C(n,k)= n!/(k! * (n-k)!)  组合无序 因此要除以 k!
 
 剪枝技巧： 逆序枚举
@@ -1041,7 +1039,7 @@ vector<vector<string>> partition(string s) {
 如果i<d最后必然没法选够k个数 不需要继续递归
 ```
 
-#### [216. 组合总和 III](https://leetcode.cn/problems/combination-sum-iii/)
+### [216. 组合总和 III](https://leetcode.cn/problems/combination-sum-iii/)
 
 从1-9中选择k个数(最多选一次)使其和为n
 
@@ -1073,7 +1071,7 @@ vector<vector<int>> combinationSum3(int k, int n) {
 }
 ```
 
-#### [39. 组合总和](https://leetcode.cn/problems/combination-sum/)
+### [39. 组合总和](https://leetcode.cn/problems/combination-sum/)
 
 从一个数组中选取一些可重复数使得其和为target，返回所有组合
 
@@ -1105,7 +1103,7 @@ vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
 }
 ```
 
-#### [40. 组合总和 II](https://leetcode.cn/problems/combination-sum-ii/)
+### [40. 组合总和 II](https://leetcode.cn/problems/combination-sum-ii/)
 
 从一个元素数组中选取一些元素组合(组合中每个数组元素只使用一次，但是有多个元素值相同)使得其和为target，返回所有组合
 
@@ -1155,7 +1153,7 @@ vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
 }
 ```
 
-### *排列型
+## *排列型
 排列数学公式 A(n,k)= n!/(n-k)!
 
 不同于组合型，(i,j)!=(j,i)
@@ -1163,7 +1161,7 @@ vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
 
 时间复杂度为所有叶子结点到根节点的路径和O(n*n!)
 
-#### [47. 全排列 II](https://leetcode.cn/problems/permutations-ii/)
+### [47. 全排列 II](https://leetcode.cn/problems/permutations-ii/)
 
 给一个含重复数字的数组，给出它所有的不重复的全排列
 
@@ -1197,7 +1195,7 @@ vector<vector<int>> permuteUnique(vector<int>& nums) {
 }
 ```
 
-#### [51. N 皇后](https://leetcode.cn/problems/n-queens/)
+### [51. N 皇后](https://leetcode.cn/problems/n-queens/)
 
 ```c++
 vector<vector<string>> solveNQueens(int n) {
@@ -1238,8 +1236,8 @@ vector<vector<string>> solveNQueens(int n) {
 	return ans;
 }
 ```
-### *DFS
-#### [332. 重新安排行程](https://leetcode.cn/problems/reconstruct-itinerary/)
+## *DFS
+### [332. 重新安排行程](https://leetcode.cn/problems/reconstruct-itinerary/)
 ```c++
 vector<string> findItinerary(vector<vector<string>>& tickets) {
 	int n = tickets.size();
@@ -1270,7 +1268,7 @@ vector<string> findItinerary(vector<vector<string>>& tickets) {
 	return path;
 }
 ```
-#### [37. 解数独](https://leetcode.cn/problems/sudoku-solver/)
+### [37. 解数独](https://leetcode.cn/problems/sudoku-solver/)
 ```c++
 void solveSudoku(vector<vector<char>>& board) {
 	vector<bitset<9>>rows(9, bitset<9>(0)), cols(9, bitset<9>(0));
@@ -1320,7 +1318,7 @@ void solveSudoku(vector<vector<char>>& board) {
 	dfs(cnt);
 }
 ```
-## 动态规划
+# 动态规划
 
 定义状态 状态转移方程 时间复杂度：状态的个数*计算状态的时间
 
@@ -1364,7 +1362,7 @@ long long maxTaxiEarnings(int n, vector<vector<int>>& rides) {
 }
 ```
 [2830. 销售利润最大化](https://leetcode.cn/problems/maximize-the-profit-as-the-salesman/)
-### *打家劫舍
+## *打家劫舍
 
 [198. 打家劫舍](https://leetcode.cn/problems/house-robber/)
 
@@ -1432,7 +1430,7 @@ int rob(vector<int>& nums) {
 }
 ```
 针对环形房子的打家劫舍 只要对[0,n-1)和[1,n) 两个区间求两次 取最大即可
-### *0/1背包
+## *0/1背包
 
 ```
 0/1背包：有n个物品  第i个物品的体积为w[i]  价值为v[i]
@@ -1463,7 +1461,7 @@ std::function<int(int capacity, vector<int> w, vector<int>v)> zero_one_knapsack 
 };
 ```
 
-#### [494. 目标和](https://leetcode.cn/problems/target-sum/)
+### [494. 目标和](https://leetcode.cn/problems/target-sum/)
 
 在非负整数数组 nums的每个数前加+/-使得数组和为target
 
@@ -1564,7 +1562,7 @@ return f[target];
 ```
 
 判断是否能恰好装满背包
-#### [416. 分割等和子集](https://leetcode.cn/problems/partition-equal-subset-sum/)
+### [416. 分割等和子集](https://leetcode.cn/problems/partition-equal-subset-sum/)
 ```c++
 bool canPartition(vector<int>& nums) {
 	int n = nums.size();
@@ -1596,7 +1594,7 @@ bool canPartition(vector<int>& nums) {
 	return dp[n - 1][target];
 }
 ```
-#### [2809. 使数组和小于等于 x 的最少时间](https://leetcode.cn/problems/minimum-time-to-make-array-sum-at-most-x/) 不等式+贪心+DP
+### [2809. 使数组和小于等于 x 的最少时间](https://leetcode.cn/problems/minimum-time-to-make-array-sum-at-most-x/) 不等式+贪心+DP
 ```c++
 int minimumTime(vector<int>& nums1, vector<int>& nums2, int x) {
 	//总的时间为t 对于下标i 不做任何操作到结束:nums1[i]+ t*nums2[i]
@@ -1622,7 +1620,7 @@ int minimumTime(vector<int>& nums1, vector<int>& nums2, int x) {
 	return -1;
 }
 ```
-### *完全背包
+## *完全背包
 
 ```
 完全背包：有n个物品  第i个物品的体积为w[i]  价值为v[i]
@@ -1630,7 +1628,7 @@ int minimumTime(vector<int>& nums1, vector<int>& nums2, int x) {
 dfs(i,c)=max(dfs(i-1,c),dfs(i,c-w[i])+v[i])
 ```
 
-#### [322. 零钱兑换](https://leetcode.cn/problems/coin-change/)
+### [322. 零钱兑换](https://leetcode.cn/problems/coin-change/)
 
 数组 coins 元素表示不同面额的硬币 返回使用最少的硬币达到 amount
 
@@ -1650,9 +1648,9 @@ int coinChange(vector<int>& coins, int amount) {
     }
 ```
 类似题目[279. 完全平方数](https://leetcode.cn/problems/perfect-squares/)
-### *组合型
+## *组合型
 
-#### [1155. 掷骰子等于目标和的方法数](https://leetcode.cn/problems/number-of-dice-rolls-with-target-sum/)
+### [1155. 掷骰子等于目标和的方法数](https://leetcode.cn/problems/number-of-dice-rolls-with-target-sum/)
 
 ```c++
 int numRollsToTarget(int n, int k, int target) {
@@ -1677,9 +1675,9 @@ int numRollsToTarget(int n, int k, int target) {
 }
 ```
 
-### *子序列
+## *子序列
 
-#### [1143. 最长公共子序列](https://leetcode.cn/problems/longest-common-subsequence/)
+### [1143. 最长公共子序列](https://leetcode.cn/problems/longest-common-subsequence/)
 
 ```c++
 //记忆化搜索
@@ -1722,7 +1720,7 @@ int longestCommonSubsequence(string text1, string text2) {
 }
 ```
 
-#### [300. 最长递增子序列](https://leetcode.cn/problems/longest-increasing-subsequence/)
+### [300. 最长递增子序列](https://leetcode.cn/problems/longest-increasing-subsequence/)
 
 将nums排序去重以后与原来的nums求一个最长公共子序列(LCS)就可以得到nums的最长递增子序列(LIS)
 
@@ -1774,7 +1772,7 @@ int lengthOfLIS(vector<int>& nums) {
 }
 ```
 
-#### [72. 编辑距离](https://leetcode.cn/problems/edit-distance/)
+### [72. 编辑距离](https://leetcode.cn/problems/edit-distance/)
 
 ```c++
 int minDistance(string word1, string word2) {
@@ -1799,11 +1797,11 @@ int minDistance(string word1, string word2) {
 }
 ```
 
-#### [583. 两个字符串的删除操作](https://leetcode.cn/problems/delete-operation-for-two-strings/)
+### [583. 两个字符串的删除操作](https://leetcode.cn/problems/delete-operation-for-two-strings/)
 ```c++
 
 ```
-### *子数组、子串
+## *子数组、子串
 思考子数组、子串统计类问题的通用技巧:
 
 将所有子串按照其末尾字符的下标分组
@@ -1813,7 +1811,7 @@ int minDistance(string word1, string word2) {
 以 s[ i ] 结尾的子串，可以看成是以 s[ i−1 ] 结尾的子串，在末尾添加上 s[ i ] 组成
 
 pre简单题[53. 最大子数组和](https://leetcode.cn/problems/maximum-subarray/)
-#### [152. 乘积最大子数组](https://leetcode.cn/problems/maximum-product-subarray/)
+### [152. 乘积最大子数组](https://leetcode.cn/problems/maximum-product-subarray/)
 ```c++
 int maxProduct(vector<int>& nums) {
 	//dpmax[i]为下标i结尾的乘积最大子数组 优化空间为dpmax(以下标i-1为结尾的最大子数组)
@@ -1830,7 +1828,7 @@ int maxProduct(vector<int>& nums) {
 	return ans;
 }
 ```
-#### [918. 环形子数组的最大和](https://leetcode.cn/problems/maximum-sum-circular-subarray/)
+### [918. 环形子数组的最大和](https://leetcode.cn/problems/maximum-sum-circular-subarray/)
 ```c++
 //求出最大子数组和maxS以及最小子数组和minS还有数组和S
 //如果所求子数组在数组中间那么就是maxS
@@ -1848,7 +1846,7 @@ int maxSubarraySumCircular(vector<int>& nums) {
 	return (sum == min_s) ? max_s : max(max_s, sum - min_s);
 }
 ```
-#### [647. 回文子串](https://leetcode.cn/problems/palindromic-substrings/)
+### [647. 回文子串](https://leetcode.cn/problems/palindromic-substrings/)
 ```c++
 int countSubstrings(string s) {
 	int n = s.size(), ans = 0;
@@ -1866,8 +1864,8 @@ int countSubstrings(string s) {
 ```
 类似题目[5. 最长回文子串](https://leetcode.cn/problems/longest-palindromic-substring/)
 
-### *状态机DP
-#### [122. 买卖股票的最佳时机 II](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/) (不限交易次数)
+## *状态机DP
+### [122. 买卖股票的最佳时机 II](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/) (不限交易次数)
 
 从最后一天开始思考：从第0天到第i天结束时的利润 = 从第0天到第i-1天结束时的利润 + 第i天的利润
 
@@ -1924,7 +1922,7 @@ if (hold) {//第i天结束拥有为max(第i-1天持有但什么都不做,第i-2�
 }
 ```
 
-#### [188. 买卖股票的最佳时机 IV](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iv/)  (至多交易k次)
+### [188. 买卖股票的最佳时机 IV](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iv/)  (至多交易k次)
 ```c++
 //记忆化搜索
 int maxProfit(int k, vector<int>& prices) {
@@ -1964,8 +1962,8 @@ int maxProfit(int k, vector<int>& prices) {
 }
 ```
 
-### *区间DP
-#### [516. 最长回文子序列](https://leetcode.cn/problems/longest-palindromic-subsequence/)
+## *区间DP
+### [516. 最长回文子序列](https://leetcode.cn/problems/longest-palindromic-subsequence/)
 
 方法一:将s逆置 求与原来的最长公共子序列的长度 即为答案
 方法二: 从两侧向内缩小问题规模 选或不选 (判断s的第一个字符和最后一个字符是否相等 相等的话都选上 不相等的话 变成选第一个 还是选最后一个) 
@@ -1992,7 +1990,7 @@ int longestPalindromeSubseq(string s) {
 	return dp(0, n - 1);
 }
 ```
-#### [1039. 多边形三角剖分的最低得分](https://leetcode.cn/problems/minimum-score-triangulation-of-polygon/) 
+### [1039. 多边形三角剖分的最低得分](https://leetcode.cn/problems/minimum-score-triangulation-of-polygon/) 
 
 分割成多个规模更小的子问题 枚举选哪个
 ```c++
@@ -2033,7 +2031,7 @@ for (int i = n - 3; i >= 0; i--) {
 }
 return f[0][n - 1];
 ```
-#### [32. 最长有效括号](https://leetcode.cn/problems/longest-valid-parentheses/)
+### [32. 最长有效括号](https://leetcode.cn/problems/longest-valid-parentheses/)
 ```c++
 int longestValidParentheses(string s) {
 	int ans = 0, n = s.size();
@@ -2058,10 +2056,10 @@ int longestValidParentheses(string s) {
 	return ans;
 }
 ```
-### *树形DP
+## *树形DP
 
 二叉树 边权型
-#### [543. 二叉树的直径](https://leetcode.cn/problems/diameter-of-binary-tree/)
+### [543. 二叉树的直径](https://leetcode.cn/problems/diameter-of-binary-tree/)
 ```c++
 int diameterOfBinaryTree(TreeNode* root) {
 	//时空复杂度都是O(n)
@@ -2078,7 +2076,7 @@ int diameterOfBinaryTree(TreeNode* root) {
 }
 ```
 二叉树 点权型
-#### [124. 二叉树中的最大路径和](https://leetcode.cn/problems/binary-tree-maximum-path-sum/)
+### [124. 二叉树中的最大路径和](https://leetcode.cn/problems/binary-tree-maximum-path-sum/)
 ```c++
 int maxPathSum(TreeNode* root) {
 	//时空复杂度都是O(n)
@@ -2096,7 +2094,7 @@ int maxPathSum(TreeNode* root) {
 ```
 
 一般树
-#### [2246. 相邻字符不同的最长路径](https://leetcode.cn/problems/longest-path-with-different-adjacent-characters/)
+### [2246. 相邻字符不同的最长路径](https://leetcode.cn/problems/longest-path-with-different-adjacent-characters/)
 ```c++
 int longestPath(vector<int>& parent, string s) {
 	int n = s.size();
@@ -2124,7 +2122,7 @@ int longestPath(vector<int>& parent, string s) {
 ```
 
 树上最大独立集
-#### [337. 打家劫舍 III](https://leetcode.cn/problems/house-robber-iii/)
+### [337. 打家劫舍 III](https://leetcode.cn/problems/house-robber-iii/)
 ```c++
 int rob(TreeNode* root) {
 	//时空复杂度为O(n)
@@ -2147,7 +2145,7 @@ int rob(TreeNode* root) {
 ```c++
 ```
 树上最小支配集
-#### [968. 监控二叉树](https://leetcode.cn/problems/binary-tree-cameras/)
+### [968. 监控二叉树](https://leetcode.cn/problems/binary-tree-cameras/)
 ```c++
 int minCameraCover(TreeNode* root) {
 	//A:选 ：在该节点安装摄像头 俩孩子都可以是A、B、C
@@ -2167,7 +2165,7 @@ int minCameraCover(TreeNode* root) {
 }
 ```
 
-### *数位DP
+## *数位DP
 基础模板 不考虑前导0
 ```c++
 string high = to_string(finish), low = to_string(start);//将数字转换成字符串表示
@@ -2188,7 +2186,7 @@ function<int(int, bool, bool)>dfs = [&](int i, bool limit_low, bool limit_high)-
 };
 dfs(0, true, true);
 ```
-#### [2999. 统计强大整数的数目](https://leetcode.cn/problems/count-the-number-of-powerful-integers/)
+### [2999. 统计强大整数的数目](https://leetcode.cn/problems/count-the-number-of-powerful-integers/)
 ```c++
 long long numberOfPowerfulInt(long long start, long long finish, int limit, string s) {
 	string high = to_string(finish), low = to_string(start);//将数字转换成字符串表示
@@ -2247,7 +2245,7 @@ long long numberOfPowerfulInt(long long start, long long finish, int limit, stri
 	return dfs(0, true, true, false);
 }
 ```
-#### [2719. 统计整数数目](https://leetcode.cn/problems/count-of-integers/)
+### [2719. 统计整数数目](https://leetcode.cn/problems/count-of-integers/)
 ```c++
 int count(string num1, string num2, int min_sum, int max_sum) {
 	long mod = 1e9 + 7; int n = num2.size();
@@ -2272,7 +2270,7 @@ int count(string num1, string num2, int min_sum, int max_sum) {
 	return dfs(0, 0, true, true);
 }
 ```
-#### [902. 最大为 N 的数字组合](https://leetcode.cn/problems/numbers-at-most-n-given-digit-set/)
+### [902. 最大为 N 的数字组合](https://leetcode.cn/problems/numbers-at-most-n-given-digit-set/)
 ```c++
 int atMostNGivenDigitSet(vector<string>& digits, int n) {
 	string high = to_string(n);
@@ -2296,8 +2294,8 @@ int atMostNGivenDigitSet(vector<string>& digits, int n) {
 	return dfs(0, true, false);
 }
 ```
-## 贪心
-### [1029. 两地调度](https://leetcode.cn/problems/two-city-scheduling/)
+# 贪心
+## [1029. 两地调度](https://leetcode.cn/problems/two-city-scheduling/)
 ```c++
 int twoCitySchedCost(vector<vector<int>>& costs) {
 	//先将N个人去A 剩余N个人去B 
@@ -2321,7 +2319,7 @@ int twoCitySchedCost(vector<vector<int>>& costs) {
 	return ans;
 }
 ```
-### [134. 加油站](https://leetcode.cn/problems/gas-station/)
+## [134. 加油站](https://leetcode.cn/problems/gas-station/)
 ```c++
 int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
 	int max_ = INT_MIN, max_i; long sum = 0;
@@ -2335,7 +2333,7 @@ int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
 	return sum >= 0 ? max_i : -1;//如果总花费大于总汽油 肯定没法跑一圈
 }
 ```
-### [122. 买卖股票的最佳时机 II](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/)
+## [122. 买卖股票的最佳时机 II](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/)
 
 ```c++
 int maxProfit(vector<int>& prices) {
@@ -2347,7 +2345,7 @@ int maxProfit(vector<int>& prices) {
 }
 ```
 
-### [1402. 做菜顺序](https://leetcode.cn/problems/reducing-dishes/)
+## [1402. 做菜顺序](https://leetcode.cn/problems/reducing-dishes/)
 
 ```c++
 int maxSatisfaction(vector<int>& satisfaction) {
@@ -2372,7 +2370,7 @@ int maxSatisfaction(vector<int>& satisfaction) {
     return ans;
 }
 ```
-### [300. 最长递增子序列](https://leetcode.cn/problems/longest-increasing-subsequence/)
+## [300. 最长递增子序列](https://leetcode.cn/problems/longest-increasing-subsequence/)
 
 ```c++
 int lengthOfLIS(vector<int>& nums) {
@@ -2389,7 +2387,7 @@ int lengthOfLIS(vector<int>& nums) {
 	return f.size();
 }
 ```
-### [334. 递增的三元子序列](https://leetcode.cn/problems/increasing-triplet-subsequence/)
+## [334. 递增的三元子序列](https://leetcode.cn/problems/increasing-triplet-subsequence/)
 ```c++
 bool increasingTriplet(vector<int>& nums) {
 	vector<int>v(2, INT_MAX);//用来记录最小元素和次最小元素
@@ -2401,7 +2399,7 @@ bool increasingTriplet(vector<int>& nums) {
 	return false;
 }
 ```
-### [435. 无重叠区间](https://leetcode.cn/problems/non-overlapping-intervals/)
+## [435. 无重叠区间](https://leetcode.cn/problems/non-overlapping-intervals/)
 ```c++
 int eraseOverlapIntervals(vector<vector<int>>& intervals) {
 	//按照结束时间从早到晚排序 结束时间相同的 开始时间晚的排在前面
@@ -2419,10 +2417,10 @@ int eraseOverlapIntervals(vector<vector<int>>& intervals) {
 	return high - low - 1;
 }
 ```
-## 图
+# 图
 
-### 深度优先搜索DFS
-#### [1466. 重新规划路线](https://leetcode.cn/problems/reorder-routes-to-make-all-paths-lead-to-the-city-zero/)
+## 深度优先搜索DFS
+### [1466. 重新规划路线](https://leetcode.cn/problems/reorder-routes-to-make-all-paths-lead-to-the-city-zero/)
 ```c++
 int minReorder(int n, vector<vector<int>>& connections) {
 	vector<vector<pair<int, int>>>edges(n);
@@ -2453,6 +2451,5 @@ int minReorder(int n, vector<vector<int>>& connections) {
 	return ans;
 }
 ```
-### 广度优先搜索BFS
+## 广度优先搜索BFS
 
-## 贡献法【计算所有子数组的……的和】(正难则反)

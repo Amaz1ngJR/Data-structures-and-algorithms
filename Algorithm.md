@@ -152,7 +152,11 @@ vector<int> findPeakGrid(vector<vector<int>>& mat) {
 [【题单】二分算法](https://leetcode.cn/circle/discuss/SqopEo/)
 ### 二分答案
 看到「最大化最小值」或者「最小化最大值」就要想到二分答案 这是一个固定的套路
+
 #### [410. 分割数组的最大值](https://leetcode.cn/problems/split-array-largest-sum/)
+pre [1283. 使结果不超过阈值的最小除数](https://leetcode.cn/problems/find-the-smallest-divisor-given-a-threshold/)、
+[2187. 完成旅途的最少时间](https://leetcode.cn/problems/minimum-time-to-complete-trips/)、
+[1011. 在 D 天内送达包裹的能力](https://leetcode.cn/problems/capacity-to-ship-packages-within-d-days/)
 ```c++
 int splitArray(vector<int>& nums, int k) {
 	auto check = [&](int& mx)->bool {//检查子数组的最大和为mx的情况下能不能划分小于等于k段子数组
@@ -172,15 +176,62 @@ int splitArray(vector<int>& nums, int k) {
 	int low = max(*max_element(nums.begin(), nums.end()) - 1, (high - 1) / k);
 	while (low + 1 < high) {//mid越大分段数cnt越小 题意是得到最小的mid且cnt不超过k
 		int mid = low + (high - low) / 2;
-		(check(mid) ? high : low) = mid;
+		(check(mid) ? high : low) = mid;//要加上括号
 	}
 	return high;
 }
 ```
+#### [2226. 每个小孩最多能分到多少糖果](https://leetcode.cn/problems/maximum-candies-allocated-to-k-children/)
+```c++
+int maximumCandies(vector<int>& candies, long long k) {
+	int low = 0, high = 1 + (*max_element(begin(candies), end(candies))), mid;
+	auto check = [&](int& mid)->bool {
+		long long sum = 0;
+		for (int i = 0; i < candies.size(); i++) 
+			sum += candies[i] / mid;
+		return sum >= k;
+	};
+	while (low + 1 < high) {//开区间写法
+		mid = low + (high - low) / 2;
+		(check(mid) ? low : high) = mid;
+	}
+	return low;
+}
+```
+```c++
+int maximumCandies(vector<int>& candies, long long k) {
+	int low = 1, high = *max_element(begin(candies), end(candies)), mid;
+	auto check = [&](int& mid)->bool {
+		long long sum = 0;
+		for (int i = 0; i < candies.size(); i++) 
+			sum += candies[i] / mid;
+		return sum >= k;
+	};
+	while (low <= high) {//闭区间写法
+		mid = low + (high - low) / 2;
+		if (check(mid)) low = mid + 1;
+		else high = mid - 1;
+	}
+	return low - 1;
+}
+```
+[1870. 准时到达的列车最小时速](https://leetcode.cn/problems/minimum-speed-to-arrive-on-time/)
+[]()
+[]()
 ### 最小化最大值
+#### [2439. 最小化数组中的最大值](https://leetcode.cn/problems/minimize-maximum-of-array/)
+```c++
 
+```
+#### [2560. 打家劫舍 IV](https://leetcode.cn/problems/house-robber-iv/)
+```c++
+
+```
 ### 最大化最小值
+#### [1552. 两球之间的磁力](https://leetcode.cn/problems/magnetic-force-between-two-balls/)
+```c++
 
+```
 ## 前后缀与差分
 
 ```

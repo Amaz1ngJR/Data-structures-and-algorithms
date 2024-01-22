@@ -1,4 +1,5 @@
 Algorithm
+
 ![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/3f60b9b4-4d9a-4d77-8bca-82876d343086)
 
 # 二分算法

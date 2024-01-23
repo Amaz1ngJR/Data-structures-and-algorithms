@@ -153,7 +153,7 @@ vector<int> findPeakGrid(vector<vector<int>>& mat) {
 [【题单】二分算法](https://leetcode.cn/circle/discuss/SqopEo/)
 ## 二分答案
 看到「最大化最小值」或者「最小化最大值」就要想到二分答案 这是一个固定的套路
-### 最小化最大值
+### *最小化最大值
 pre [1283. 使结果不超过阈值的最小除数](https://leetcode.cn/problems/find-the-smallest-divisor-given-a-threshold/)、
 [2187. 完成旅途的最少时间](https://leetcode.cn/problems/minimum-time-to-complete-trips/)、
 [2064. 分配给商店的最多商品的最小值](https://leetcode.cn/problems/minimized-maximum-of-products-distributed-to-any-store/)、
@@ -256,7 +256,7 @@ int minCapability(vector<int>& nums, int k) {
 	return high;
 }
 ```
-### 最大化最小值
+### *最大化最小值
 pre [1870. 准时到达的列车最小时速](https://leetcode.cn/problems/minimum-speed-to-arrive-on-time/)、
 #### [1552. 两球之间的磁力](https://leetcode.cn/problems/magnetic-force-between-two-balls/)
 ```c++

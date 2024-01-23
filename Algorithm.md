@@ -237,7 +237,24 @@ int minimizeArrayValue(vector<int>& nums) {
 ```
 ### [2560. 打家劫舍 IV](https://leetcode.cn/problems/house-robber-iv/)
 ```c++
-
+int minCapability(vector<int>& nums, int k) {
+	int n = nums.size(), low = 0, high = *max_element(begin(nums), end(nums)) + 1, mid;
+	auto check = [&](int& mid)->bool {
+		int cnt = 0, last = -2;
+		for (int i = 0; i < n; i++) {
+			if (nums[i] <= mid && i - 1 != last) {
+				last = i;
+				if (++cnt == k)return true;
+			}
+		}
+		return false;
+	};
+	while (low + 1 < high) {
+		mid = low + (high - low) / 2;
+		(check(mid) ? high : low) = mid;
+	}
+	return high;
+}
 ```
 ## 最大化最小值
 ### [1552. 两球之间的磁力](https://leetcode.cn/problems/magnetic-force-between-two-balls/)

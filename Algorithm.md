@@ -153,12 +153,13 @@ vector<int> findPeakGrid(vector<vector<int>>& mat) {
 [【题单】二分算法](https://leetcode.cn/circle/discuss/SqopEo/)
 ## 二分答案
 看到「最大化最小值」或者「最小化最大值」就要想到二分答案 这是一个固定的套路
-
+### 最小化最大值
 pre [1283. 使结果不超过阈值的最小除数](https://leetcode.cn/problems/find-the-smallest-divisor-given-a-threshold/)、
 [2187. 完成旅途的最少时间](https://leetcode.cn/problems/minimum-time-to-complete-trips/)、
-[1870. 准时到达的列车最小时速](https://leetcode.cn/problems/minimum-speed-to-arrive-on-time/)、
+[2064. 分配给商店的最多商品的最小值](https://leetcode.cn/problems/minimized-maximum-of-products-distributed-to-any-store/)、
+[1760. 袋子里最少数目的球](https://leetcode.cn/problems/minimum-limit-of-balls-in-a-bag/)、
 [1011. 在 D 天内送达包裹的能力](https://leetcode.cn/problems/capacity-to-ship-packages-within-d-days/)
-### [410. 分割数组的最大值](https://leetcode.cn/problems/split-array-largest-sum/)
+#### [410. 分割数组的最大值](https://leetcode.cn/problems/split-array-largest-sum/)
 ```c++
 int splitArray(vector<int>& nums, int k) {
 	auto check = [&](int& mx)->bool {//检查子数组的最大和为mx的情况下能不能划分小于等于k段子数组
@@ -183,7 +184,7 @@ int splitArray(vector<int>& nums, int k) {
 	return high;
 }
 ```
-### [2226. 每个小孩最多能分到多少糖果](https://leetcode.cn/problems/maximum-candies-allocated-to-k-children/)
+#### [2226. 每个小孩最多能分到多少糖果](https://leetcode.cn/problems/maximum-candies-allocated-to-k-children/)
 ```c++
 int maximumCandies(vector<int>& candies, long long k) {
 	int low = 0, high = 1 + (*max_element(begin(candies), end(candies))), mid;
@@ -217,9 +218,7 @@ int maximumCandies(vector<int>& candies, long long k) {
 	return low - 1;
 }
 ```
-## 最小化最大值
-pre [2064. 分配给商店的最多商品的最小值](https://leetcode.cn/problems/minimized-maximum-of-products-distributed-to-any-store/)、[1760. 袋子里最少数目的球](https://leetcode.cn/problems/minimum-limit-of-balls-in-a-bag/)
-### [2439. 最小化数组中的最大值](https://leetcode.cn/problems/minimize-maximum-of-array/)
+#### [2439. 最小化数组中的最大值](https://leetcode.cn/problems/minimize-maximum-of-array/)
 ```c++
 int minimizeArrayValue(vector<int>& nums) {
 	int n = nums.size(), low = 0, high = *max_element(begin(nums), end(nums)), mid;
@@ -236,7 +235,7 @@ int minimizeArrayValue(vector<int>& nums) {
 	return high;
 }
 ```
-### [2560. 打家劫舍 IV](https://leetcode.cn/problems/house-robber-iv/)
+#### [2560. 打家劫舍 IV](https://leetcode.cn/problems/house-robber-iv/)
 ```c++
 int minCapability(vector<int>& nums, int k) {
 	int n = nums.size(), low = 0, high = *max_element(begin(nums), end(nums)) + 1, mid;
@@ -257,8 +256,9 @@ int minCapability(vector<int>& nums, int k) {
 	return high;
 }
 ```
-## 最大化最小值
-### [1552. 两球之间的磁力](https://leetcode.cn/problems/magnetic-force-between-two-balls/)
+### 最大化最小值
+pre [1870. 准时到达的列车最小时速](https://leetcode.cn/problems/minimum-speed-to-arrive-on-time/)、
+#### [1552. 两球之间的磁力](https://leetcode.cn/problems/magnetic-force-between-two-balls/)
 ```c++
 int maxDistance(vector<int>& position, int m) {
 	sort(position.begin(), position.end());

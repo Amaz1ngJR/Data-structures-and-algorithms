@@ -259,7 +259,25 @@ int minCapability(vector<int>& nums, int k) {
 ## 最大化最小值
 ### [1552. 两球之间的磁力](https://leetcode.cn/problems/magnetic-force-between-two-balls/)
 ```c++
-
+int maxDistance(vector<int>& position, int m) {
+	sort(position.begin(), position.end());
+	int n = position.size(), low = 0, high = position[n - 1] - position[0] + 1, mid;
+	auto check = [&](int& mid)->bool {
+		int cnt = 1, last = 0;
+		for (int i = 1; i < n; i++) {
+			if (position[i] - position[last] >= mid) {
+				last = i;
+				if (++cnt == m)return true;
+			}
+		}
+		return false;
+	};
+	while (low + 1 < high) {
+		mid = low + (high - low) / 2;
+		(check(mid) ? low : high) = mid;
+	}
+	return low;
+}
 ```
 # 前后缀与差分
 

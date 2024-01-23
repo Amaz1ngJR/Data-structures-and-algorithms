@@ -218,7 +218,7 @@ int maximumCandies(vector<int>& candies, long long k) {
 }
 ```
 ## 最小化最大值
-pre [2064. 分配给商店的最多商品的最小值](https://leetcode.cn/problems/minimized-maximum-of-products-distributed-to-any-store/)
+pre [2064. 分配给商店的最多商品的最小值](https://leetcode.cn/problems/minimized-maximum-of-products-distributed-to-any-store/)、[1760. 袋子里最少数目的球](https://leetcode.cn/problems/minimum-limit-of-balls-in-a-bag/)
 ### [2439. 最小化数组中的最大值](https://leetcode.cn/problems/minimize-maximum-of-array/)
 ```c++
 int minimizeArrayValue(vector<int>& nums) {

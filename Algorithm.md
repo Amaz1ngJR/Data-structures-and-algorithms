@@ -637,6 +637,8 @@ int compress(vector<char>& chars) {
 }
 ```
 ### 定长滑动窗口
+pre [1343. 大小为 K 且平均值大于等于阈值的子数组数目](https://leetcode.cn/problems/number-of-sub-arrays-of-size-k-and-average-greater-than-or-equal-to-threshold/)、
+[2090. 半径为 k 的子数组平均值](https://leetcode.cn/problems/k-radius-subarray-averages/)
 #### [438. 找到字符串中所有字母异位词](https://leetcode.cn/problems/find-all-anagrams-in-a-string/)
 ```c++
 vector<int> findAnagrams(string s, string p) {

@@ -150,7 +150,7 @@ vector<int> findPeakGrid(vector<vector<int>>& mat) {
 	return{ -1,-1 };
 }
 ```
-[【题单】二分算法](https://leetcode.cn/circle/discuss/SqopEo/)
+
 ## 二分答案
 看到「最大化最小值」或者「最小化最大值」就要想到二分答案 这是一个固定的套路
 ### *最小化最大值

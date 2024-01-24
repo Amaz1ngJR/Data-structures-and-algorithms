@@ -322,33 +322,29 @@ int trap(vector<int>& height) {
 #### [2866. 美丽塔 II](https://leetcode.cn/problems/beautiful-towers-ii/)
 ```c++
 long long maximumSumOfHeights(vector<int>& maxHeights) {
-	//用单调栈模拟美丽塔两边的塔
-	//pre和suf分别记录下标i的左右两边塔的最大和
-	int n = maxHeights.size(); long long ans = 0;
-	stack<int>stas, stap; 
-	vector<long long>pre(n, 0), suf(n, 0);
-	//枚举左边的塔
-	for (int i = 0; i < n; i++) {
-		int high = maxHeights[i];
-		while (!stap.empty() && maxHeights[stap.top()] > high) {
-			stap.pop();//维护一个递增的单调栈
-		}
-		//栈为空 说明当前值为最小的 那么左边的塔最大只能取high
-		if (stap.empty()) pre[i] = (long long)(i + 1) * high;
-		//栈不为空 说明当前值大于栈顶 中间的下标等于当前值
-		else pre[i] = pre[stap.top()] + (long long)(i - stap.top()) * high;
-		stap.emplace(i);
+	int n = maxHeights.size(), high;
+	vector<long long>pre(n, 0), suf(n, 0); //pre和suf分别记录下标i的左、右边塔加上自身的最大和
+	stack<int> sta_p, sta_s; long long ans = 0;
+	for (int i = 0; i < n; i++) {//枚举左边的塔
+		high = maxHeights[i];
+		while (!sta_p.empty() && maxHeights[sta_p.top()] > high)
+			sta_p.pop();//维护一个递增的单调栈
+		//栈为空 说明i为最小的 那么i及其左边的塔最大只能取high
+		if (sta_p.empty())pre[i] = (long long)(i + 1) * high;
+		//栈顶到i之间的塔只能取high，pre[i]=pre[栈顶]+high*sizeof(栈顶,i]
+		else pre[i] = pre[sta_p.top()] + (long long)(i - sta_p.top()) * high;
+		sta_p.emplace(i);
 	}
-	//枚举右边的塔
-	for (int i = n - 1; i >= 0; i--) {
-		int high = maxHeights[i];
-		while (!stas.empty() && maxHeights[stas.top()] > high) {
-			stas.pop();//维护一个递增的单调栈
-		}
-		if (stas.empty()) suf[i] = (long long)(n - i) * high;
-		else suf[i] = suf[stas.top()] + (long long)(stas.top() - i) * high;
-		stas.emplace(i);
-		ans = max(ans, pre[i] + suf[i] - high);
+	for (int i = n - 1; ~i; i--) {//枚举右边的塔
+		high = maxHeights[i];
+		while (!sta_s.empty() && maxHeights[sta_s.top()] > high)
+			sta_s.pop();//维护一个递增的单调栈
+		//栈为空 说明i为最小的 那么i及其右边的塔最大只能取high
+		if (sta_s.empty())suf[i] = (long long)(n - i) * high;
+		//栈顶到i之间的塔只能取high，suf[i]=suf[栈顶]+high*sizeof[i,栈顶)
+		else suf[i] = suf[sta_s.top()] + (long long)(sta_s.top() - i) * high;
+		sta_s.emplace(i);
+		ans = max(ans, pre[i] + suf[i] - high);//i作为封顶
 	}
 	return ans;
 }

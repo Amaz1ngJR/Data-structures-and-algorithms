@@ -280,6 +280,31 @@ int maxDistance(vector<int>& position, int m) {
 	return low;
 }
 ```
+#### [2861. 最大合金数](https://leetcode.cn/problems/maximum-number-of-alloys/)
+```c++
+int maxNumberOfAlloys(int n, int k, int budget,
+	vector<vector<int>>& composition,
+	vector<int>& stock, vector<int>& cost) {
+	int low = -1, mid, high = 1e9;//数据刁钻
+	auto check = [&](int& mid)->bool {//合金个数
+		int min_cost = INT_MAX; long long cur_cost, need;//数据刁钻
+		for (const auto& com : composition) {//枚举所有机器
+			cur_cost = 0;
+			for (int i = 0; i < n; i++) {
+				need = (long long)mid * com[i] - stock[i];
+				if (need > 0)cur_cost += need * cost[i];
+			}
+			min_cost = (cur_cost < min_cost) ? cur_cost : min_cost;
+		}
+		return min_cost <= budget;
+	};
+	while (low + 1 < high) {
+		mid = low + (high - low) / 2;
+		(check(mid) ? low : high) = mid;
+	}
+	return low;
+}
+```
 # 前后缀与差分
 
 ```

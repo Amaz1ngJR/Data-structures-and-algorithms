@@ -93,6 +93,13 @@ if((a ^ b) < 0)
 ```c++
 for(int i = n;i >= 0; i--) => for(int i = n; ~i; i--) //~(-1) == 0
 ```
+交换两个整数的值
+```c++
+int a = 10, b = 100;
+a ^= b;
+b ^= a;
+a ^= b; std::cout << "a = " << a << " b = " << b << std::endl;
+```
 ## bitset < bitset >
 ```c++
 void demo() {

@@ -698,49 +698,10 @@ vector<int> findAnagrams(string s, string p) {
 }
 ```
 ### 不定长滑动窗口
-求最长/最大
-#### [3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/)
-```c++
-int lengthOfLongestSubstring(string s) {
-    int ans = 0;
-    if(s.size()==1)return 1;
-    map<char, int> m;
-    int low = 0, high = low + 1;
-    int num=1;
-    m[s[low]]++;
-    while (high < s.size()) {
-        if (m[s[high]] == 0) {
-            m[s[high]]++;
-            num++;
-            ans = max(ans, num);
-            high++;
-        }
-        else {
-            m[s[low]]--;
-            num--;
-            low++;
-        }
-    }
-    return ans;
-}
-```
-```c++
-int lengthOfLongestSubstring(string s) {
-    int ans = 0;
-    if (s.size() == 1)return 1;
-    map<char, int> m;
-    int low = 0;
-    for (int high = 0; high < s.size(); high++) {
-        m[s[high]]++;
-        while (m[s[high]] > 1) {
-            m[s[low]]--;
-            low++;
-        }
-        ans = max(ans, high - low + 1);
-    }
-    return ans;
-}
-```
+求最长/最大 [3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/)、
+[1493. 删掉一个元素以后全为 1 的最长子数组](https://leetcode.cn/problems/longest-subarray-of-1s-after-deleting-one-element/)、
+[]()
+
 #### [1004. 最大连续1的个数 III](https://leetcode.cn/problems/max-consecutive-ones-iii/)
 ```c++
 int longestOnes(vector<int>& nums, int k) {

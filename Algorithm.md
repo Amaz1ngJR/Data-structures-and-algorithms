@@ -638,7 +638,43 @@ int compress(vector<char>& chars) {
 ```
 ### 定长滑动窗口
 pre [1343. 大小为 K 且平均值大于等于阈值的子数组数目](https://leetcode.cn/problems/number-of-sub-arrays-of-size-k-and-average-greater-than-or-equal-to-threshold/)、
-[2090. 半径为 k 的子数组平均值](https://leetcode.cn/problems/k-radius-subarray-averages/)
+[2090. 半径为 k 的子数组平均值](https://leetcode.cn/problems/k-radius-subarray-averages/)、
+[2379. 得到 K 个黑块的最少涂色次数](https://leetcode.cn/problems/minimum-recolors-to-get-k-consecutive-black-blocks/)、
+[1052. 爱生气的书店老板](https://leetcode.cn/problems/grumpy-bookstore-owner/)、
+#### [2841. 几乎唯一子数组的最大和](https://leetcode.cn/problems/maximum-sum-of-almost-unique-subarray/)
+```c++
+long long maxSum(vector<int>& nums, int m, int k) {
+	int n = nums.size();
+	long long sum = 0, ans = 0;
+	unordered_map<int, int>um;
+	for (int i = 0; i < n; i++) {
+		sum += nums[i];
+		um[nums[i]]++;
+		if (i >= k - 1) {
+			if (um.size() >= m)ans = max(ans, sum);
+			sum -= nums[i - k + 1];
+			if (--um[nums[i - k + 1]] == 0)//及时删除值为0的键
+				um.erase(nums[i - k + 1]);
+		}
+	}
+	return ans;
+}
+```
+#### [2134. 最少交换次数来组合所有的 1 II](https://leetcode.cn/problems/minimum-swaps-to-group-all-1s-together-ii/)
+```c++
+int minSwaps(vector<int>& nums) {
+	int n = nums.size(), k = 0, sum = 0, ans = INT_MAX;
+	for (const int& num : nums)k += num;
+	for (int i = 0; i < 2 * n; i++) {
+		sum += nums[i % n];
+		if (i >= k - 1) {
+			ans = min(ans, k - sum);
+			sum -= nums[(i - k + 1) % n];
+		}
+	}
+	return ans;
+}
+```
 #### [438. 找到字符串中所有字母异位词](https://leetcode.cn/problems/find-all-anagrams-in-a-string/)
 ```c++
 vector<int> findAnagrams(string s, string p) {

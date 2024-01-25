@@ -463,7 +463,7 @@ vector<int> productExceptSelf(vector<int>& nums) {
     return ans;
 }
 ```
-### [42. 接雨水](https://leetcode.cn/problems/trapping-rain-water/)
+#### [42. 接雨水](https://leetcode.cn/problems/trapping-rain-water/)
 
 分别计算每个格子的最大前缀(左向右)和最大后缀(右向左)，存两个数组里，然后取前后缀的最小值减去格子的值即为这个格子所能接的水
 ```c++

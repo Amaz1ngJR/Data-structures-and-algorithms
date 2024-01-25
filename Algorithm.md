@@ -612,9 +612,9 @@ int maxArea(vector<int>& height) {
     return ans;
 }
 ```
-## *同向双指针 滑动窗口
+## *同向双指针&滑动窗口
 [题单](https://leetcode.cn/circle/discuss/0viNMK/)
-### [443. 压缩字符串](https://leetcode.cn/problems/string-compression/)
+#### [443. 压缩字符串](https://leetcode.cn/problems/string-compression/)
 ```c++
 int compress(vector<char>& chars) {
 	int n = chars.size();
@@ -697,7 +697,8 @@ vector<int> findAnagrams(string s, string p) {
 	return ans;
 }
 ```
-### 不定长滑动窗口(求最长/最大)
+### 不定长滑动窗口
+求最长/最大
 #### [3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/)
 ```c++
 int lengthOfLongestSubstring(string s) {
@@ -756,7 +757,7 @@ int longestOnes(vector<int>& nums, int k) {
 	return ans;
 }
 ```
-### 不定长滑动窗口(求最短/最小)
+求最短/最小
 #### [209. 长度最小的子数组](https://leetcode.cn/problems/minimum-size-subarray-sum/)
 
 初始为第一个元素 子数组小于目标则加大右端点来增加子数组长度 若子数组和大于等于目标 缩小左端点 直到右端点为数组最后一个
@@ -781,7 +782,7 @@ int minSubArrayLen(int target, vector<int>& nums) {
     return ans > n ? 0 : ans;
 }
 ```
-### 不定长滑动窗口(求子数组个数)
+求子数组个数
 #### [713. 乘积小于 K 的子数组](https://leetcode.cn/problems/subarray-product-less-than-k/)
 
 ```c++
@@ -838,7 +839,7 @@ long long countSubarrays(vector<int>& nums, int k) {//时间复杂度为O(n)
 	return ans;
 }
 ```
-### 多指针滑动窗口
+多指针滑动窗口
 
 ## *快慢指针
 

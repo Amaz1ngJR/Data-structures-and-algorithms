@@ -2528,3 +2528,97 @@ int minReorder(int n, vector<vector<int>>& connections) {
 ```
 ## 广度优先搜索BFS
 
+## 最近公共祖先LCA
+### [2846. 边权重均等查询](https://leetcode.cn/problems/minimum-edge-weight-equilibrium-queries-in-a-tree/)
+```c++
+vector<int> minOperationsQueries(int n, vector<vector<int>>& edges, vector<vector<int>>& queries) {
+	vector<vector<pair<int, int>>> g(n);//记录节点i相连的节点id以及边权重
+	for (const auto& e : edges) {
+		g[e[0]].emplace_back(e[1], e[2] - 1);
+		g[e[1]].emplace_back(e[0], e[2] - 1);
+	}
+
+	int m = 32 - __builtin_clz(n); // n 的二进制长度
+
+	/*  树上倍增:
+	pa[x][i] 表示x的第2^i个祖先节点
+	pa[x][0] = parent[x]
+	pa[x][1] = pa[pa[x][0]][0] = parent[parent[x]]
+	pa[x][i+1] = pa[pa[x][i]][i]*/
+	vector<vector<int>> pa(n, vector<int>(m, -1));
+	vector<int> depth(n);
+	//cnt[x][i][j]表示节点x到其第2^i个祖先的路径上，边权值为j的边的数量
+	vector<vector<array<int, 26>>> cnt(n, vector<array<int, 26>>(m));
+	function<void(int, int)> dfs = [&](int x, int fa) {
+		pa[x][0] = fa;
+		for (const auto &ne : g[x]) {//当前节点相连的下一个节点们
+			if (ne.first != fa) {//下个节点不是当前节点
+				cnt[ne.first][0][ne.second] = 1;
+				depth[ne.first] = depth[x] + 1;//下个节点的深度+1
+				dfs(ne.first, x);
+			}
+		}
+	};
+	dfs(0, -1);//将节点0视为树的根节点 其父节点为-1
+
+	for (int i = 0; i < m - 1; i++) {
+		for (int x = 0; x < n; x++) {
+			int p = pa[x][i];
+			if (p != -1) {
+				int pp = pa[p][i];
+				pa[x][i + 1] = pp;
+				for (int j = 0; j < 26; ++j) {
+					cnt[x][i + 1][j] = cnt[x][i][j] + cnt[p][i][j];
+				}
+			}
+		}
+	}
+	/*保留出现次数最多的边 其余的全部修改
+	从 a 到 b 的路径长度(边数)
+		depth[a] + depth[b] - 2 * depth[lca]
+	从 a 到 b 出现次数最多的边
+	1 <= wi <= 26 统计每种边权的出现次数*/
+	vector<int> ans;
+	for (auto& q : queries) {
+		int x = q[0], y = q[1];
+		int path_len = depth[x] + depth[y]; // 最后减去 depth[lca] * 2
+		vector<int>cw(26);
+		if (depth[x] > depth[y]) {
+			swap(x, y);//保证x深度小于y
+		}
+		//求lca:
+		
+		// 让 y 和 x 在同一深度
+		for (int k = depth[y] - depth[x]; k; k &= k - 1) {
+			int i = __builtin_ctz(k);//本次跳跃的深度
+			int p = pa[y][i];
+			for (int j = 0; j < 26; ++j) {
+				cw[j] += cnt[y][i][j];//统计本次跳跃增加了多少路径权值
+			}
+			y = p;
+		}
+		//x和y一起跳
+		if (y != x) {
+			for (int i = m - 1; ~i; i--) {// x 和 y 同时上跳 2^i 步
+				int px = pa[x][i], py = pa[y][i];
+				if (px != py) {//同时往上跳i步 此时px!=py说明lca还在上面 可以跳
+					for (int j = 0; j < 26; j++) {
+						cw[j] += cnt[x][i][j] + cnt[y][i][j];
+					}
+					x = px;
+					y = py; 
+				}
+			}
+			//最后跳完之后lca就在x和y的上面 还需跳一步
+			for (int j = 0; j < 26; j++) {
+				cw[j] += cnt[x][0][j] + cnt[y][0][j];
+			}
+			x = pa[x][0];//x即为lca
+		}
+
+		path_len -= depth[x] * 2;
+		ans.emplace_back(path_len - *max_element(cw.begin(), cw.end()));
+	}
+	return ans;
+}
+```

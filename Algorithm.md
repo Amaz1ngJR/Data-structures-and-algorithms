@@ -613,7 +613,6 @@ int maxArea(vector<int>& height) {
 }
 ```
 ## *同向双指针&滑动窗口
-[题单](https://leetcode.cn/circle/discuss/0viNMK/)
 #### [443. 压缩字符串](https://leetcode.cn/problems/string-compression/)
 ```c++
 int compress(vector<char>& chars) {
@@ -716,17 +715,17 @@ string subStrHash(string s, int power, int modulo, int k, int hashValue) {
 }
 ```
 ### 不定长滑动窗口
+[题单](https://leetcode.cn/circle/discuss/0viNMK/)
 求最长/最大 [3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/)、
 [1493. 删掉一个元素以后全为 1 的最长子数组](https://leetcode.cn/problems/longest-subarray-of-1s-after-deleting-one-element/)、
-[]()
-
+[2730. 找到最长的半重复子字符串](https://leetcode.cn/problems/find-the-longest-semi-repetitive-substring/)、
 #### [1004. 最大连续1的个数 III](https://leetcode.cn/problems/max-consecutive-ones-iii/)
 ```c++
 int longestOnes(vector<int>& nums, int k) {
 	int low = 0, high = 0, ans = 0;
 	while (high != nums.size()) {
-		if (!nums[high]) k--;//遇到0就填
-		while (k < 0) {//多填一个 移动左指针
+		if (!nums[high]) k--;//遇到0就填 直到不满足条件
+		while (k < 0) {// 条件不满足移动左指针
 			if (!nums[low]) k++;
 			low++;
 		}

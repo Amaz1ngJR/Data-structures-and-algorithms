@@ -641,6 +641,7 @@ pre [1343. 大小为 K 且平均值大于等于阈值的子数组数目](https:/
 [2090. 半径为 k 的子数组平均值](https://leetcode.cn/problems/k-radius-subarray-averages/)、
 [2379. 得到 K 个黑块的最少涂色次数](https://leetcode.cn/problems/minimum-recolors-to-get-k-consecutive-black-blocks/)、
 [1052. 爱生气的书店老板](https://leetcode.cn/problems/grumpy-bookstore-owner/)、
+[2653. 滑动子数组的美丽值](https://leetcode.cn/problems/sliding-subarray-beauty/)、
 #### [2841. 几乎唯一子数组的最大和](https://leetcode.cn/problems/maximum-sum-of-almost-unique-subarray/)
 ```c++
 long long maxSum(vector<int>& nums, int m, int k) {
@@ -695,6 +696,23 @@ vector<int> findAnagrams(string s, string p) {
 		i++;
 	}
 	return ans;
+}
+```
+#### [2156. 查找给定哈希值的子串](https://leetcode.cn/problems/find-substring-with-given-hash-value/)
+```c++
+string subStrHash(string s, int power, int modulo, int k, int hashValue) {
+	int ans = -1, n = s.size();
+	long long hash = 0, mult = 1;
+	for (int i = n - 1; i > n - k; i--) {
+		hash = power * (hash + s[i] - 96) % modulo;
+		mult = mult * power % modulo;//power^(k-1) mod modulo
+	}
+	for (int i = n - k; ~i; i--) {//窗口开始满
+		hash = (hash + s[i] - 96) % modulo;
+		if (hash == hashValue)ans = i;
+		hash = power * (hash + modulo - mult * (s[i + k - 1] - 96) % modulo) % modulo;
+	}
+	return s.substr(ans, k);
 }
 ```
 ### 不定长滑动窗口

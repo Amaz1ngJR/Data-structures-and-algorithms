@@ -227,6 +227,14 @@ void solveSudoku(vector<vector<char>>& board) {
 	dfs(cnt);
 }
 ```
+## __builtin GCC编译器
+```c++
+void demo() {
+	int count = __builtin_popcount(255);//返回整数中二进制表示中1的个数 8
+	int trailing_zeros = __builtin_ctz(16);//返回整数的二进制表示中从最低位开始到第一个非零位的位数4
+	int leading_zeros = __builtin_clz(16);//返回整数的二进制表示中从最高位开始到第一个非零位的位数 28
+}
+```
 # 重叠区间
 [452. 用最少数量的箭引爆气球](https://leetcode.cn/problems/minimum-number-of-arrows-to-burst-balloons/)
 ```c++

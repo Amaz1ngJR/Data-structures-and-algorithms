@@ -11,6 +11,10 @@ bool demo() {
 		ans |= 1 << i;//将ans的第i位置为1
 		ans &= ~(1 << i);//将ans的第i位置为0
 	}
+	while (n) {
+		cout << n << endl;
+		n &= n - 1; //去掉n二进制中低位第一个1
+	}
 	return (n&(n-1))==0;//判断一个正整数是否是2的幂
 }
 ```

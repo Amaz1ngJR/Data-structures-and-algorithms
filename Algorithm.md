@@ -719,6 +719,27 @@ string subStrHash(string s, int power, int modulo, int k, int hashValue) {
 求最长/最大 [3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/)、
 [1493. 删掉一个元素以后全为 1 的最长子数组](https://leetcode.cn/problems/longest-subarray-of-1s-after-deleting-one-element/)、
 [2730. 找到最长的半重复子字符串](https://leetcode.cn/problems/find-the-longest-semi-repetitive-substring/)、
+[1695. 删除子数组的最大得分](https://leetcode.cn/problems/maximum-erasure-value/)
+#### [904. 水果成篮](https://leetcode.cn/problems/fruit-into-baskets/)
+```c++
+int totalFruit(vector<int>& fruits) {
+	int n = fruits.size(), low = 0, high = 0, ans = 0;
+	unordered_map<int, int>m;
+	while (high < n) {
+		m[fruits[high]]++;
+		while (m.size() > 2) {
+			if (--m[fruits[low]] == 0) {
+				m.erase(fruits[low++]);
+				break;
+			}
+			low++;
+		}
+		ans = max(ans, high - low + 1);
+		high++;
+	}
+	return ans;
+}
+```
 #### [1004. 最大连续1的个数 III](https://leetcode.cn/problems/max-consecutive-ones-iii/)
 ```c++
 int longestOnes(vector<int>& nums, int k) {

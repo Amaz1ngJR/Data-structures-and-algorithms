@@ -716,10 +716,9 @@ string subStrHash(string s, int power, int modulo, int k, int hashValue) {
 ```
 ### 不定长滑动窗口
 [题单](https://leetcode.cn/circle/discuss/0viNMK/)
-求最长/最大 [3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/)、
+**求最长/最大:** [3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/)、
 [1493. 删掉一个元素以后全为 1 的最长子数组](https://leetcode.cn/problems/longest-subarray-of-1s-after-deleting-one-element/)、
 [2730. 找到最长的半重复子字符串](https://leetcode.cn/problems/find-the-longest-semi-repetitive-substring/)、
-[1695. 删除子数组的最大得分](https://leetcode.cn/problems/maximum-erasure-value/)
 #### [904. 水果成篮](https://leetcode.cn/problems/fruit-into-baskets/)
 ```c++
 int totalFruit(vector<int>& fruits) {
@@ -740,6 +739,9 @@ int totalFruit(vector<int>& fruits) {
 	return ans;
 }
 ```
+[1695. 删除子数组的最大得分](https://leetcode.cn/problems/maximum-erasure-value/)、
+[2958. 最多 K 个重复元素的最长子数组](https://leetcode.cn/problems/length-of-longest-subarray-with-at-most-k-frequency/)、
+[2024. 考试的最大困扰度](https://leetcode.cn/problems/maximize-the-confusion-of-an-exam/)
 #### [1004. 最大连续1的个数 III](https://leetcode.cn/problems/max-consecutive-ones-iii/)
 ```c++
 int longestOnes(vector<int>& nums, int k) {
@@ -756,7 +758,26 @@ int longestOnes(vector<int>& nums, int k) {
 	return ans;
 }
 ```
-求最短/最小
+#### [2401. 最长优雅子数组](https://leetcode.cn/problems/longest-nice-subarray/) 位运算
+```c++
+int longestNiceSubarray(vector<int>& nums) {
+	int n = nums.size(), ans = 0, low = 0, high = 0, len = 0, mask = 0;
+	while (high < n) {
+		len++;
+		while (mask & nums[high]) {
+			//mask &= ~(nums[low++]);
+			mask ^= nums[low++];
+			len--;
+		}
+		mask |= nums[high];
+		ans = max(ans, len);
+		high++;
+	}
+	return ans;
+}
+```
+
+**求最短/最小:**
 #### [209. 长度最小的子数组](https://leetcode.cn/problems/minimum-size-subarray-sum/)
 
 初始为第一个元素 子数组小于目标则加大右端点来增加子数组长度 若子数组和大于等于目标 缩小左端点 直到右端点为数组最后一个
@@ -781,7 +802,7 @@ int minSubArrayLen(int target, vector<int>& nums) {
     return ans > n ? 0 : ans;
 }
 ```
-求子数组个数
+**求子数组个数:**
 #### [713. 乘积小于 K 的子数组](https://leetcode.cn/problems/subarray-product-less-than-k/)
 
 ```c++
@@ -838,7 +859,7 @@ long long countSubarrays(vector<int>& nums, int k) {//时间复杂度为O(n)
 	return ans;
 }
 ```
-多指针滑动窗口
+**多指针滑动窗口:**
 
 ## *快慢指针
 

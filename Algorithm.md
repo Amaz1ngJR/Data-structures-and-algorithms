@@ -792,6 +792,7 @@ int longestNiceSubarray(vector<int>& nums) {
 	return ans;
 }
 ```
+[1658. 将 x 减到 0 的最小操作数](https://leetcode.cn/problems/minimum-operations-to-reduce-x-to-zero/)、
 
 **求最短/最小:**
 #### [209. 长度最小的子数组](https://leetcode.cn/problems/minimum-size-subarray-sum/)

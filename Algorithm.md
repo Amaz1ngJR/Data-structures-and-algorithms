@@ -758,6 +758,22 @@ int longestOnes(vector<int>& nums, int k) {
 	return ans;
 }
 ```
+#### [1438. 绝对差不超过限制的最长连续子数组](https://leetcode.cn/problems/longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit/)
+```c++
+int longestSubarray(vector<int>& nums, int limit) {
+	multiset<int>ms;
+	int n = nums.size(), low = 0, high = 0, ans = 0;
+	while (high < n) {
+		ms.emplace(nums[high]);
+		while (*ms.rbegin() - *ms.begin() > limit) {
+			ms.erase(ms.find(nums[low++]));
+		}
+		ans = max(ans, high - low + 1);
+		high++;
+	}
+	return ans;
+}
+```
 #### [2401. 最长优雅子数组](https://leetcode.cn/problems/longest-nice-subarray/) 位运算
 ```c++
 int longestNiceSubarray(vector<int>& nums) {

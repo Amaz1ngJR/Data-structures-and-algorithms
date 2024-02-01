@@ -977,6 +977,44 @@ vector<vector<int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k
 	return ans;
 }
 ```
+**对顶堆**
+#### [295. 数据流的中位数](https://leetcode.cn/problems/find-median-from-data-stream/)
+```c++
+class MedianFinder {
+private:
+	priority_queue<int>q_max;//大根堆
+	priority_queue<int, vector<int>, greater<int>>q_min;//小根堆
+public:
+	MedianFinder() {}
+
+	void addNum(int num) {
+		if (q_max.empty() || num <= q_max.top()) {
+			q_max.emplace(num);
+			if (q_min.size() + 1 < q_max.size()) {//q_max.size要比q_min.size多一个
+				q_min.emplace(q_max.top());
+				q_max.pop();
+			}
+		}
+		else {
+			q_min.emplace(num);
+			if (q_min.size() > q_max.size()) {
+				q_max.emplace(q_min.top());
+				q_min.pop();
+			}
+		}
+	}
+
+	double findMedian() {
+		if (q_max.size() > q_min.size())//奇数个
+			return q_max.top();
+		return (q_min.top() + q_max.top()) / 2.0;
+	}
+};
+```
+#### [480. 滑动窗口中位数](https://leetcode.cn/problems/sliding-window-median/)
+```c++
+
+```
 ### **并查集
 #### [990. 等式方程的可满足性](https://leetcode.cn/problems/satisfiability-of-equality-equations/)
 ```c++

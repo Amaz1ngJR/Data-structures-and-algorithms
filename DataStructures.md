@@ -1015,6 +1015,42 @@ public:
 ```c++
 
 ```
+#### [LCP 24. 数字游戏](https://leetcode.cn/problems/5TxKeK/)
+```c++
+vector<int> numsGame(vector<int>& nums) {
+	int n = nums.size(), t, mod = 1e9 + 7;
+	priority_queue<int>q_max;
+	priority_queue<int, vector<int>, greater<>>q_min;
+	vector<int>ans(n);
+	long long left_sum = 0, right_sum = 0;
+	for (int i = 0; i < n; i++) {
+		t = nums[i] - i;
+		if (i & 1) {//前缀是偶数
+			if (t > q_min.top()) {
+				right_sum += t - q_min.top();
+				q_min.emplace(t);
+				t = q_min.top();
+				q_min.pop();
+			}
+			left_sum += t;
+			q_max.emplace(t);
+			ans[i] = (right_sum - left_sum) % mod;
+		}
+		else {
+			if (!q_max.empty() && t < q_max.top()) {
+				left_sum -= q_max.top() - t;
+				q_max.emplace(t);
+				t = q_max.top();
+				q_max.pop();
+			}
+			right_sum += t;
+			q_min.emplace(t);
+			ans[i] = (right_sum - q_min.top() - left_sum) % mod;
+		}
+	}
+	return ans;
+}
+```
 ### **并查集
 #### [990. 等式方程的可满足性](https://leetcode.cn/problems/satisfiability-of-equality-equations/)
 ```c++

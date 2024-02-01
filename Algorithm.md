@@ -794,7 +794,29 @@ int longestNiceSubarray(vector<int>& nums) {
 ```
 [1658. 将 x 减到 0 的最小操作数](https://leetcode.cn/problems/minimum-operations-to-reduce-x-to-zero/)、
 [1838. 最高频元素的频数](https://leetcode.cn/problems/frequency-of-the-most-frequent-element/)、
-
+#### [2516. 每种字符至少取 K 个](https://leetcode.cn/problems/take-k-of-each-character-from-left-and-right/)
+```c++
+int takeCharacters(string s, int k) {
+	vector<int>tar(3, 0), cnt(3, 0);
+	for (const char& ch : s)tar[ch - 'a']++;
+	for (int& ta : tar) {
+		ta -= k;
+		if (ta < 0)return -1;
+	}
+	int n = s.size(), ans = INT_MAX, low = 0, high = 0, i;
+	while (high < n) {
+		i = s[high] - 'a';
+		cnt[i]++;
+		while (cnt[i] > tar[i]) {
+			cnt[s[low] - 'a']--;
+			low++;
+		}
+		ans = min(ans, n - high + low - 1);
+		high++;
+	}
+	return ans;
+}
+```
 
 **求最短/最小:**
 #### [209. 长度最小的子数组](https://leetcode.cn/problems/minimum-size-subarray-sum/)

@@ -901,6 +901,23 @@ long long countSubarrays(vector<int>& nums, int k) {//时间复杂度为O(n)
 }
 ```
 **多指针滑动窗口:**
+#### [930. 和相同的二元子数组](https://leetcode.cn/problems/binary-subarrays-with-sum/)
+```c++
+int numSubarraysWithSum(vector<int>& nums, int goal) {
+	int n = nums.size(), low1 = 0, low2 = 0, high = 0, sum1 = 0, sum2 = 0, ans = 0;
+	while (high < n) {
+		sum1 += nums[high];
+		while (low1 <= high && sum1 > goal)
+			sum1 -= nums[low1++];
+		sum2 += nums[high];
+		while (low2 <= high && sum2 >= goal)
+			sum2 -= nums[low2++];
+		ans += low2 - low1;//以high为窗口左端点 右端点落在[low1,low2)之间都满足
+		high++;
+	}
+	return ans;
+}
+```
 
 ## *快慢指针
 

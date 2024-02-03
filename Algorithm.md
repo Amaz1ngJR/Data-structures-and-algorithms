@@ -612,7 +612,7 @@ int maxArea(vector<int>& height) {
     return ans;
 }
 ```
-## *同向双指针&滑动窗口
+## *同向双指针
 #### [443. 压缩字符串](https://leetcode.cn/problems/string-compression/)
 ```c++
 int compress(vector<char>& chars) {
@@ -716,9 +716,47 @@ string subStrHash(string s, int power, int modulo, int k, int hashValue) {
 ```
 ### 不定长滑动窗口
 [题单](https://leetcode.cn/circle/discuss/0viNMK/)
-**求最长/最大:** [3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/)、
+[209. 长度最小的子数组](https://leetcode.cn/problems/minimum-size-subarray-sum/)、
+[3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/)、
 [1493. 删掉一个元素以后全为 1 的最长子数组](https://leetcode.cn/problems/longest-subarray-of-1s-after-deleting-one-element/)、
 [2730. 找到最长的半重复子字符串](https://leetcode.cn/problems/find-the-longest-semi-repetitive-substring/)、
+
+#### [713. 乘积小于 K 的子数组](https://leetcode.cn/problems/subarray-product-less-than-k/)
+```c++
+int numSubarrayProductLessThanK(vector<int>& nums, int k) {
+	if (k <= 1)return 0; //nums[i]>=1
+	int ans = 0, low = 0, high = low;
+	int mul = nums[low];//初始化乘积为nums[0]
+	while (high != nums.size()) {//固定左端点low 遍历high
+		if (mul >= k) {//乘积大于k了 移动左端点
+			mul /= nums[low];
+			low++;
+		}
+		else {
+			ans += high - low + 1;//新增的！子数组数量
+			high++;
+			if (high != nums.size()) 
+				mul *= nums[high];
+		}
+	}
+	return ans;
+}
+```
+```c++
+int numSubarrayProductLessThanK(vector<int>& nums, int k) {
+    if (k <= 1)return false;//nums[i]>=1
+    int ans = 0, mul = 1, low = 0;
+    for (int high = 0; high < nums.size(); high++) {
+        mul *= nums[high];
+        while(mul >= k) {
+            mul /= nums[low];
+            low++;
+        }
+        ans += high - low + 1;//固定了右端点
+    }
+    return ans;
+}
+```
 #### [904. 水果成篮](https://leetcode.cn/problems/fruit-into-baskets/)
 ```c++
 int totalFruit(vector<int>& fruits) {
@@ -794,6 +832,27 @@ int longestNiceSubarray(vector<int>& nums) {
 ```
 [1658. 将 x 减到 0 的最小操作数](https://leetcode.cn/problems/minimum-operations-to-reduce-x-to-zero/)、
 [1838. 最高频元素的频数](https://leetcode.cn/problems/frequency-of-the-most-frequent-element/)、
+#### [1234. 替换子串得到平衡字符串](https://leetcode.cn/problems/replace-the-substring-for-balanced-string/)
+```c++
+int balancedString(string s) {
+	int n = s.size(), t = n / 4;
+	unordered_map<char, int>m = { {'Q',0},{'W',1},{'E',2},{'R',3} };
+	vector<int>cnt(4, 0);
+	for (const char& ch : s)cnt[m[ch]]++;
+	if (cnt[0] == t && cnt[1] == t && cnt[2] == t && cnt[3] == t)return 0;
+	int ans = n, low = 0, high = 0;
+	while (high < n) {
+		cnt[m[s[high]]]--;
+		while (cnt[0] <= t && cnt[1] <= t && cnt[2] <= t && cnt[3] <= t) {
+			ans = min(ans, high - low + 1);
+			cnt[m[s[low]]]++;
+			low++;
+		}
+		high++;
+	}
+	return ans;
+}
+```
 #### [2516. 每种字符至少取 K 个](https://leetcode.cn/problems/take-k-of-each-character-from-left-and-right/)
 ```c++
 int takeCharacters(string s, int k) {
@@ -818,69 +877,6 @@ int takeCharacters(string s, int k) {
 }
 ```
 
-**求最短/最小:**
-#### [209. 长度最小的子数组](https://leetcode.cn/problems/minimum-size-subarray-sum/)
-
-初始为第一个元素 子数组小于目标则加大右端点来增加子数组长度 若子数组和大于等于目标 缩小左端点 直到右端点为数组最后一个
-
-```c++
-int minSubArrayLen(int target, vector<int>& nums) {
-    int n = nums.size(), ans = n + 1;
-    int low = 0, high = low;
-    int sum = nums[low];
-    while (high != n) {
-        if (sum >= target) {
-            sum -= nums[low];
-            ans = min(ans, high - low + 1);
-            low++;
-        }
-        else {
-            high++;
-            if (high != n) 
-                sum += nums[high];
-        }
-    }
-    return ans > n ? 0 : ans;
-}
-```
-**求子数组个数:**
-#### [713. 乘积小于 K 的子数组](https://leetcode.cn/problems/subarray-product-less-than-k/)
-
-```c++
-int numSubarrayProductLessThanK(vector<int>& nums, int k) {
-	if (k <= 1)return 0; //nums[i]>=1
-	int ans = 0, low = 0, high = low;
-	int mul = nums[low];//初始化乘积为nums[0]
-	while (high != nums.size()) {//固定左端点low 遍历high
-		if (mul >= k) {//乘积大于k了 移动左端点
-			mul /= nums[low];
-			low++;
-		}
-		else {
-			ans += high - low + 1;//新增的！子数组数量
-			high++;
-			if (high != nums.size()) 
-				mul *= nums[high];
-		}
-	}
-	return ans;
-}
-```
-```c++
-int numSubarrayProductLessThanK(vector<int>& nums, int k) {
-    if (k <= 1)return false;//nums[i]>=1
-    int ans = 0, mul = 1, low = 0;
-    for (int high = 0; high < nums.size(); high++) {
-        mul *= nums[high];
-        while(mul >= k) {
-            mul /= nums[low];
-            low++;
-        }
-        ans += high - low + 1;//固定了右端点
-    }
-    return ans;
-}
-```
 #### [2962. 统计最大元素出现至少 K 次的子数组](https://leetcode.cn/problems/count-subarrays-where-max-element-appears-at-least-k-times/)
 ```c++
 long long countSubarrays(vector<int>& nums, int k) {//时间复杂度为O(n)
@@ -900,7 +896,7 @@ long long countSubarrays(vector<int>& nums, int k) {//时间复杂度为O(n)
 	return ans;
 }
 ```
-**多指针滑动窗口:**
+### 多指针滑动窗口
 #### [930. 和相同的二元子数组](https://leetcode.cn/problems/binary-subarrays-with-sum/)
 ```c++
 int numSubarraysWithSum(vector<int>& nums, int goal) {

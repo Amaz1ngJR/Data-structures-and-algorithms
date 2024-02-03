@@ -2155,6 +2155,24 @@ int maxProfit(int k, vector<int>& prices) {
 ```
 
 ## *区间DP
+### [1690. 石子游戏 VII](https://leetcode.cn/problems/stone-game-vii/)
+```c++
+int stoneGameVII(vector<int>& stones) {
+	int n = stones.size(), a = 0, b = 0;
+	vector<int>pre(n + 1);//sum[low,high)=pre[high]-pre[low]
+	partial_sum(stones.begin(), stones.end(), pre.begin() + 1);
+	vector<vector<int>>memo(n, vector<int>(n));
+	//dp(i,j)表示在区间[i,j]中选取最左边或最右边使得这次得分与下个人的得分之间的差值最大
+	function<int(int, int)>dp = [&](int low, int high)->int {
+		if (low == high)return 0;
+		if (memo[low][high])return memo[low][high];
+		memo[low][high] = max(pre[high + 1] - pre[low + 1] - dp(low + 1, high),//选择最左边sum[low+1,high+1)
+			pre[high] - pre[low] - dp(low, high - 1));//选择最右边sum[low,high)
+		return memo[low][high];
+	};
+	return dp(0, n - 1);
+}
+```
 ### [516. 最长回文子序列](https://leetcode.cn/problems/longest-palindromic-subsequence/)
 
 方法一:将s逆置 求与原来的最长公共子序列的长度 即为答案

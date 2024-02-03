@@ -853,6 +853,24 @@ int balancedString(string s) {
 	return ans;
 }
 ```
+#### [1574. 删除最短的子数组使剩余数组有序](https://leetcode.cn/problems/shortest-subarray-to-be-removed-to-make-array-sorted/)
+```c++
+int findLengthOfShortestSubarray(vector<int>& arr) {
+	int n = arr.size(), low = 0, high = n - 1;
+	while (high && arr[high - 1] <= arr[high])
+		high--;
+	int ans = high;//删除[0,high-1]
+	while (high) {
+		while (high == n || arr[low] <= arr[high]) {
+			ans = min(ans, high - low - 1);//删除[low+1,high-1]
+			if (arr[low] > arr[low + 1])return ans;
+			low++;
+		}
+		high++;
+	}
+	return ans;
+}
+```
 #### [2516. 每种字符至少取 K 个](https://leetcode.cn/problems/take-k-of-each-character-from-left-and-right/)
 ```c++
 int takeCharacters(string s, int k) {

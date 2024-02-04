@@ -715,11 +715,53 @@ string subStrHash(string s, int power, int modulo, int k, int hashValue) {
 }
 ```
 ### 不定长滑动窗口
-[题单](https://leetcode.cn/circle/discuss/0viNMK/)
+
+#### [1004. 最大连续1的个数 III](https://leetcode.cn/problems/max-consecutive-ones-iii/)
+```c++
+int longestOnes(vector<int>& nums, int k) {
+	int low = 0, high = 0, ans = 0;
+	while (high != nums.size()) {
+		if (!nums[high]) k--;//遇到0就填 直到不满足条件
+		while (k < 0) {// 条件不满足移动左指针
+			if (!nums[low]) k++;
+			low++;
+		}
+		ans = max(ans, high - low + 1);//时刻记录最大值
+		high++;
+	}
+	return ans;
+}
+```
+
 [209. 长度最小的子数组](https://leetcode.cn/problems/minimum-size-subarray-sum/)、
 [3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/)、
 [1493. 删掉一个元素以后全为 1 的最长子数组](https://leetcode.cn/problems/longest-subarray-of-1s-after-deleting-one-element/)、
 [2730. 找到最长的半重复子字符串](https://leetcode.cn/problems/find-the-longest-semi-repetitive-substring/)、
+[1695. 删除子数组的最大得分](https://leetcode.cn/problems/maximum-erasure-value/)、
+[2958. 最多 K 个重复元素的最长子数组](https://leetcode.cn/problems/length-of-longest-subarray-with-at-most-k-frequency/)、
+[2024. 考试的最大困扰度](https://leetcode.cn/problems/maximize-the-confusion-of-an-exam/)、
+[2401. 最长优雅子数组](https://leetcode.cn/problems/longest-nice-subarray/)、
+[1658. 将 x 减到 0 的最小操作数](https://leetcode.cn/problems/minimum-operations-to-reduce-x-to-zero/)、
+[1838. 最高频元素的频数](https://leetcode.cn/problems/frequency-of-the-most-frequent-element/)、
+
+pre [2799. 统计完全子数组的数目](https://leetcode.cn/problems/count-complete-subarrays-in-an-array/)
+#### [1358. 包含所有三种字符的子字符串数目](https://leetcode.cn/problems/number-of-substrings-containing-all-three-characters/)
+```c++
+int numberOfSubstrings(string s) {
+	vector<int>cnt(3, 0);
+	int n = s.size(), low = 0, high = 0, ans = 0;
+	while (high < n) {
+		cnt[s[high] - 'a']++;
+		while (cnt[0] && cnt[1] && cnt[2]) {
+			ans += n - high;//[low, high]到[low, n-1]都满足
+			cnt[s[low] - 'a']--;
+			low++;
+		}
+		high++;
+	}
+	return ans;
+}
+```
 
 #### [713. 乘积小于 K 的子数组](https://leetcode.cn/problems/subarray-product-less-than-k/)
 ```c++
@@ -777,25 +819,6 @@ int totalFruit(vector<int>& fruits) {
 	return ans;
 }
 ```
-[1695. 删除子数组的最大得分](https://leetcode.cn/problems/maximum-erasure-value/)、
-[2958. 最多 K 个重复元素的最长子数组](https://leetcode.cn/problems/length-of-longest-subarray-with-at-most-k-frequency/)、
-[2024. 考试的最大困扰度](https://leetcode.cn/problems/maximize-the-confusion-of-an-exam/)
-#### [1004. 最大连续1的个数 III](https://leetcode.cn/problems/max-consecutive-ones-iii/)
-```c++
-int longestOnes(vector<int>& nums, int k) {
-	int low = 0, high = 0, ans = 0;
-	while (high != nums.size()) {
-		if (!nums[high]) k--;//遇到0就填 直到不满足条件
-		while (k < 0) {// 条件不满足移动左指针
-			if (!nums[low]) k++;
-			low++;
-		}
-		ans = max(ans, high - low + 1);//时刻记录最大值
-		high++;
-	}
-	return ans;
-}
-```
 #### [1438. 绝对差不超过限制的最长连续子数组](https://leetcode.cn/problems/longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit/)
 ```c++
 int longestSubarray(vector<int>& nums, int limit) {
@@ -831,26 +854,7 @@ long long countSubarrays(vector<int>& nums, int k) {//时间复杂度为O(n)
 	return ans;
 }
 ```
-#### [2401. 最长优雅子数组](https://leetcode.cn/problems/longest-nice-subarray/) 位运算
-```c++
-int longestNiceSubarray(vector<int>& nums) {
-	int n = nums.size(), ans = 0, low = 0, high = 0, len = 0, mask = 0;
-	while (high < n) {
-		len++;
-		while (mask & nums[high]) {
-			//mask &= ~(nums[low++]);
-			mask ^= nums[low++];
-			len--;
-		}
-		mask |= nums[high];
-		ans = max(ans, len);
-		high++;
-	}
-	return ans;
-}
-```
-[1658. 将 x 减到 0 的最小操作数](https://leetcode.cn/problems/minimum-operations-to-reduce-x-to-zero/)、
-[1838. 最高频元素的频数](https://leetcode.cn/problems/frequency-of-the-most-frequent-element/)、
+
 #### [1234. 替换子串得到平衡字符串](https://leetcode.cn/problems/replace-the-substring-for-balanced-string/)
 ```c++
 int balancedString(string s) {
@@ -913,7 +917,13 @@ int takeCharacters(string s, int k) {
 	return ans;
 }
 ```
+pre [2302. 统计得分小于 K 的子数组数目](https://leetcode.cn/problems/count-subarrays-with-score-less-than-k/)
+#### [2537. 统计好子数组的数目](https://leetcode.cn/problems/count-the-number-of-good-subarrays/)
+```c++
+
+```
 ### 多指针滑动窗口
+[题单](https://leetcode.cn/circle/discuss/0viNMK/)
 #### [930. 和相同的二元子数组](https://leetcode.cn/problems/binary-subarrays-with-sum/)
 ```c++
 int numSubarraysWithSum(vector<int>& nums, int goal) {

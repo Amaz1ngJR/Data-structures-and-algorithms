@@ -509,7 +509,25 @@ vector<int> maxSlidingWindow(vector<int>& nums, int k) {
 	return ans;
 }
 ```
-
+#### [1696. 跳跃游戏 VI](https://leetcode.cn/problems/jump-game-vi/)
+```c++
+int maxResult(vector<int>& nums, int k) {
+	int n = nums.size(); vector<int> dp(n);
+	dp[0] = nums[0];//dp[i]表示到达i的最大得分
+	deque<int>q; q.emplace_back(0);//q中存放从q.front开始能跳到的所有位置
+	for (int i = 1; i < n; i++) {
+		while (!q.empty() && q.front() < i - k) {//超出能跳到的k
+			q.pop_front();
+		}
+		dp[i] = dp[q.front()] + nums[i];
+		while (!q.empty() && dp[q.back()] <= dp[i]) {//比跳到前面得分高
+			q.pop_back();
+		}
+		q.emplace_back(i);
+	}
+	return dp[n - 1];
+}
+```
 ## *哈希表
 
 ### [1. 两数之和](https://leetcode.cn/problems/two-sum/)

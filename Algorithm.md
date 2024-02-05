@@ -821,6 +821,7 @@ int totalFruit(vector<int>& fruits) {
 }
 ```
 #### [1438. 绝对差不超过限制的最长连续子数组](https://leetcode.cn/problems/longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit/)
+do [2762. 不间断子数组](https://leetcode.cn/problems/continuous-subarrays/)
 ```c++
 int longestSubarray(vector<int>& nums, int limit) {
 	multiset<int>ms;
@@ -836,6 +837,7 @@ int longestSubarray(vector<int>& nums, int limit) {
 	return ans;
 }
 ```
+
 #### [2962. 统计最大元素出现至少 K 次的子数组](https://leetcode.cn/problems/count-subarrays-where-max-element-appears-at-least-k-times/)
 ```c++
 long long countSubarrays(vector<int>& nums, int k) {//时间复杂度为O(n)
@@ -958,13 +960,11 @@ int numSubarraysWithSum(vector<int>& nums, int goal) {
 	return ans;
 }
 ```
-
 ## *快慢指针
 
 ### [141. 环形链表](https://leetcode.cn/problems/linked-list-cycle/)
 
 判断一个链表是否是有环
-
 ```c++
 bool hasCycle(ListNode *head) {
     ListNode* slow, * fast;

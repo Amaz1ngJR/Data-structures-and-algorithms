@@ -741,6 +741,7 @@ int longestOnes(vector<int>& nums, int k) {
 [2958. 最多 K 个重复元素的最长子数组](https://leetcode.cn/problems/length-of-longest-subarray-with-at-most-k-frequency/)、
 [2024. 考试的最大困扰度](https://leetcode.cn/problems/maximize-the-confusion-of-an-exam/)、
 [2401. 最长优雅子数组](https://leetcode.cn/problems/longest-nice-subarray/)、
+[2302. 统计得分小于 K 的子数组数目](https://leetcode.cn/problems/count-subarrays-with-score-less-than-k/)、
 [1658. 将 x 减到 0 的最小操作数](https://leetcode.cn/problems/minimum-operations-to-reduce-x-to-zero/)、
 [1838. 最高频元素的频数](https://leetcode.cn/problems/frequency-of-the-most-frequent-element/)、
 
@@ -917,11 +918,27 @@ int takeCharacters(string s, int k) {
 	return ans;
 }
 ```
-pre [2302. 统计得分小于 K 的子数组数目](https://leetcode.cn/problems/count-subarrays-with-score-less-than-k/)
 #### [2537. 统计好子数组的数目](https://leetcode.cn/problems/count-the-number-of-good-subarrays/)
 ```c++
-
+long long countGood(vector<int>& nums, int k) {
+	int n = nums.size(), low = 0, high = 0, sum = 0;
+	long long ans = 0;
+	unordered_map<int, int>cnt;
+	while (high < n) {//枚举子数组左端点high
+		sum += cnt[nums[high]]++;//新增的满足的对数
+		//如果源区间[low,high]恰好满足那么除了源区间 向左[0,high]-[low-1,high]还有low个满足
+		//在更新新的low之前 随着右端点high++都有low个区间满足(固定左端点计算)
+		ans += low;
+		while (sum >= k) {//满足条件
+			ans++;//[low,high]恰好满足条件的源区间本身
+			sum -= --cnt[nums[low++]];
+		}
+		high++;
+	}
+	return ans;
+}
 ```
+
 ### 多指针滑动窗口
 [题单](https://leetcode.cn/circle/discuss/0viNMK/)
 #### [930. 和相同的二元子数组](https://leetcode.cn/problems/binary-subarrays-with-sum/)

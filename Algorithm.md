@@ -944,17 +944,18 @@ long long countGood(vector<int>& nums, int k) {
 ### 多指针滑动窗口
 [题单](https://leetcode.cn/circle/discuss/0viNMK/)
 #### [930. 和相同的二元子数组](https://leetcode.cn/problems/binary-subarrays-with-sum/)
+do [1248. 统计「优美子数组」](https://leetcode.cn/problems/count-number-of-nice-subarrays/)
 ```c++
 int numSubarraysWithSum(vector<int>& nums, int goal) {
 	int n = nums.size(), low1 = 0, low2 = 0, high = 0, sum1 = 0, sum2 = 0, ans = 0;
 	while (high < n) {
 		sum1 += nums[high];
-		while (low1 <= high && sum1 > goal)
+		while (low1 <= high && sum1 > goal)//[low1,high]恰好满足
 			sum1 -= nums[low1++];
 		sum2 += nums[high];
-		while (low2 <= high && sum2 >= goal)
+		while (low2 <= high && sum2 >= goal)//[low2,high]恰好不满足
 			sum2 -= nums[low2++];
-		ans += low2 - low1;//以high为窗口左端点 右端点落在[low1,low2)之间都满足
+		ans += low2 - low1;//以high为窗口右端点 左端点落在[low1,low2)之间都满足
 		high++;
 	}
 	return ans;

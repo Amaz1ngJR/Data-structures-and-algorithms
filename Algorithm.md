@@ -41,7 +41,7 @@ int BinarySearch(vector<T>& nums, T target) {
 }
 ```
 
-## 二分查找的变形
+## 二分查找
 pre [852. 山脉数组的峰顶索引](https://leetcode.cn/problems/peak-index-in-a-mountain-array/)
 ```c++
 int peakIndexInMountainArray(vector<int>& arr) {
@@ -150,7 +150,35 @@ vector<int> findPeakGrid(vector<vector<int>>& mat) {
 	return{ -1,-1 };
 }
 ```
-
+### [2563. 统计公平数对的数目](https://leetcode.cn/problems/count-the-number-of-fair-pairs/)
+```c++
+long long countFairPairs(vector<int>& nums, int lower, int upper) {
+	sort(nums.begin(), nums.end());
+	int n = nums.size(); long long ans = 0;
+	for (int j = 0; j < n; j++) {//枚举j => lower - nums[j] <= nums[i] <=upper - nums[j] [left,right]
+		auto low = lower_bound(nums.begin(), nums.begin() + j, lower - nums[j]);//[0,j]中第一个大于或等于left的
+		auto high = upper_bound(nums.begin(), nums.begin() + j, upper - nums[j]);//[0,j]中第一个大于right的 即right+1
+		ans += high - low;
+	}
+	return ans;
+}
+```
+### [300. 最长递增子序列](https://leetcode.cn/problems/longest-increasing-subsequence/)
+```c++
+int lengthOfLIS(vector<int>& nums) {
+	//贪心+二分
+	//时间复杂度O(nlogn) 空间复杂度O(n)
+	vector<int>f;
+	for (const auto& v : nums) {
+		auto it = lower_bound(f.begin(), f.end(), v);//在f中查找第一个大于或等于v的位置
+		if (it == f.end()) {//f中所有元素都小于v
+			f.emplace_back(v); //插入到数组末尾
+		}
+		else *it = v;//找到一个大于等于v的数 将其减少至v 增大了数组变长的潜力
+	}
+	return f.size();
+}
+```
 ## 二分答案
 看到「最大化最小值」或者「最小化最大值」就要想到二分答案 这是一个固定的套路
 ### *最小化最大值
@@ -2619,23 +2647,6 @@ int maxSatisfaction(vector<int>& satisfaction) {
         ans = max(ans, f);
     }
     return ans;
-}
-```
-## [300. 最长递增子序列](https://leetcode.cn/problems/longest-increasing-subsequence/)
-
-```c++
-int lengthOfLIS(vector<int>& nums) {
-	//贪心+二分
-	//时间复杂度O(nlogn) 空间复杂度O(n)
-	vector<int>f;
-	for (const auto& v : nums) {
-		auto it = lower_bound(f.begin(), f.end(), v);//在数组中查找元素v
-		if (it == f.end()) {//v大于f中所有元素 
-			f.emplace_back(v); //插入到数组末尾
-		}
-		else *it = v;//找到一个大于等于v的数 将其减少至v 增大了数组变长的潜力
-	}
-	return f.size();
 }
 ```
 ## [334. 递增的三元子序列](https://leetcode.cn/problems/increasing-triplet-subsequence/)

@@ -150,19 +150,6 @@ vector<int> findPeakGrid(vector<vector<int>>& mat) {
 	return{ -1,-1 };
 }
 ```
-### [2563. 统计公平数对的数目](https://leetcode.cn/problems/count-the-number-of-fair-pairs/)
-```c++
-long long countFairPairs(vector<int>& nums, int lower, int upper) {
-	sort(nums.begin(), nums.end());
-	int n = nums.size(); long long ans = 0;
-	for (int j = 0; j < n; j++) {//枚举j => lower - nums[j] <= nums[i] <=upper - nums[j] [left,right]
-		auto low = lower_bound(nums.begin(), nums.begin() + j, lower - nums[j]);//[0,j]中第一个大于或等于left的
-		auto high = upper_bound(nums.begin(), nums.begin() + j, upper - nums[j]);//[0,j]中第一个大于right的 即right+1
-		ans += high - low;
-	}
-	return ans;
-}
-```
 ### [300. 最长递增子序列](https://leetcode.cn/problems/longest-increasing-subsequence/)
 ```c++
 int lengthOfLIS(vector<int>& nums) {
@@ -968,9 +955,7 @@ long long countGood(vector<int>& nums, int k) {
 	return ans;
 }
 ```
-
 ### 多指针滑动窗口
-[题单](https://leetcode.cn/circle/discuss/0viNMK/)
 #### [930. 和相同的二元子数组](https://leetcode.cn/problems/binary-subarrays-with-sum/)
 do [1248. 统计「优美子数组」](https://leetcode.cn/problems/count-number-of-nice-subarrays/)
 ```c++
@@ -984,6 +969,50 @@ int numSubarraysWithSum(vector<int>& nums, int goal) {
 		while (low2 <= high && sum2 >= goal)//[low2,high]恰好不满足
 			sum2 -= nums[low2++];
 		ans += low2 - low1;//以high为窗口右端点 左端点落在[low1,low2)之间都满足
+		high++;
+	}
+	return ans;
+}
+```
+#### [2563. 统计公平数对的数目](https://leetcode.cn/problems/count-the-number-of-fair-pairs/)
+```c++
+long long countFairPairs(vector<int>& nums, int lower, int upper) {
+	sort(nums.begin(), nums.end());
+	int n = nums.size(); long long ans = 0;
+	for (int j = 0; j < n; j++) {//枚举j => lower - nums[j] <= nums[i] <=upper - nums[j] [left,right]
+		auto low = lower_bound(nums.begin(), nums.begin() + j, lower - nums[j]);//[0,j]中第一个大于或等于left的
+		auto high = upper_bound(nums.begin(), nums.begin() + j, upper - nums[j]);//[0,j]中第一个大于right的 即right+1
+		ans += high - low;
+	}
+	return ans;
+}
+```
+#### [1712. 将数组分成三个子数组的方案数](https://leetcode.cn/problems/ways-to-split-array-into-three-subarrays/)
+```c++
+int waysToSplit(vector<int>& nums) {
+	int n = nums.size(), ans = 0, low1, low2, high = 2, mod = 1e9 + 7;//[0,low)、[low,high)、[high,n)
+	vector<long>pre(n + 1);//pre[l]<=pre[h]-pre[l]<=pre[n]-pre[h] => 2pre[h]-pre[n] <= pre[l] <= pre[h]/2 
+	partial_sum(nums.begin(), nums.end(), pre.begin() + 1);//sum[low,high)=pre[high]-pre[low]
+	while (high < n && 3 * pre[high] <= 2 * pre[n]) {//pre[h]>=4pre[h]-2pre[n] =>2*pre[n]>=3pre[high]
+		low1 = lower_bound(pre.begin() + 1, pre.begin() + high, 2 * pre[high] - pre[n]) - pre.begin();
+		low2 = upper_bound(pre.begin() + low1, pre.begin() + high, pre[high] / 2) - pre.begin();
+		ans = (ans + low2 - low1) % mod;
+		high++;
+	}
+	return ans;
+}
+```
+#### [2444. 统计定界子数组的数目](https://leetcode.cn/problems/count-subarrays-with-fixed-bounds/)
+```c++
+long long countSubarrays(vector<int>& nums, int minK, int maxK) {
+	int n = nums.size(), min_i = -1, max_i = -1, low = -1, high = 0;
+	long long ans = 0;
+	while (high < n) {
+		int x = nums[high];
+		if (x == minK)min_i = high;
+		if (x == maxK)max_i = high;
+		if (x<minK || x>maxK)low = high;//子数组不能包含low
+		ans += max(min(max_i, min_i) - low, 0);
 		high++;
 	}
 	return ans;

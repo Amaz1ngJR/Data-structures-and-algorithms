@@ -70,28 +70,21 @@ do [153. 寻找旋转排序数组中的最小值](https://leetcode.cn/problems/f
 
 ```c++
 int search(vector<int>& nums, int target) {
-    int n = nums.size();
-    if (nums[n - 1] == target)return n - 1;
-    int low = -1;
-    int high = nums.size() - 1;
-    int mid;
-    auto isblue = [&](int mid) {
-        if (nums[mid] > target) {
-            if (target > nums[n - 1]) return true;
-            else if (nums[mid] < nums[n - 1]) return true;
-        }
-        else if (target > nums[n - 1] && nums[n - 1] > nums[mid])return true;
-        return false;
-    };
-    while (low + 1 < high) {
-        mid = low + ((high - low) / 2);
-        if (nums[mid] == target)return mid;
-        else if (isblue(mid))
-            high = mid;
-        else
-            low = mid;
-    }
-    return -1;
+	int n = nums.size(), low = -1, high = n, mid;
+	auto isblue = [&](int mid) {
+		if (nums[mid] > target) {
+			if (target > nums[n - 1]) return true;
+			else if (nums[mid] < nums[n - 1]) return true;
+		}
+		else if (target > nums[n - 1] && nums[n - 1] > nums[mid])return true;
+		return false;
+	};
+	while (low + 1 < high) {
+		mid = low + (high - low) / 2;
+		if (nums[mid] == target)return mid;
+		(isblue(mid) ? high : low) = mid;
+	}
+	return -1;
 }
 ```
 ### [1901. 寻找峰值 II](https://leetcode.cn/problems/find-a-peak-element-ii/)

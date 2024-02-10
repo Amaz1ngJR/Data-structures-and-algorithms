@@ -42,24 +42,8 @@ int BinarySearch(vector<T>& nums, T target) {
 ```
 
 ## 二分查找
-pre [852. 山脉数组的峰顶索引](https://leetcode.cn/problems/peak-index-in-a-mountain-array/)
-```c++
-int peakIndexInMountainArray(vector<int>& arr) {
-	int left = 0, right = nums.size() - 1, ans = 0;
-	while (left < right) {
-		int mid = left + (right - left) / 2;
-		if (nums[mid] > nums[mid + 1]) {
-			ans = mid;
-			right = mid - 1;
-		}
-		else left = mid;
-	}
-	return ans;
-}
-```
-pre plus [845. 数组中的最长山脉](https://leetcode.cn/problems/longest-mountain-in-array/)
 ### [162. 寻找峰值](https://leetcode.cn/problems/find-peak-element/)
-
+pre [852. 山脉数组的峰顶索引](https://leetcode.cn/problems/peak-index-in-a-mountain-array/)
 ```c++
 int findPeakElement(vector<int>& nums) {
 	int low = -1, high = nums.size() - 1, mid;
@@ -70,25 +54,7 @@ int findPeakElement(vector<int>& nums) {
 	return high;
 }
 ```
-
-### [153. 寻找旋转排序数组中的最小值](https://leetcode.cn/problems/find-minimum-in-rotated-sorted-array/)
-
-```c++
-int findMin(vector<int>& nums) {
-    int low = -1;
-    int high = nums.size()-1;
-    int mid;
-    while (low + 1 < high) {
-        mid = low + ((high - low) / 2);
-        if (nums[mid] < nums[nums.size()-1])
-            high = mid;
-        else
-            low = mid;
-    }
-    return nums[high];
-
-}
-```
+do [153. 寻找旋转排序数组中的最小值](https://leetcode.cn/problems/find-minimum-in-rotated-sorted-array/)
 
 ### [33. 搜索旋转排序数组](https://leetcode.cn/problems/search-in-rotated-sorted-array/)
 

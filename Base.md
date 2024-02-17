@@ -320,17 +320,6 @@ int numberOfGoodPartitions(vector<int>& nums) {
 	return ans;
 }
 ```
-# 广度遍历
-```c++
-vector<int> dirs = {0, -1, 0, 1, 0};
-queue<pair<int, int>>q;
-//...
-for (int d = 0; d < 4; ++d) {//将上、下、左、右坐标加入
-	int nx = x + dirs[d];
-	int ny = y + dirs[d + 1];
-	q.emplace(nx, ny);
-}
-```
 # 数学
 ## 快速幂
 [50. Pow(x, n)](https://leetcode.cn/problems/powx-n/)

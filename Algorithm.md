@@ -2701,7 +2701,54 @@ int minReorder(int n, vector<vector<int>>& connections) {
 }
 ```
 ## 广度优先搜索BFS
-
+```c++
+vector<int> dirs = {0, -1, 0, 1, 0};
+//queue<pair<int, int>>q;
+vector<pair<int, int>>cur, next;
+//...
+for (int d = 0; d < 4; ++d) {//将上、下、左、右坐标加入
+	int nx = x + dirs[d];
+	int ny = y + dirs[d + 1];
+	//q.emplace(nx, ny);
+	next.emplace_back(nx, ny);
+}
+cur = move(next);
+```
+### [994. 腐烂的橘子](https://leetcode.cn/problems/rotting-oranges/)
+```c++
+int orangesRotting(vector<vector<int>>& grid) {
+	int m = grid.size(), n = grid[0].size();
+	int ans = -1, res = 0, x, y;
+	vector<int> dirs = { 0, -1, 0, 1, 0 };
+	vector<pair<int, int>>cur, next;
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < n; j++) {
+			if (grid[i][j] == 1)res++;
+			else if (grid[i][j] == 2) {
+				cur.emplace_back(i, j);
+			}
+		}
+	}
+	if (!res)return 0;
+	while (!cur.empty()) {
+		ans++;
+		for (const auto& it : cur) {
+			for (int i = 0; i < 4; i++) {//遍历上下左右四个坐标
+				x = it.first + dirs[i];
+				y = it.second + dirs[i + 1];
+				if (x < 0 || x >= m || y < 0 || y >= n)continue;
+				if (grid[x][y] == 1) {
+					res--;
+					grid[x][y] = 2;
+					next.emplace_back(x, y);
+				}
+			}
+		}
+		cur = move(next);
+	}
+	return res ? -1 : ans;
+}
+```
 ## 最近公共祖先LCA
 ### [2846. 边权重均等查询](https://leetcode.cn/problems/minimum-edge-weight-equilibrium-queries-in-a-tree/)
 ```c++

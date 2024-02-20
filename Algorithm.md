@@ -1795,22 +1795,14 @@ bool canPartition(vector<int>& nums) {
 	target /= 2;
 	//求和为target的子序列 => 0/1背包 恰好装capacity 
 	if (Max > target) return false;
-	vector<vector<int>> dp(n, vector<int>(target + 1, 0));
+	vector<int>dp(target + 1, 0);//dp[i]能否装满容量为i的背包
+	dp[0] = 1;//边界条件 装满一个空背包 是合理的
 	for (int i = 0; i < n; i++) {
-		dp[i][0] = true;
-	}
-	dp[0][nums[0]] = true;
-	for (int i = 1; i < n; i++) {
-		for (int j = 1; j <= target; j++) {
-			if (j >= nums[i]) {//可以装
-				dp[i][j] = dp[i - 1][j] | dp[i - 1][j - num];
-			}
-			else { //装不下
-				dp[i][j] = dp[i - 1][j];
-			}
+		for (int c = target; c >= nums[i]; c--) {
+			dp[c] |= dp[c - nums[i]];
 		}
 	}
-	return dp[n - 1][target];
+	return dp[target];
 }
 ```
 ### [2809. 使数组和小于等于 x 的最少时间](https://leetcode.cn/problems/minimum-time-to-make-array-sum-at-most-x/) 不等式+贪心+DP

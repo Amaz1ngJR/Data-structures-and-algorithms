@@ -1816,7 +1816,7 @@ int lastStoneWeightII(vector<int>& stones) {
 			dp[c] = max(dp[c], dp[c - stones[i]] + stones[i]);
 		}
 	}
-	return total - dp[half] - dp[half];
+	return (total - dp[half]) - dp[half];//重的一堆石头减去轻的一堆石头
 }
 ```
 ### [2809. 使数组和小于等于 x 的最少时间](https://leetcode.cn/problems/minimum-time-to-make-array-sum-at-most-x/) 不等式+贪心+DP

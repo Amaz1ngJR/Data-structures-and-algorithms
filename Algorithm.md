@@ -1819,6 +1819,26 @@ int lastStoneWeightII(vector<int>& stones) {
 	return (total - dp[half]) - dp[half];//重的一堆石头减去轻的一堆石头
 }
 ```
+### [474. 一和零](https://leetcode.cn/problems/ones-and-zeroes/) 二维0/1背包
+```c++
+int findMaxForm(vector<string>& strs, int m, int n) {
+	int len = strs.size(), cnt0, cnt1;
+	vector<vector<int>>dp(m + 1, vector<int>(n + 1, 0));
+	for (int i = 0; i < len; i++) {//枚举字符串
+		cnt0 = cnt1 = 0;
+		for (const char& s : strs[i]) {
+			if (s == '0')cnt0++;
+			else cnt1++;
+		}
+		for (int c0 = m; cnt0 <= c0; c0--) {//分别枚举两个背包
+			for (int c1 = n; cnt1 <= c1; c1--) {//两个背包不能写在一个for循环中
+				dp[c0][c1] = max(dp[c0 - cnt0][c1 - cnt1] + 1, dp[c0][c1]);
+			}
+		}
+	}
+	return dp[m][n];
+}
+```
 ### [2809. 使数组和小于等于 x 的最少时间](https://leetcode.cn/problems/minimum-time-to-make-array-sum-at-most-x/) 不等式+贪心+DP
 ```c++
 int minimumTime(vector<int>& nums1, vector<int>& nums2, int x) {

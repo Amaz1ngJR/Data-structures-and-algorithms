@@ -1739,15 +1739,10 @@ int findTargetSumWays(vector<int>& nums, int target) {
 vector<vector<int>> f(n + 1, vector<int>(target + 1, 0));
 f[0][0] = 1;//边界条件作为初始值
 for (int i = 0; i < n; i++) {
-    for (int j = 0; j < target+1; j++) {
-        if (j < nums[i]) {
-            f[i + 1][j] = f[i][j];//只能不选
-        }
-        else {
-            //前面 不选的方案数+选的方案数
-            f[i + 1][j] = f[i][j] + f[i][j - nums[i]];
-        }
-    }
+	for (int c = 0; c <= target; c++) {
+		if (c < nums[i])f[i + 1][c] = f[i][c];//只能不选
+		else f[i + 1][c] = f[i][c] + f[i][c - nums[i]];
+	}
 }
 return f[n][target];
 ```
@@ -1757,15 +1752,10 @@ return f[n][target];
 vector<vector<int>> f(2, vector<int>(target + 1, 0));
 f[0][0] = 1;//边界条件作为初始值
 for (int i = 0; i < n; i++) {
-    for (int j = 0; j < target+1; j++) {
-        if (j < nums[i]) {
-            f[(i + 1)%2][j] = f[i%2][j];//只能不选
-        }
-        else {
-            //前面 不选的方案数+选的方案数
-            f[(i + 1) % 2][j] = f[i % 2][j] + f[i % 2][j - nums[i]];
-        }
-    }
+	for (int j = 0; j < target + 1; j++) {
+		if (j < nums[i]) f[(i + 1) % 2][j] = f[i % 2][j];
+		else f[(i + 1) % 2][j] = f[i % 2][j] + f[i % 2][j - nums[i]];
+	}
 }
 return f[n % 2][target];
 ```

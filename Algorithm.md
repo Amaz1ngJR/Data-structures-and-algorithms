@@ -12,16 +12,14 @@ template<typename T>
 int BinarySearch(vector<T>& nums, T target) {
 	//时间复杂度O(logn)
 	//闭区间写法[left,right]
-	int left = 0;
-	int right = nums.size() - 1;
-	int mid = (left + right) / 2;
+	int left = 0, right = nums.size() - 1, mid;
 	if (nums[0] >= target) return 0;
 	if (nums[nums.size() - 1] < target) return nums.size();
 	while (left <= right) {
+		mid = (left + right) / 2;
 		if (nums[mid] == target) return mid;//找到返回mid
 		if (nums[mid] > target) right = mid - 1;
 		if (nums[mid] < target) left = mid + 1;
-		mid = (left + right) / 2;
 	}
 	return left;//找不到就返回target应该插入的位置
 

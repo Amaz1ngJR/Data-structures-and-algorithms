@@ -9,8 +9,7 @@ Algorithm
 ```c++
 //二分查找 有序数组
 template<typename T>
-int BinarySearch(vector<T>& nums, T target) {
-	//时间复杂度O(logn)
+int BinarySearch(vector<T>& nums, T target) {//时间复杂度O(logn)
 	//闭区间写法[left,right]
 	int left = 0, right = nums.size() - 1, mid;
 	if (nums[0] >= target) return 0;
@@ -24,18 +23,16 @@ int BinarySearch(vector<T>& nums, T target) {
 	return left;//找不到就返回target应该插入的位置
 
 	//开区间写法(low,high)
-	//int low = -1;
-	//int high = nums.size();
-	//int mid;
-	//while (low + 1 < high) {
-	//	mid = low + ((high - low) / 2);
-	//	if (nums[mid] == target)return mid;
-	//	else if (nums[mid] > target)
-	//		high = mid;
-	//	else
-	//		low = mid;
-	//}
-	//return high;//找不到就返回target应该插入的位置
+	int low = -1, high = nums.size(), mid;
+	while (low + 1 < high) {
+		mid = low + (high - low) / 2;
+		if (nums[mid] == target)return mid;
+		else if (nums[mid] > target)
+			high = mid;
+		else
+			low = mid;
+	}
+	return high;//找不到就返回target应该插入的位置
 }
 ```
 

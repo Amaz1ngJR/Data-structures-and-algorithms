@@ -1683,7 +1683,7 @@ int rob(vector<int>& nums) {
 ```
 0/1背包：有n个物品  第i个物品的体积为w[i]  价值为v[i]
 每个物品至多选一个  求体积和不超过capacity时的最大价值和
-dfs(i,c)=max(dfs(i-1,c),dfs(i-1,c-w[i])+v[i])
+dfs(i,c)=max(dfs(i-1,c),dfs(i-1,c-w[i])+v[i]) //背包剩余容量为c时 从前i个物体中能选出的最大价值和
 ```
 
 ```c++
@@ -1710,50 +1710,31 @@ std::function<int(int capacity, vector<int> w, vector<int>v)> zero_one_knapsack 
 ```
 
 ### [494. 目标和](https://leetcode.cn/problems/target-sum/)
-
-在非负整数数组 nums的每个数前加+/-使得数组和为target
-
 ```c++
-//记忆化搜索
-//dfs(i,c)=dfs(i-1,c)+dfs(i-1,c-w[i])
+//记忆化搜索 dfs(i,c) = dfs(i-1,c) + dfs(i-1,c-w[i])
 int findTargetSumWays(vector<int>& nums, int target) {
-    //所有前面为+号的数之和为p
-    //所有数之和为s
-    //所有前面为-号的数之和为s-p
-    //-(s-p)+p=target => p=(s+t)/2 => s+t为非负偶数
-    for (const auto& v : nums) {//target=s+t
-        target += v;
-    }
-    if (target < 0 || target % 2 == 1)return 0;
-    target /= 2;
-    int n = nums.size();
-    //记忆化搜搜
-    vector<vector<int>> cache(n, vector<int>(target+1, -1));
-    //dfs(i,j)表示从前i个数中选出恰好为j的方案数 j取值[0,target]故记忆化target+1
-    std::function<int(int, int)> dfs = [&](int i, int j)->int {
-        if (i < 0) {
-            if (j == 0)return 1;
-            else return 0;
-        }
-        int& res = cache[i][j];
-        if (res != -1)return res;
-        if (j < nums[i]) {//物体体积大于剩余容量，只能不选
-            res = dfs(i - 1, j);
-            return res;
-        }
-        else {
-            res = dfs(i - 1, j) + dfs(i - 1, j - nums[i]);
-            return res;
-        }
-    };
-    return dfs(n - 1, target);
+	//所有前面为+号的数之和为p 所有数之和为s 所有前面为-号的数之和为s-p
+	//-(s-p) + p = target => p = (s+t)/2 => s+t为非负偶数
+	for (const int& num : nums)target += num;
+	if (target < 0 || target & 1)return 0;
+	target /= 2;
+	int n = nums.size();
+	vector<vector<int>>memo(n, vector<int>(target + 1, -1));
+	function<int(int, int)>dfs = [&](int i, int c)->int {
+		if (i < 0)return c == 0 ? 1 : 0;
+		if (memo[i][c] != -1)return memo[i][c];
+		if (c < nums[i]) {//当前物体体积大于剩余容量 只能不选
+			memo[i][c] = dfs(i - 1, c);
+		}
+		else memo[i][c] = dfs(i - 1, c) + dfs(i - 1, c - nums[i]);
+		return memo[i][c];
+	};
+	return dfs(n - 1, target);
 }
 ```
 
 ```c++
-//递推
-//f[i][c]=f[i-1][c]+f[i-1][c-w[i]]
-//f[i+1][c]=f[i][c]+f[i][c-w[i]]
+//递推f[i][c]=f[i-1][c]+f[i-1][c-w[i]] => f[i+1][c]=f[i][c]+f[i][c-w[i]]
 //数组初始值为边界条件
 vector<vector<int>> f(n + 1, vector<int>(target + 1, 0));
 f[0][0] = 1;//边界条件作为初始值
@@ -1791,15 +1772,15 @@ return f[n % 2][target];
 
 ```c++
  //一个数组递推
-vector<int> f(target + 1, 0);
-f[0] = 1;//边界条件作为初始值
+vector<int>dp(target + 1, 0);//dp[i]表示装满容量为i的方案个数
+dp[0] = 1;//边界条件 装满一个空背包 是合理的
 for (int i = 0; i < n; i++) {
-    //从后向前遍历
-    for (int j = target; j >= nums[i]; j--) {
-        f[j] += f[j - nums[i]];
-    }
+	//如果当前i的值小于容器 就可以装
+	for (int c = target; c >= nums[i]; c--) {
+		dp[c] += dp[c - nums[i]];
+	}
 }
-return f[target];
+return dp[target];
 ```
 
 ```

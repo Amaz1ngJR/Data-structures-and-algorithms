@@ -1805,6 +1805,20 @@ bool canPartition(vector<int>& nums) {
 	return dp[target];
 }
 ```
+### [1049. 最后一块石头的重量 II](https://leetcode.cn/problems/last-stone-weight-ii/)
+```c++
+int lastStoneWeightII(vector<int>& stones) {
+	int total = accumulate(begin(stones), end(stones), 0);
+	int half = total / 2, n = stones.size();
+	vector<int>dp(total + 1, 0);//dp[i]表示容量为i的背包可以装的最大重量
+	for (int i = 0; i < n; i++) {
+		for (int c = half; c >= stones[i]; c--) {
+			dp[c] = max(dp[c], dp[c - stones[i]] + stones[i]);
+		}
+	}
+	return total - dp[half] - dp[half];
+}
+```
 ### [2809. 使数组和小于等于 x 的最少时间](https://leetcode.cn/problems/minimum-time-to-make-array-sum-at-most-x/) 不等式+贪心+DP
 ```c++
 int minimumTime(vector<int>& nums1, vector<int>& nums2, int x) {

@@ -1869,23 +1869,18 @@ dfs(i,c)=max(dfs(i-1,c),dfs(i,c-w[i])+v[i])
 ```
 
 ### [322. 零钱兑换](https://leetcode.cn/problems/coin-change/)
-
-数组 coins 元素表示不同面额的硬币 返回使用最少的硬币达到 amount
-
 ```c++
 int coinChange(vector<int>& coins, int amount) {
-        int n = coins.size();
-        vector<int>dp(amount + 1, INT_MAX);
-        dp[0] = 0;
-        for (int i = 1; i <= amount; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (coins[j] <= i && dp[i - coins[j]] != INT_MAX) {
-                    dp[i] = min(dp[i], dp[i - coins[j]] + 1);
-                }
-            }
-        }
-        return dp[amount] == INT_MAX ? -1 : dp[amount];
-    }
+	vector<int>dp(amount + 1, INT_MAX);
+	dp[0] = 0;//达到0金额所需的最少硬币为0
+	for (int c = 1; c <= amount; c++) {//枚举余额
+		for (int i = 0; i < coins.size(); i++) {//枚举硬币
+			if (coins[i] <= c && dp[c - coins[i]] != INT_MAX)
+				dp[c] = min(dp[c], dp[c - coins[i]] + 1);
+		}
+	}
+	return (dp[amount] == INT_MAX) ? -1 : dp[amount];
+}
 ```
 类似题目[279. 完全平方数](https://leetcode.cn/problems/perfect-squares/)
 ## *组合型

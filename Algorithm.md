@@ -1882,7 +1882,20 @@ int coinChange(vector<int>& coins, int amount) {
 	return (dp[amount] == INT_MAX) ? -1 : dp[amount];
 }
 ```
-类似题目[279. 完全平方数](https://leetcode.cn/problems/perfect-squares/)
+[279. 完全平方数](https://leetcode.cn/problems/perfect-squares/)、
+[377. 组合总和 Ⅳ](https://leetcode.cn/problems/combination-sum-iv/)、
+### [518. 零钱兑换 II](https://leetcode.cn/problems/coin-change-ii/)
+```c++
+int change(int amount, vector<int>& coins) {
+	vector<int>dp(amount + 1, 0);
+	dp[0] = 1;//存在背包余额为0的情况
+	for (int i = 0; i < coins.size(); i++) {
+		for (int c = coins[i]; c <= amount; c++)
+			dp[c] += dp[c - coins[i]];
+	}
+	return dp[amount];
+}
+```
 ## *组合型
 
 ### [1155. 掷骰子等于目标和的方法数](https://leetcode.cn/problems/number-of-dice-rolls-with-target-sum/)

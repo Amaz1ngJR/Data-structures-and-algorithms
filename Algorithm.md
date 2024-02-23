@@ -2020,31 +2020,29 @@ int lengthOfLIS(vector<int>& nums) {
 }
 ```
 
+## *编辑距离
 ### [72. 编辑距离](https://leetcode.cn/problems/edit-distance/)
-
 ```c++
 int minDistance(string word1, string word2) {
-	int l1 = word1.size();
-	int l2 = word2.size();
-	vector<vector<int>>path(l1, vector<int>(l2, -1));
-	std::function<int(int, int)>dfs =
-		[&](int i, int j)->int {
-		if (i < 0) return j + 1;
-		else if (j < 0)return i + 1;
-		if (path[i][j] != -1)return path[i][j];
-		if (word1[i] == word2[j]) {
-			path[i][j] = dfs(i - 1, j - 1);
-			return path[i][j];
-		}
-		else {
-			path[i][j] = min(min(dfs(i - 1, j), dfs(i, j - 1)), dfs(i - 1, j - 1)) + 1;
-			return path[i][j];
-		}
+	int l1 = word1.size(), l2 = word2.size();
+	vector<vector<int>>memo(l1, vector<int>(l2, -1));
+	function<int(int, int)>dfs = [&](int i, int j)->int {
+		if (i < 0) return j + 1;//word1加上word2前面剩余的字符
+		else if (j < 0)return i + 1;//word1删除前面多余的字符
+		if (~memo[i][j])return memo[i][j];
+		if (word1[i] == word2[j]) //不用增删
+			memo[i][j] = dfs(i - 1, j - 1);
+		else //删除word1中字符、word2中字符、同时删除 中的最小值
+			memo[i][j] = min(min(dfs(i - 1, j), dfs(i, j - 1)), dfs(i - 1, j - 1)) + 1;
+		return memo[i][j];
 	};
 	return dfs(l1 - 1, l2 - 1);
 }
 ```
+### [115. 不同的子序列](https://leetcode.cn/problems/distinct-subsequences/)
+```c++
 
+```
 ### [583. 两个字符串的删除操作](https://leetcode.cn/problems/delete-operation-for-two-strings/)
 ```c++
 

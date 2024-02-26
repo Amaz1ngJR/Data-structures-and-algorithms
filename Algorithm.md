@@ -2115,6 +2115,22 @@ int countSubstrings(string s) {
 ```
 类似题目[5. 最长回文子串](https://leetcode.cn/problems/longest-palindromic-substring/)
 
+### [718. 最长重复子数组](https://leetcode.cn/problems/maximum-length-of-repeated-subarray/)
+```c++
+int findLength(vector<int>& nums1, vector<int>& nums2) {
+	//dp[i][j] 表示以 nums1[i-1] 和 nums2[j-1] 结尾的最长公共子数组的长度
+	vector<vector<int>> dp(nums1.size() + 1, vector<int>(nums2.size() + 1, 0));
+	int ans = 0;
+	for (int i = 1; i < nums1.size() + 1; i++) {
+		for (int j = 1; j < nums2.size() + 1; j++) {
+			if (nums1[i - 1] == nums2[j - 1]) 
+				dp[i][j] = dp[i - 1][j - 1] + 1;
+			ans = max(ans, dp[i][j]);
+		}
+	}
+	return ans;
+}
+```
 ## *状态机DP
 ### [122. 买卖股票的最佳时机 II](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/) (不限交易次数)
 

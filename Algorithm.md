@@ -2022,17 +2022,18 @@ int lengthOfLIS(vector<int>& nums) {
 
 ## *编辑距离
 ### [72. 编辑距离](https://leetcode.cn/problems/edit-distance/)
+pre [583. 两个字符串的删除操作](https://leetcode.cn/problems/delete-operation-for-two-strings/)
 ```c++
 int minDistance(string word1, string word2) {
 	int l1 = word1.size(), l2 = word2.size();
 	vector<vector<int>>memo(l1, vector<int>(l2, -1));
 	function<int(int, int)>dfs = [&](int i, int j)->int {
-		if (i < 0) return j + 1;//word1加上word2前面剩余的字符
+		if (i < 0) return j + 1;//word1插入word2前面剩余的字符
 		else if (j < 0)return i + 1;//word1删除前面多余的字符
 		if (~memo[i][j])return memo[i][j];
-		if (word1[i] == word2[j]) //不用增删
+		if (word1[i] == word2[j]) //不用修改
 			memo[i][j] = dfs(i - 1, j - 1);
-		else //删除word1中字符、word2中字符、同时删除 中的最小值
+		else //删除word1中字符、插入word2中字符、替换word1[i]为word2[j] 中的最小值
 			memo[i][j] = min(min(dfs(i - 1, j), dfs(i, j - 1)), dfs(i - 1, j - 1)) + 1;
 		return memo[i][j];
 	};
@@ -2043,10 +2044,7 @@ int minDistance(string word1, string word2) {
 ```c++
 
 ```
-### [583. 两个字符串的删除操作](https://leetcode.cn/problems/delete-operation-for-two-strings/)
-```c++
 
-```
 ## *子数组、子串
 思考子数组、子串统计类问题的通用技巧:
 

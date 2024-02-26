@@ -1930,41 +1930,35 @@ int numRollsToTarget(int n, int k, int target) {
 ```c++
 //记忆化搜索
 int longestCommonSubsequence(string text1, string text2) {
-    int l1 = text1.size();
-    int l2 = text2.size();
-    vector<vector<int>>path(l1, vector<int>(l2, -1));
-    std::function<int(int, int)>dfs = [&](int i, int j)->int {
-        if (i < 0 || j < 0)return 0;
-        if (path[i][j] != -1)return path[i][j];
-        if (text1[i] == text2[j]) {
-            path[i][j] = dfs(i - 1, j - 1) + 1;
-            return path[i][j];
-        }
-        else {
-            path[i][j] = max(dfs(i - 1, j), dfs(i, j - 1));
-            return path[i][j];
-        }
-    };
-    return dfs(l1 - 1, l2 - 1);
+	int l1 = text1.size(), l2 = text2.size();
+	vector<vector<int>>memo(l1, vector<int>(l2, -1));
+	function<int(int, int)>dfs = [&](int i, int j)->int {
+		if (i < 0 || j < 0)return 0;
+		if (~memo[i][j])return memo[i][j];
+		if (text1[i] == text2[j])
+			memo[i][j] = dfs(i - 1, j - 1) + 1;
+		else
+			memo[i][j] = max(dfs(i - 1, j), dfs(i, j - 1));
+		return memo[i][j];
+	};
+	return dfs(l1 - 1, l2 - 1);
+}
 ```
 
 ```c++
 //递推
 int longestCommonSubsequence(string text1, string text2) {
-    int l1 = text1.size();
-    int l2 = text2.size();
-    vector<vector<int>>f(l1+1, vector<int>(l2+1, 0));
-    for (int i = 0; i < l1; i++) {
-        for (int j = 0; j < l2; j++) {
-            if (text1[i] == text2[j]) {
-                f[i + 1][j + 1] = f[i][j] + 1;
-            }
-            else {
-                f[i + 1][j + 1] = max(f[i][j + 1], f[i + 1][j]);
-            }
-        }
-    }
-    return f[l1][l2];
+	int l1 = text1.size(), l2 = text2.size();
+	vector<vector<int>>dp(l1 + 1, vector<int>(l2 + 1));
+	for (int i = 0; i < l1; i++) {
+		for (int j = 0; j < l2; j++) {
+			if (text1[i] == text2[j]) 
+				dp[i + 1][j + 1] = dp[i][j] + 1;		
+			else 
+				dp[i + 1][j + 1] = max(dp[i][j + 1], dp[i + 1][j]);
+		}
+	}
+	return dp[l1][l2];
 }
 ```
 

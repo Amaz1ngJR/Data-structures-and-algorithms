@@ -2042,7 +2042,20 @@ int minDistance(string word1, string word2) {
 ```
 ### [115. 不同的子序列](https://leetcode.cn/problems/distinct-subsequences/)
 ```c++
-
+int numDistinct(string s, string t) {//dp[i][j] 从s前i-1个字符 变成以t[j-1]结尾字符串的个数
+	int mod = 1e9 + 7, ans = 0, lens = s.size(), lent = t.size();
+	vector<vector<long long>>dp(lens + 1, vector<long long>(lent + 1, 0));
+	dp[0][0] = 1;
+	for (int i = 1; i <= lens; i++) {
+		dp[i][0] = 1;//s删除所有的字符可以变成空字符串
+		for (int j = 1; j <= lent; j++) {
+			if (s[i - 1] == t[j - 1]) //s[i-1]对齐t[j-1]+s[i-1]对齐t[j]
+				dp[i][j] = (dp[i - 1][j - 1] + dp[i - 1][j]) % mod;
+			else dp[i][j] = dp[i - 1][j];
+		}
+	}
+	return dp[lens][lent];
+}
 ```
 
 ## *子数组、子串

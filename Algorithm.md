@@ -2720,6 +2720,7 @@ int minReorder(int n, vector<vector<int>>& connections) {
 }
 ```
 ## 广度优先搜索BFS
+上下左右 四个方向
 ```c++
 vector<int> dirs = {0, -1, 0, 1, 0};
 //queue<pair<int, int>>q;
@@ -2732,6 +2733,16 @@ for (int d = 0; d < 4; ++d) {//将上、下、左、右坐标加入
 	next.emplace_back(nx, ny);
 }
 cur = move(next);
+```
+加上对角线八个方向
+```c++
+vector<int> dirs = { -1, -1, 0, -1, 1, 1, 0, 1, -1 };
+//...
+for (int d = 0; d < 8; d++) {
+	int nx = x + dirs[d];
+	int ny = y + dirs[d + 1];
+	//...
+}
 ```
 ### [994. 腐烂的橘子](https://leetcode.cn/problems/rotting-oranges/)
 ```c++

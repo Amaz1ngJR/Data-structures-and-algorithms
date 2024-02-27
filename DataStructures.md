@@ -534,7 +534,7 @@ int maxResult(vector<int>& nums, int k) {
 
 ![1699109708486](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/16ba909e-8d2c-4d40-a322-465c26f7f52c)
 
-```c++ [g1]
+```c++ [
 vector<int> twoSum(vector<int>& nums, int target) {
     unordered_map<int, int>m;//创建一个空哈希表
     for (int i = 0; i < nums.size();i++) {// 枚举 i
@@ -546,9 +546,6 @@ vector<int> twoSum(vector<int>& nums, int target) {
     }
     return {};
 }
-```
-```python [g1]
-print("Hello, world!")
 ```
 
 ### [146. LRU 缓存](https://leetcode.cn/problems/lru-cache/) 哈希+双链表

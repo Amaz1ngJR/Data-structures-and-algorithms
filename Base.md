@@ -358,6 +358,23 @@ function<int(int, int)>gcd3 = [&](int x, int y)->int {
 	return y ? gcd3(y, x % y) : x;
 };
 ```
+## 求质数
+[204. 计数质数](https://leetcode.cn/problems/count-primes/)
+```c++
+int countPrimes(int n) {
+	if (n == 0 || n == 1)return 0;
+	vector<int>cnt(n);//0表示质数 1表示非质数 
+	cnt[0] = cnt[1] = 1;//0和1是非质数
+	for (int i = 2; i * i < n; i++) {
+		if (!cnt[i]) {//i是质数
+			for (int j = i * i; j < n; j += i) {//i的倍数都是非质数
+				cnt[j] = 1;
+			}
+		}
+	}
+	return n - accumulate(begin(cnt), end(cnt), 0);
+}
+```
 ## 不等式
 均值(算术-几何平均值)不等式
 ```

@@ -37,8 +37,8 @@ int BinarySearch(vector<T>& nums, T target) {//时间复杂度O(logn)
 ```
 
 ## 二分查找
-### [162. 寻找峰值](https://leetcode.cn/problems/find-peak-element/)
 pre [852. 山脉数组的峰顶索引](https://leetcode.cn/problems/peak-index-in-a-mountain-array/)
+### [162. 寻找峰值](https://leetcode.cn/problems/find-peak-element/)
 ```c++
 int findPeakElement(vector<int>& nums) {
 	int low = -1, high = nums.size() - 1, mid;

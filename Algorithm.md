@@ -2341,6 +2341,42 @@ int longestValidParentheses(string s) {
 	return ans;
 }
 ```
+## *换根DP
+### [834. 树中距离之和](https://leetcode.cn/problems/sum-of-distances-in-tree/)
+```c++
+vector<int> sumOfDistancesInTree(int n, vector<vector<int>>& edges) {
+	vector<vector<int>> g(n); // g[x] 表示 x 的所有邻居
+	for (const auto& e : edges) {
+		g[e[0]].emplace_back(e[1]);
+		g[e[1]].emplace_back(e[0]);
+	}
+	vector<int> ans(n), size(n, 1); // size[i]表示以i为根节点的子树大小 初始化为1
+	function<void(int, int, int)> dfs = [&](int x, int fa, int depth) {
+		ans[0] += depth; // depth 为 0 到 x 的距离
+		for (const int& y : g[x]) { // 遍历 x 的邻居 y
+			if (y != fa) { // 避免访问父节点
+				dfs(y, x, depth + 1); // x 是 y 的父节点
+				size[x] += size[y]; // 累加 x 的儿子 y 的子树大小
+			}
+		}
+	}; 
+	dfs(0, -1, 0); // 0 没有父节点
+	function<void(int, int)> reroot = [&](int x, int fa) {
+		for (int y : g[x]) { // 遍历 x 的邻居 y
+			if (y != fa) { // 避免访问父节点
+				ans[y] = ans[x] + n - 2 * size[y];//ans[x] - size[y] + (n - size[y])
+				reroot(y, x); // x 是 y 的父节点
+			}
+		}
+	};
+	reroot(0, -1); // 0 没有父节点
+	return ans;
+}
+```
+### [2581. 统计可能的树根数目](https://leetcode.cn/problems/count-number-of-possible-root-nodes/)
+```c++
+
+```
 ## *树形DP
 
 二叉树 边权型

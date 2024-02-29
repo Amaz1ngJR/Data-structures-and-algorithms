@@ -2360,9 +2360,9 @@ vector<int> sumOfDistancesInTree(int n, vector<vector<int>>& edges) {
 			}
 		}
 	}; 
-	dfs(0, -1, 0); // 0 没有父节点
-	function<void(int, int)> reroot = [&](int x, int fa) {
-		for (int y : g[x]) { // 遍历 x 的邻居 y
+	dfs(0, -1, 0); // 0 没有父节点 先把以0作为根节点的情况算出来
+	function<void(int, int)> reroot = [&](int x, int fa) {//换根
+		for (const int& y : g[x]) { // 遍历 x 的邻居 y
 			if (y != fa) { // 避免访问父节点
 				ans[y] = ans[x] + n - 2 * size[y];//ans[x] - size[y] + (n - size[y])
 				reroot(y, x); // x 是 y 的父节点
@@ -2375,7 +2375,40 @@ vector<int> sumOfDistancesInTree(int n, vector<vector<int>>& edges) {
 ```
 ### [2581. 统计可能的树根数目](https://leetcode.cn/problems/count-number-of-possible-root-nodes/)
 ```c++
-
+int rootCount(vector<vector<int>>& edges, vector<vector<int>>& guesses, int k) {
+	vector<vector<int>>g(edges.size() + 1);
+	for (const auto& e : edges) {
+		g[e[0]].emplace_back(e[1]);
+		g[e[1]].emplace_back(e[0]);
+	}
+	//unordered_set<pair<int, int>>us;
+	unordered_set<long>us;
+	for (const auto& e : guesses) {
+		//us.emplace(e[0], e[1]);
+		us.emplace((long long)e[0] << 32 | e[1]);
+	}
+	int ans = 0, cnt0 = 0;
+	function<void(int, int)>dfs = [&](int x, int fa) {
+		for (const int& y : g[x]) {
+			if (y != fa) {
+				cnt0 += us.count((long long)x << 32 | y);
+				dfs(y, x);
+			}
+		}
+	};
+	dfs(0, -1);//求以0为根的时候的猜对个数cnt0
+	function<void(int, int, int)>reroot = [&](int x, int fa, int cnt) {//换根
+		ans += cnt >= k;//cnt为以x为根时猜对的次数
+		for (const int& y : g[x]) {
+			if (y != fa)
+				reroot(y, x, cnt
+					- us.count((long long)x << 32 | y)//减去原来是对的 现在改成y是根节点
+					+ us.count((long long)y << 32 | x));//加上原来是错的 现在改成对的
+		}
+	};
+	reroot(0, -1, cnt0);
+	return ans;
+}
 ```
 ## *树形DP
 

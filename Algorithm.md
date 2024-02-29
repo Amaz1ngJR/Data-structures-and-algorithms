@@ -2779,7 +2779,7 @@ for (int d = 0; d < 8; d++) {
 	//...
 }
 ```
-## 深度优先搜索DFS
+## *深度优先搜索DFS
 pre[200. 岛屿数量](https://leetcode.cn/problems/number-of-islands/)
 ### [695. 岛屿的最大面积](https://leetcode.cn/problems/max-area-of-island/)
 do [1020. 飞地的数量](https://leetcode.cn/problems/number-of-enclaves/)
@@ -2919,7 +2919,7 @@ int largestIsland(vector<vector<int>>& grid) {
 	return ans;
 }
 ```
-## 广度优先搜索BFS
+## *广度优先搜索BFS
 
 ### [994. 腐烂的橘子](https://leetcode.cn/problems/rotting-oranges/)
 ```c++

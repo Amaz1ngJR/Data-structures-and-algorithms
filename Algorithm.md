@@ -2755,8 +2755,59 @@ int eraseOverlapIntervals(vector<vector<int>>& intervals) {
 }
 ```
 # 图
-
+遍历上下左右 四个方向
+```c++
+vector<int> dirs = {0, -1, 0, 1, 0};
+//queue<pair<int, int>>q;
+vector<pair<int, int>>cur, next;
+//...
+for (int d = 0; d < 4; ++d) {//将上、下、左、右坐标加入
+	int nx = x + dirs[d];
+	int ny = y + dirs[d + 1];
+	//q.emplace(nx, ny);
+	next.emplace_back(nx, ny);
+}
+cur = move(next);
+```
+遍历加上对角线八个方向
+```c++
+vector<int> dirs = { -1, -1, 0, -1, 1, 1, 0, 1, -1 };
+//...
+for (int d = 0; d < 8; d++) {
+	int nx = x + dirs[d];
+	int ny = y + dirs[d + 1];
+	//...
+}
+```
 ## 深度优先搜索DFS
+pre[200. 岛屿数量](https://leetcode.cn/problems/number-of-islands/)
+### [695. 岛屿的最大面积](https://leetcode.cn/problems/max-area-of-island/)
+do [1020. 飞地的数量](https://leetcode.cn/problems/number-of-enclaves/)
+```c++
+int maxAreaOfIsland(vector<vector<int>>& grid) {
+	int m = grid.size(), n = grid[0].size(), ans = 0;
+	vector<int> dirs = { 0, -1, 0, 1, 0 };
+	function<int(int, int)>dfs = [&](int x, int y) {
+		if (!grid[x][y])return 0;
+		grid[x][y] = 0;//标记为已访问
+		int res = 1;
+		for (int d = 0; d < 4; d++) {
+			int nx = x + dirs[d];
+			int ny = y + dirs[d + 1];
+			if (0 <= nx && nx < m && 0 <= ny && ny < n)
+				res += dfs(nx, ny);
+		}
+		return res;
+	};
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < n; j++) {
+			if (grid[i][j]) 
+				ans = max(ans, dfs(i, j));
+		}
+	}
+	return ans;
+}
+```
 ### [1466. 重新规划路线](https://leetcode.cn/problems/reorder-routes-to-make-all-paths-lead-to-the-city-zero/)
 ```c++
 int minReorder(int n, vector<vector<int>>& connections) {
@@ -2788,31 +2839,88 @@ int minReorder(int n, vector<vector<int>>& connections) {
 	return ans;
 }
 ```
+pre[130. 被围绕的区域](https://leetcode.cn/problems/surrounded-regions/)
+### [417. 太平洋大西洋水流问题](https://leetcode.cn/problems/pacific-atlantic-water-flow/)
+```c++
+vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) {
+	vector<int> dirs = { 0, -1, 0, 1, 0 };
+	int m = heights.size(), n = heights[0].size();
+	vector<vector<int>>p(m, vector<int>(n)), a(m, vector<int>(n)), ans;
+	function<void(int, int, bool)>bfs = [&](int x, int y, bool isp) {
+		if ((p[x][y] && isp) || (a[x][y] & (!isp))) return;
+		(isp ? p[x][y] : a[x][y]) = 1;
+		for (int d = 0; d < 4; ++d) {
+			int nx = x + dirs[d];
+			int ny = y + dirs[d + 1];
+			if (0 <= nx && nx < m && 0 <= ny && ny < n && heights[nx][ny] >= heights[x][y])
+				bfs(nx, ny, isp);
+		}
+	};
+	for (int i = 0; i < m; ++i) {
+		bfs(i, 0, true);//能访问Pacific Ocean
+		bfs(i, n - 1, false);//能访问 Atlantic Ocean
+	}
+	for (int j = 0; j < n; ++j) {
+		bfs(0, j, true);//能访问Pacific Ocean
+		bfs(m - 1, j, false);//能访问 Atlantic Ocean
+	}
+	for (int x = 0; x < m; ++x) {
+		for (int y = 0; y < n; ++y) {
+			if (p[x][y] && a[x][y])
+				ans.push_back({ x,y });
+		}
+	}
+	return ans;
+}
+```
+### [827. 最大人工岛](https://leetcode.cn/problems/making-a-large-island/)
+```c++
+int largestIsland(vector<vector<int>>& grid) {
+	int m = grid.size(), n = grid[0].size();
+	vector<int> dirs = { 0, -1, 0, 1, 0 };
+	vector<int>areas(2, 0); int cnt, index = 2;
+	function<void(int, int, int)>bfs = [&](int x, int y, int index) {
+		grid[x][y] = index;//已访问的岛屿标记为岛屿编号
+		areas.back() = ++cnt;//更新岛屿的大小
+		for (int d = 0; d < 4; ++d) {
+			int nx = x + dirs[d];
+			int ny = y + dirs[d + 1];
+			if (0 <= nx && nx < m && 0 <= ny && ny < n && grid[nx][ny] == 1)
+				bfs(nx, ny, index);
+		}
+	};
+	for (int x = 0; x < m; ++x) {
+		for (int y = 0; y < n; ++y) {
+			if (grid[x][y] == 1) {
+				areas.push_back(index);
+				cnt = 0;//岛屿大小初始化为0
+				bfs(x, y, index++);
+			}
+		}
+	}
+	if (areas.size() == 2)return 1;//没有岛屿
+	int ans = areas[2];//初始化为第一个岛屿面积
+	for (int x = 0; x < m; ++x) {
+		for (int y = 0; y < n; ++y) {
+			if (!grid[x][y]) {
+				int res = 0;
+				unordered_set<int>us;
+				for (int d = 0; d < 4; ++d) {
+					int nx = x + dirs[d];
+					int ny = y + dirs[d + 1];
+					if (0 <= nx && nx < m && 0 <= ny && ny < n)
+						us.emplace(grid[nx][ny]);
+				}
+				for (const int& v : us)res += areas[v];
+				ans = max(ans, res + 1);
+			}
+		}
+	}
+	return ans;
+}
+```
 ## 广度优先搜索BFS
-上下左右 四个方向
-```c++
-vector<int> dirs = {0, -1, 0, 1, 0};
-//queue<pair<int, int>>q;
-vector<pair<int, int>>cur, next;
-//...
-for (int d = 0; d < 4; ++d) {//将上、下、左、右坐标加入
-	int nx = x + dirs[d];
-	int ny = y + dirs[d + 1];
-	//q.emplace(nx, ny);
-	next.emplace_back(nx, ny);
-}
-cur = move(next);
-```
-加上对角线八个方向
-```c++
-vector<int> dirs = { -1, -1, 0, -1, 1, 1, 0, 1, -1 };
-//...
-for (int d = 0; d < 8; d++) {
-	int nx = x + dirs[d];
-	int ny = y + dirs[d + 1];
-	//...
-}
-```
+
 ### [994. 腐烂的橘子](https://leetcode.cn/problems/rotting-oranges/)
 ```c++
 int orangesRotting(vector<vector<int>>& grid) {

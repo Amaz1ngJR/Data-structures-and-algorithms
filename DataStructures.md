@@ -1069,6 +1069,8 @@ vector<int> numsGame(vector<int>& nums) {
 }
 ```
 ### **并查集
+pre [1971. 寻找图中是否存在路径](https://leetcode.cn/problems/find-if-path-exists-in-graph/)、
+[684. 冗余连接](https://leetcode.cn/problems/redundant-connection/)
 #### [990. 等式方程的可满足性](https://leetcode.cn/problems/satisfiability-of-equality-equations/)
 ```c++
 bool equationsPossible(vector<string>& equations) {

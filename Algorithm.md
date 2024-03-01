@@ -2956,6 +2956,34 @@ int orangesRotting(vector<vector<int>>& grid) {
 	return res ? -1 : ans;
 }
 ```
+### [127. 单词接龙](https://leetcode.cn/problems/word-ladder/)
+```c++
+int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+	unordered_set<string>dict; unordered_map<string, int>visit;
+	for (const string& s : wordList)dict.emplace(s);
+	if (!dict.count(endWord))return 0;//特判 字典中不存在endWord直接返回0
+	unordered_set<string> q, next; q.emplace(beginWord);//BFS 用unordered_set替换vector加速
+	int ans = 0;
+	while (!q.empty()) {
+		ans++;
+		for (string s : q) {
+			if (s == endWord)return ans;
+			visit[s]++;//标记遍历过的字符串
+			for (int i = 0; i < s.size(); ++i) {//逐字符改变字符串
+				char t = s[i];
+				for (int j = 'a'; j <= 'z'; ++j) {
+					s[i] = j;
+					if (dict.count(s) && (!visit[s]))
+						next.emplace(s);
+				}
+				s[i] = t;//恢复该字符 以便改变下一个字符
+			}
+		}
+		q = move(next);
+	}
+	return 0;
+}
+```
 ## 最近公共祖先LCA
 ### [2846. 边权重均等查询](https://leetcode.cn/problems/minimum-edge-weight-equilibrium-queries-in-a-tree/)
 ```c++

@@ -565,19 +565,13 @@ int trap(vector<int>& height) {
 ### [11. 盛最多水的容器](https://leetcode.cn/problems/container-with-most-water/)
 ```c++
 int maxArea(vector<int>& height) {
-    int ans = 0;
-    int low = 0, high = height.size() - 1;
-    while (low < high) {      
-        if (height[low] <= height[high]) {
-            ans = max(ans, height[low] * (high - low));
-            low++;
-        }
-        else {
-            ans = max(ans, height[high] * (high - low));
-            high--;
-        }
-    }
-    return ans;
+	int low = 0, high = height.size() - 1, ans = 0;
+	while (low < high) {
+		ans = max(ans, (high - low) * min(height[low], height[high]));
+		if (height[low] < height[high])++low;
+		else --high;
+	}
+	return ans;
 }
 ```
 ## *同向双指针

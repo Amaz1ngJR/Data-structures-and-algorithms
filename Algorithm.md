@@ -1,4 +1,4 @@
-Algorithm
+![image](https://github.com/Amaz1ngJR/Re/assets/83129567/8d00d4ca-3d7b-48aa-9794-61ab84791beb)Algorithm
 
 ![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/3f60b9b4-4d9a-4d77-8bca-82876d343086)
 
@@ -2774,7 +2774,8 @@ for (int d = 0; d < 8; d++) {
 }
 ```
 ## *深度优先搜索DFS
-pre[200. 岛屿数量](https://leetcode.cn/problems/number-of-islands/)
+pre[200. 岛屿数量](https://leetcode.cn/problems/number-of-islands/)、
+[2684. 矩阵中移动的最大次数](https://leetcode.cn/problems/maximum-number-of-moves-in-a-grid/)
 ### [695. 岛屿的最大面积](https://leetcode.cn/problems/max-area-of-island/)
 do [1020. 飞地的数量](https://leetcode.cn/problems/number-of-enclaves/)
 ```c++
@@ -2840,23 +2841,23 @@ vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) {
 	vector<int> dirs = { 0, -1, 0, 1, 0 };
 	int m = heights.size(), n = heights[0].size();
 	vector<vector<int>>p(m, vector<int>(n)), a(m, vector<int>(n)), ans;
-	function<void(int, int, bool)>bfs = [&](int x, int y, bool isp) {
+	function<void(int, int, bool)>dfs = [&](int x, int y, bool isp) {
 		if ((p[x][y] && isp) || (a[x][y] & (!isp))) return;
 		(isp ? p[x][y] : a[x][y]) = 1;
 		for (int d = 0; d < 4; ++d) {
 			int nx = x + dirs[d];
 			int ny = y + dirs[d + 1];
 			if (0 <= nx && nx < m && 0 <= ny && ny < n && heights[nx][ny] >= heights[x][y])
-				bfs(nx, ny, isp);
+				dfs(nx, ny, isp);
 		}
 	};
 	for (int i = 0; i < m; ++i) {
-		bfs(i, 0, true);//能访问Pacific Ocean
-		bfs(i, n - 1, false);//能访问 Atlantic Ocean
+		dfs(i, 0, true);//能访问Pacific Ocean
+		dfs(i, n - 1, false);//能访问 Atlantic Ocean
 	}
 	for (int j = 0; j < n; ++j) {
-		bfs(0, j, true);//能访问Pacific Ocean
-		bfs(m - 1, j, false);//能访问 Atlantic Ocean
+		dfs(0, j, true);//能访问Pacific Ocean
+		dfs(m - 1, j, false);//能访问 Atlantic Ocean
 	}
 	for (int x = 0; x < m; ++x) {
 		for (int y = 0; y < n; ++y) {
@@ -2873,14 +2874,14 @@ int largestIsland(vector<vector<int>>& grid) {
 	int m = grid.size(), n = grid[0].size();
 	vector<int> dirs = { 0, -1, 0, 1, 0 };
 	vector<int>areas(2, 0); int cnt, index = 2;
-	function<void(int, int, int)>bfs = [&](int x, int y, int index) {
+	function<void(int, int, int)>dfs = [&](int x, int y, int index) {
 		grid[x][y] = index;//已访问的岛屿标记为岛屿编号
 		areas.back() = ++cnt;//更新岛屿的大小
 		for (int d = 0; d < 4; ++d) {
 			int nx = x + dirs[d];
 			int ny = y + dirs[d + 1];
 			if (0 <= nx && nx < m && 0 <= ny && ny < n && grid[nx][ny] == 1)
-				bfs(nx, ny, index);
+				dfs(nx, ny, index);
 		}
 	};
 	for (int x = 0; x < m; ++x) {
@@ -2888,7 +2889,7 @@ int largestIsland(vector<vector<int>>& grid) {
 			if (grid[x][y] == 1) {
 				areas.push_back(index);
 				cnt = 0;//岛屿大小初始化为0
-				bfs(x, y, index++);
+				dfs(x, y, index++);
 			}
 		}
 	}

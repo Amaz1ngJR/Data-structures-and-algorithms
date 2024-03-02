@@ -1107,6 +1107,55 @@ bool equationsPossible(vector<string>& equations) {
 	return true;
 }
 ```
+#### [685. 冗余连接 II](https://leetcode.cn/problems/redundant-connection-ii/)
+```c++
+vector<int> findRedundantDirectedConnection(vector<vector<int>>& edges) {
+	int n = edges.size();
+	vector<int>fa(n + 1, 0), in(n + 1);
+	function<int(int)> find = [&](int x)->int {
+		return x == fa[x] ? x : (fa[x] = find(fa[x])); // 压缩路径
+	};
+	auto merge = [&](int i, int j) {
+		int x = find(i), y = find(j);    // 先找到两个根节点
+		if (x != y) fa[y] = x;
+	};
+	auto isTreeAfterRemove = [&](int deleteEdge)->bool {
+		iota(begin(fa), end(fa), 0); // 初始化并查集
+		for (int i = 0; i < n; ++i) {
+			if (i != deleteEdge) {
+				if (find(edges[i][0]) == find(edges[i][1])) // 构成有向环了，一定不是树
+					return false;
+				merge(edges[i][0], edges[i][1]);
+			}
+		}
+		return true;
+	};
+	vector<int> memo; // 记录度为2的边
+	for (int i = 0; i < n; ++i) {
+		++in[edges[i][1]];
+	}
+	for (int i = n - 1; i >= 0; i--) {
+		if (in[edges[i][1]] == 2) {
+			memo.push_back(i);
+		}
+	}
+	if (memo.size()) {
+		if (isTreeAfterRemove(memo[0]))
+			return edges[memo[0]];
+		return edges[memo[1]];
+	}
+	auto getRemoveEdge = [&]()->vector<int> {
+		iota(begin(fa), end(fa), 0); // 初始化并查集
+		for (int i = 0; i < n; ++i) {
+			if (find(edges[i][0]) == find(edges[i][1]))
+				return edges[i];
+			merge(edges[i][0], edges[i][1]);
+		}
+		return {};
+	};
+	return getRemoveEdge();
+}
+```
 #### [399. 除法求值](https://leetcode.cn/problems/evaluate-division/)
 ```c++
 // 带权并查集 + 路径压缩

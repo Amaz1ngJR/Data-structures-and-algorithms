@@ -2983,6 +2983,37 @@ int nearestExit(vector<vector<char>>& maze, vector<int>& entrance) {
 	return -1;
 }
 ```
+### [1162. 地图分析](https://leetcode.cn/problems/as-far-from-land-as-possible/) 多源BFS
+```c++
+int maxDistance(vector<vector<int>>& grid) {
+	int n = grid.size(), ans = -1, sum = 0;
+	vector<int> dirs = { 0, -1, 0, 1, 0 };
+	vector<pair<int, int>>q, next;
+	vector<vector<bool>>vis(n, vector<bool>(n, false));
+	for (int i = 0; i < n; ++i) {
+		for (int j = 0; j < n; ++j) {
+			sum += grid[i][j];
+			if (grid[i][j]) q.emplace_back(i, j);
+		}
+	}
+	if (!sum || sum == n * n)return -1;//全为海洋或陆地
+	while (!q.empty()) {
+		ans++;//距离+1
+		for (const auto& it : q) {
+			for (int d = 0; d < 4; ++d) {
+				int nx = it.first + dirs[d];
+				int ny = it.second + dirs[d + 1];
+				if (0 <= nx && nx < n && 0 <= ny && ny < n && !vis[nx][ny]) {
+					vis[nx][ny] = true;
+					next.emplace_back(nx, ny);
+				}
+			}
+		}
+		q = move(next);
+	}
+	return ans;
+}
+```
 ### [127. 单词接龙](https://leetcode.cn/problems/word-ladder/)
 ```c++
 int ladderLength(string beginWord, string endWord, vector<string>& wordList) {

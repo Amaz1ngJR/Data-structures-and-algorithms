@@ -1,4 +1,4 @@
-![image](https://github.com/Amaz1ngJR/Re/assets/83129567/8d00d4ca-3d7b-48aa-9794-61ab84791beb)Algorithm
+Algorithm
 
 ![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/3f60b9b4-4d9a-4d77-8bca-82876d343086)
 

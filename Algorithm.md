@@ -2958,7 +2958,7 @@ int nearestExit(vector<vector<char>>& maze, vector<int>& entrance) {
 	vector<pair<int, int>>q, next;
 	vector<vector<bool>>visited(m, vector<bool>(n, false));
 	vector<int> dirs = { 0, -1, 0, 1, 0 };
-	q.push_back({ entrance[0], entrance[1] });
+	q.emplace_back(entrance[0], entrance[1]);
 	while (!q.empty()) {
 		path++;
 		for (const auto& it : q) {
@@ -2973,7 +2973,7 @@ int nearestExit(vector<vector<char>>& maze, vector<int>& entrance) {
 				int nx = x + dirs[d];
 				int ny = y + dirs[d + 1];
 				if (nx >= 0 && nx < m && ny >= 0 && ny < n && maze[nx][ny] == '.' && !visited[nx][ny]) {
-					next.push_back({ nx, ny });
+					next.emplace_back(nx, ny);
 					visited[nx][ny] = true;
 				}
 			}

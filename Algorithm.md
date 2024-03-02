@@ -2951,6 +2951,38 @@ int orangesRotting(vector<vector<int>>& grid) {
 	return res ? -1 : ans;
 }
 ```
+### [1926. 迷宫中离入口最近的出口](https://leetcode.cn/problems/nearest-exit-from-entrance-in-maze/)
+```c++
+int nearestExit(vector<vector<char>>& maze, vector<int>& entrance) {
+	int m = maze.size(), n = maze[0].size(), path = -1;
+	vector<pair<int, int>>q, next;
+	vector<vector<bool>>visited(m, vector<bool>(n, false));
+	vector<int> dirs = { 0, -1, 0, 1, 0 };
+	q.push_back({ entrance[0], entrance[1] });
+	while (!q.empty()) {
+		path++;
+		for (const auto& it : q) {
+			int x = it.first;
+			int y = it.second;
+			if (x == m - 1 || x == 0 || y == 0 || y == n - 1) {//可能是出口
+				if (x != entrance[0] || y != entrance[1]) {//出口
+					return path;
+				}
+			}
+			for (int d = 0; d < 4; ++d) {
+				int nx = x + dirs[d];
+				int ny = y + dirs[d + 1];
+				if (nx >= 0 && nx < m && ny >= 0 && ny < n && maze[nx][ny] == '.' && !visited[nx][ny]) {
+					next.push_back({ nx, ny });
+					visited[nx][ny] = true;
+				}
+			}
+		}
+		q = move(next);
+	}
+	return -1;
+}
+```
 ### [127. 单词接龙](https://leetcode.cn/problems/word-ladder/)
 ```c++
 int ladderLength(string beginWord, string endWord, vector<string>& wordList) {

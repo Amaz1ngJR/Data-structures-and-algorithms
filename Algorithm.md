@@ -273,7 +273,7 @@ int maxNumberOfAlloys(int n, int k, int budget,
 	return low;
 }
 ```
-# 前后缀与差分
+# 前后缀与差分数组
 
 ```
 前缀和sum[i] = accumulate(arr[0],arr[i])
@@ -296,7 +296,7 @@ sumd2: 1, 6,10, 8, 2
 ![bafcdc70864e80ef1a00fae5ad94f349](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/fbd57c75-c76a-4f8e-bff8-0fd898a80af9)
 
 ```c++
-vector<vector<int>>sum(m + 1, vector<int>(n + 1, 0));//二维前缀和 下标从1开始
+vector<vector<int>>sum(m + 1, vector<int>(n + 1, 0));//二维前缀和 
 for (int i = 0; i < m; i++) {
 	for (int j = 0; j < n; j++) {
 		sum[i + 1][j + 1] = sum[i + 1][j] + sum[i][j + 1] - sum[i][j] + grid[i][j];
@@ -304,7 +304,6 @@ for (int i = 0; i < m; i++) {
 }
 int s = sum[x][y] - sum[x][j - 1] - sum[i - 1][y] + sum[i - 1][j - 1]; //蓝色区域的和
 ```
-
 二维差分
 
 ![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/8357a9c9-8c01-4f0c-b91b-468735aedf26)
@@ -336,7 +335,7 @@ dif[x2+1][y2+1] += v; //加上两个蓝色区域多减的绿色区域
 ```
 
 ## *差分
-[1094. 拼车](https://leetcode.cn/problems/car-pooling/)
+### [1094. 拼车](https://leetcode.cn/problems/car-pooling/)
 ```c++
 bool carPooling(vector<vector<int>>& trips, int capacity) {
 	vector<int> dif(1001, 0);
@@ -352,7 +351,7 @@ bool carPooling(vector<vector<int>>& trips, int capacity) {
 	return true;
 }
 ```
-[2132. 用邮票贴满网格图](https://leetcode.cn/problems/stamping-the-grid/)
+### [2132. 用邮票贴满网格图](https://leetcode.cn/problems/stamping-the-grid/)
 ```c++
 bool possibleToStamp(vector<vector<int>>& grid, int stampHeight, int stampWidth) {
 	int m = grid.size(), n = grid[0].size();
@@ -389,10 +388,8 @@ bool possibleToStamp(vector<vector<int>>& grid, int stampHeight, int stampWidth)
 	return true;
 }
 ```
-## *前缀和最值
-
-#### [121. 买卖股票的最佳时机](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/)
-
+## *前后缀
+### [121. 买卖股票的最佳时机](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/)
 ```c++
 int maxProfit(vector<int>& prices) {
     vector<int>suf;
@@ -410,11 +407,7 @@ int maxProfit(vector<int>& prices) {
     return ans;
 }
 ```
-
-## *分解前后缀
-
-#### [238. 除自身以外数组的乘积](https://leetcode.cn/problems/product-of-array-except-self/)
-
+### [238. 除自身以外数组的乘积](https://leetcode.cn/problems/product-of-array-except-self/)
 ```c++
 vector<int> productExceptSelf(vector<int>& nums) {
     int n = nums.size();
@@ -431,7 +424,7 @@ vector<int> productExceptSelf(vector<int>& nums) {
     return ans;
 }
 ```
-#### [42. 接雨水](https://leetcode.cn/problems/trapping-rain-water/)
+### [42. 接雨水](https://leetcode.cn/problems/trapping-rain-water/)
 
 分别计算每个格子的最大前缀(左向右)和最大后缀(右向左)，存两个数组里，然后取前后缀的最小值减去格子的值即为这个格子所能接的水
 ```c++
@@ -455,7 +448,20 @@ int trap(vector<int>& height) {
 	return ans;
 }
 ```
-
+### [100237. 元素和小于等于 k 的子矩阵的数目](https://leetcode.cn/problems/count-submatrices-with-top-left-element-and-sum-less-than-k/)
+```c++
+int countSubmatrices(vector<vector<int>>& grid, int k) {
+	int m = grid.size(), n = grid[0].size(), ans = 0;
+	vector<vector<int>>sum(m + 1, vector<int>(n + 1));
+	for (int i = 0; i < m; ++i) {
+		for (int j = 0; j < n; ++j) {
+			sum[i + 1][j + 1] = sum[i + 1][j] + sum[i][j + 1] - sum[i][j] + grid[i][j];
+			ans += sum[i + 1][j + 1] <= k;
+		}
+	}
+	return ans;
+}
+```
 # 双指针
 ### [160. 相交链表](https://leetcode.cn/problems/intersection-of-two-linked-lists/)
 消除两个链表的长度差

@@ -2914,6 +2914,52 @@ int largestIsland(vector<vector<int>>& grid) {
 	return ans;
 }
 ```
+### [2867. 统计树中的合法路径数目](https://leetcode.cn/problems/count-valid-paths-in-a-tree/)
+```c++
+long long countPaths(int n, vector<vector<int>>& edges) {
+	vector<bool> cnt(n + 1, false);//false表示质数 true表示非质数
+	int init = [&]() {//找到1到n中所有的质数
+		cnt[1] = true;
+		for (int i = 2; i * i <= n; i++) {
+			if (!cnt[i]) {
+				for (int j = i * i; j <= n; j += i) {
+					cnt[j] = true;
+				}
+			}
+		}
+		return 0;
+	}();
+	vector<vector<int>>next(n + 1);//结点的领域结点
+	for (const auto& e : edges) {
+		next[e[0]].emplace_back(e[1]);
+		next[e[1]].emplace_back(e[0]);
+	}
+	vector<int>size(n + 1), nodes;
+	function<void(int, int)>dfs = [&](int x, int fa) {
+		nodes.emplace_back(x);
+		for (const int& y : next[x]) //dfs非质数结点
+			if (y != fa && cnt[y]) dfs(y, x);
+	};
+	long long ans = 0; int sum;
+	for (int x = 1; x <= n; x++) {//枚举所有质数结点
+		if (cnt[x])continue;
+		sum = 0;
+		for (const int& y : next[x]) {//质数x视为根结点 将树分成多个连通块
+			if (!cnt[y]) continue;//只能有一个质数 遍历非质数结点
+			if (!size[y]) {//该连通块没有计算过
+				nodes.clear();
+				dfs(y, -1);//遍历y所在的连通块不经过质数的情况下有多少非质数
+				for (const int& z : nodes)
+					size[z] = nodes.size();
+			}
+			ans += (long long)size[y] * sum;//以质数x为拐点两颗子树构成的路径
+			sum += size[y];//更新左侧连通块中非质数的数量
+		}
+		ans += sum;//仅从质数x出发到达非质数一条路径
+	}
+	return ans;
+}
+```
 ## *广度优先搜索BFS
 
 ### [994. 腐烂的橘子](https://leetcode.cn/problems/rotting-oranges/)

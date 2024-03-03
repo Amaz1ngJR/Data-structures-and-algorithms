@@ -2914,6 +2914,7 @@ int largestIsland(vector<vector<int>>& grid) {
 	return ans;
 }
 ```
+pre [100226. 在带权树网络中统计可连接服务器对数目](https://leetcode.cn/problems/count-pairs-of-connectable-servers-in-a-weighted-tree-network/)
 ### [2867. 统计树中的合法路径数目](https://leetcode.cn/problems/count-valid-paths-in-a-tree/)
 ```c++
 long long countPaths(int n, vector<vector<int>>& edges) {

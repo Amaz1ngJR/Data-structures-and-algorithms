@@ -1314,12 +1314,19 @@ int minExtraChar(string s, vector<string>& dictionary) {
 ```c++
 ```
 ### **树状数组
+![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/360481f1-a9a5-4734-9f30-ec6ba106557c)
+
+![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/68b9b732-12af-4190-8469-c6d08d5dcec3)
+
+![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/b4d7035c-718e-46b5-9142-536aed7346c3)
+
+
 #### [307. 区域和检索 - 数组可修改](https://leetcode.cn/problems/range-sum-query-mutable/)
 ```c++
 class NumArray {
 private:
-	vector<int> nums;
-	vector<int> tree;
+	vector<int> nums;//记录修改之前nums中的数据
+	vector<int> tree;//树状数组 
 
 	int prefixSum(int i) {
 		int t = 0;
@@ -1330,14 +1337,22 @@ private:
 	}
 public:
 	NumArray(vector<int>& nums) {
-		this->nums.resize(nums.size());
 		this->tree.resize(nums.size() + 1);
-		for (int i = 0; i < nums.size(); i++) {
-			update(i, nums[i]);
+		//this->nums.resize(nums.size());
+		//for (int i = 0; i < nums.size(); ++i) {//O(nlogn) 
+		//	update(i, nums[i]);
+		//}
+		this->nums = nums;
+		for (int i = 1; i <= nums.size(); i++) {//O(n)
+			tree[i] += nums[i - 1];
+			int nxt = i + (i & -i); // 下一个关键区间的右端点
+			if (nxt <= nums.size()) {
+				tree[nxt] += tree[i];
+			}
 		}
 	}
 
-	void update(int index, int val) {
+	void update(int index, int val) {//O(logn)
 		int delta = val - nums[index];
 		nums[index] = val;
 		for (int i = index + 1; i < tree.size(); i += i & -i) {
@@ -1345,7 +1360,7 @@ public:
 		}
 	}
 
-	int sumRange(int left, int right) {
+	int sumRange(int left, int right) {//O(logn)
 		return prefixSum(right + 1) - prefixSum(left);
 	}
 };

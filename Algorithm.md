@@ -2392,12 +2392,9 @@ int rootCount(vector<vector<int>>& edges, vector<vector<int>>& guesses, int k) {
 		g[e[0]].emplace_back(e[1]);
 		g[e[1]].emplace_back(e[0]);
 	}
-	//unordered_set<pair<int, int>>us;
-	unordered_set<long>us;
-	for (const auto& e : guesses) {
-		//us.emplace(e[0], e[1]);
+	unordered_set<long>us;//想象成unordered_set<pair<int, int>>
+	for (const auto& e : guesses) 
 		us.emplace((long long)e[0] << 32 | e[1]);
-	}
 	int ans = 0, cnt0 = 0;
 	function<void(int, int)>dfs = [&](int x, int fa) {
 		for (const int& y : g[x]) {

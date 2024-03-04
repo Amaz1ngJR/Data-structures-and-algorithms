@@ -296,7 +296,7 @@ sumd2: 1, 6,10, 8, 2
 ![bafcdc70864e80ef1a00fae5ad94f349](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/fbd57c75-c76a-4f8e-bff8-0fd898a80af9)
 
 ```c++
-vector<vector<int>>sum(m + 1, vector<int>(n + 1, 0));//二维前缀和 
+vector<vector<int>>sum(m + 1, vector<int>(n + 1, 0));//二维前缀和 下标是从1开始的！
 for (int i = 0; i < m; i++) {
 	for (int j = 0; j < n; j++) {
 		sum[i + 1][j + 1] = sum[i + 1][j] + sum[i][j + 1] - sum[i][j] + grid[i][j];
@@ -351,7 +351,7 @@ bool carPooling(vector<vector<int>>& trips, int capacity) {
 	return true;
 }
 ```
-### [2132. 用邮票贴满网格图](https://leetcode.cn/problems/stamping-the-grid/)
+### [2132. 用邮票贴满网格图](https://leetcode.cn/problems/stamping-the-grid/) 二维差分
 ```c++
 bool possibleToStamp(vector<vector<int>>& grid, int stampHeight, int stampWidth) {
 	int m = grid.size(), n = grid[0].size();
@@ -448,18 +448,29 @@ int trap(vector<int>& height) {
 	return ans;
 }
 ```
-### [100237. 元素和小于等于 k 的子矩阵的数目](https://leetcode.cn/problems/count-submatrices-with-top-left-element-and-sum-less-than-k/)
+### [221. 最大正方形](https://leetcode.cn/problems/maximal-square/) 二维前缀和+二分答案
 ```c++
-int countSubmatrices(vector<vector<int>>& grid, int k) {
-	int m = grid.size(), n = grid[0].size(), ans = 0;
-	vector<vector<int>>sum(m + 1, vector<int>(n + 1));
-	for (int i = 0; i < m; ++i) {
-		for (int j = 0; j < n; ++j) {
-			sum[i + 1][j + 1] = sum[i + 1][j] + sum[i][j + 1] - sum[i][j] + grid[i][j];
-			ans += sum[i + 1][j + 1] <= k;
-		}
+int maximalSquare(vector<vector<char>>& matrix) {
+	int m = matrix.size(), n = matrix[0].size(), low = -1, high = min(m, n) + 1;
+	vector<vector<int>>sum(m + 1, vector<int>(n + 1, 0));//二维前缀和 下标从1开始
+	for (int i = 0; i < m; i++)
+		for (int j = 0; j < n; j++)
+			sum[i + 1][j + 1] = sum[i + 1][j] + sum[i][j + 1] - sum[i][j] + (matrix[i][j] == '1');
+	auto check = [&](int mid) {
+		for (int x = 0; x + mid - 1 < m; ++x)
+			for (int y = 0; y + mid - 1 < n; ++y)
+				if (sum[x + mid][y + mid]
+					- sum[x + mid][y]
+					- sum[x][y + mid]
+					+ sum[x][y] == mid * mid)
+					return true;
+		return false;
+	};
+	while (low + 1 < high) {
+		int mid = low + (high - low) / 2;
+		(check(mid) ? low : high) = mid;
 	}
-	return ans;
+	return low * low;
 }
 ```
 # 双指针
@@ -2920,7 +2931,7 @@ int largestIsland(vector<vector<int>>& grid) {
 	return ans;
 }
 ```
-pre [100226. 在带权树网络中统计可连接服务器对数目](https://leetcode.cn/problems/count-pairs-of-connectable-servers-in-a-weighted-tree-network/)
+pre [3067. 在带权树网络中统计可连接服务器对数目](https://leetcode.cn/problems/count-pairs-of-connectable-servers-in-a-weighted-tree-network/)
 ### [2867. 统计树中的合法路径数目](https://leetcode.cn/problems/count-valid-paths-in-a-tree/)
 ```c++
 long long countPaths(int n, vector<vector<int>>& edges) {

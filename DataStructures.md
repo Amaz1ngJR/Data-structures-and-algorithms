@@ -203,7 +203,7 @@ for(int i = 0; i < nums.size(); i++){
 	st.push(nums[i]);
 }
 ```
-#### 找到数组中每个元素的前第一个小于该元素的下标
+**找到数组中每个元素的前第一个小于该元素的下标**
 ```c++
 vector<int>pre(n, -1); stack<int>sta;
 for (int i = 0; i < n; i++) {

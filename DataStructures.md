@@ -203,7 +203,32 @@ for(int i = 0; i < nums.size(); i++){
 	st.push(nums[i]);
 }
 ```
-**找到数组中每个元素的前第一个小于该元素的下标**
+**找到数组元素前面第一个小/大于该元素的下标**
+#### [962. 最大宽度坡](https://leetcode.cn/problems/maximum-width-ramp/) 
+```c++
+int maxWidthRamp(vector<int>& nums) {
+	int ans = 0, n = nums.size();
+	stack<int>sta;
+	for (int i = 0; i < n; i++) {
+		if (sta.empty() || nums[sta.top()] > nums[i]) 
+			sta.emplace(i);//单调递减的序列
+	}
+	for (int i = n - 1; ~i; i--) {
+		while (!sta.empty() && nums[sta.top()] <= nums[i]) {
+			ans = max(ans, i - sta.top());
+			sta.pop();//从右向左遍历 弹出后不影响答案
+		}
+		if (sta.empty())return ans;//提前退出
+	}
+	return ans;
+}
+```
+[1124. 表现良好的最长时间段](https://leetcode.cn/problems/longest-well-performing-interval/)
+```c++
+
+```
+
+**找到数组元素前面最后一个小/大于该元素的下标**
 ```c++
 vector<int>pre(n, -1); stack<int>sta;
 for (int i = 0; i < n; i++) {
@@ -221,10 +246,9 @@ vector<int> dailyTemperatures(vector<int>& temperatures) {
 	int n = te.size();
 	vector<int> ans(n, 0);
 	stack<int>s;
-	for (int i = n - 1; i >= 0; i--) {//从后向前
-		while (!s.empty() && te[i] >= te[s.top()]) {
+	for (int i = n - 1; ~i; i--) {//从后向前
+		while (!s.empty() && te[i] >= te[s.top()])
 			s.pop();
-		}
 		if (!s.empty()) {//te[i]<s.top()
 			ans[i] = s.top() - i;
 		}
@@ -253,6 +277,12 @@ vector<int> dailyTemperatures(vector<int>& temperatures) {
 	return ans;
 }
 ```
+[1475. 商品折扣后的最终价格](https://leetcode.cn/problems/final-prices-with-a-special-discount-in-a-shop/)、
+[496. 下一个更大元素 I](https://leetcode.cn/problems/next-greater-element-i/)、
+[503. 下一个更大元素 II](https://leetcode.cn/problems/next-greater-element-ii/)、
+[1019. 链表中的下一个更大节点](https://leetcode.cn/problems/next-greater-node-in-linked-list/) 
+[]()
+
 #### [901. 股票价格跨度](https://leetcode.cn/problems/online-stock-span/)
 ```c++
 class StockSpanner {

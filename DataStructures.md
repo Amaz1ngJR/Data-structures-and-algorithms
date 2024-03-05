@@ -223,9 +223,26 @@ int maxWidthRamp(vector<int>& nums) {
 	return ans;
 }
 ```
-[1124. 表现良好的最长时间段](https://leetcode.cn/problems/longest-well-performing-interval/)
+#### [1124. 表现良好的最长时间段](https://leetcode.cn/problems/longest-well-performing-interval/)
 ```c++
-
+int longestWPI(vector<int>& hours) {
+	int n = hours.size(), ans = 0;
+	//劳累的一天视为1 不劳累视为-1 求最长子数组使其元素和大于0
+	vector<int>pre(n + 1); stack<int>sta;
+	sta.push(0);
+	for (int i = 1; i <= n; ++i) {
+		pre[i] = pre[i - 1] + (hours[i - 1] > 8 ? 1 : -1);
+		if (pre[i] < pre[sta.top()])sta.push(i);
+	}
+	for (int i = n; i; --i) {
+		while (!sta.empty() && pre[i] > pre[sta.top()]) {
+			ans = max(ans, i - sta.top());
+			sta.pop();
+		}
+		if (sta.empty())return ans;//提前退出
+	}
+	return ans;
+}
 ```
 
 **找到数组元素前面最后一个小/大于该元素的下标**
@@ -281,7 +298,6 @@ vector<int> dailyTemperatures(vector<int>& temperatures) {
 [496. 下一个更大元素 I](https://leetcode.cn/problems/next-greater-element-i/)、
 [503. 下一个更大元素 II](https://leetcode.cn/problems/next-greater-element-ii/)、
 [1019. 链表中的下一个更大节点](https://leetcode.cn/problems/next-greater-node-in-linked-list/) 
-[]()
 
 #### [901. 股票价格跨度](https://leetcode.cn/problems/online-stock-span/)
 ```c++

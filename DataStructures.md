@@ -203,48 +203,6 @@ for(int i = 0; i < nums.size(); i++){
 	st.push(nums[i]);
 }
 ```
-**找到数组元素前面第一个小/大于该元素的下标**
-#### [962. 最大宽度坡](https://leetcode.cn/problems/maximum-width-ramp/) 
-```c++
-int maxWidthRamp(vector<int>& nums) {
-	int ans = 0, n = nums.size();
-	stack<int>sta;
-	for (int i = 0; i < n; i++) {
-		if (sta.empty() || nums[sta.top()] > nums[i]) 
-			sta.emplace(i);//单调递减的序列
-	}
-	for (int i = n - 1; ~i; i--) {
-		while (!sta.empty() && nums[sta.top()] <= nums[i]) {
-			ans = max(ans, i - sta.top());
-			sta.pop();//从右向左遍历 弹出后不影响答案
-		}
-		if (sta.empty())return ans;//提前退出
-	}
-	return ans;
-}
-```
-#### [1124. 表现良好的最长时间段](https://leetcode.cn/problems/longest-well-performing-interval/)
-```c++
-int longestWPI(vector<int>& hours) {
-	int n = hours.size(), ans = 0;
-	//劳累的一天视为1 不劳累视为-1 求最长子数组使其元素和大于0
-	vector<int>pre(n + 1); stack<int>sta;
-	sta.push(0);
-	for (int i = 1; i <= n; ++i) {
-		pre[i] = pre[i - 1] + (hours[i - 1] > 8 ? 1 : -1);
-		if (pre[i] < pre[sta.top()])sta.push(i);
-	}
-	for (int i = n; i; --i) {
-		while (!sta.empty() && pre[i] > pre[sta.top()]) {
-			ans = max(ans, i - sta.top());
-			sta.pop();
-		}
-		if (sta.empty())return ans;//提前退出
-	}
-	return ans;
-}
-```
-
 **找到数组元素前面最后一个小/大于该元素的下标**
 ```c++
 vector<int>pre(n, -1); stack<int>sta;
@@ -310,9 +268,8 @@ public:
 
 	int next(int price) {
 		day++;
-		while (price>=s.top().second) {
-			s.pop();
-		}
+		while (price>=s.top().second) 
+			s.pop();	
 		int ans = day - s.top().first;
 		s.emplace(day, price);
 		return ans;
@@ -321,6 +278,57 @@ private:
 	int day;
 	stack<pair<int, int>>s;//<day,price>
 };
+```
+#### [42. 接雨水](https://leetcode.cn/problems/trapping-rain-water/)
+```c++
+int trap(vector<int>& height) {
+	int n = height.size(), ans = 0;
+	stack<int>s;
+	for (int i = 0; i < n; i++) {
+		while (!s.empty() && height[i] > height[s.top()]) {//遇到大于栈顶元素 构成凹 可以接雨水
+			int temp = s.top();
+			s.pop();
+			if (s.empty())break;//凹 缺左边部分 
+			ans += (i - s.top() - 1) * (min(height[s.top()], height[i]) - height[temp]);
+		}
+		s.emplace(i);//维护一个单调递减的栈
+	}
+	return ans;
+}
+```
+#### [84. 柱状图中最大的矩形](https://leetcode.cn/problems/largest-rectangle-in-histogram/)
+```c++
+int largestRectangleArea(vector<int>& heights) {
+	heights.emplace(heights.begin(), 0);
+	heights.emplace_back(0);
+	stack<int>sta;
+	int ans = 0, n = heights.size();
+	for (int i = 0; i < n; ++i) {
+		while (!sta.empty() && heights[i] < heights[sta.top()]) {
+			int h = heights[sta.top()];//当前面积的最大值为h*w
+			sta.pop();//w是其右边第一个小于h的下标 - 左边第一个小于h的下标 - 1
+			ans = max(ans, (i - sta.top() - 1) * h);
+		}
+		sta.emplace(i);//维护一个单调递增的栈
+	}
+	return ans;
+}
+```
+### [456. 132 模式](https://leetcode.cn/problems/132-pattern/)
+```c++
+bool find132pattern(vector<int>& nums) {
+	stack<int> sta;
+	int n = nums.size(), k = INT_MIN;
+	for (int i = n - 1; ~i; --i) {
+		if (nums[i] < k) return true;
+		while (!sta.empty() && nums[i] > sta.top()) {
+			k = max(k, sta.top());//此时找到了132中的3(nums[i])和2(sta.top)
+			sta.pop();
+		}
+		sta.emplace(nums[i]);//维护一个单调递减的栈
+	}
+	return false;
+}
 ```
 #### [2454. 下一个更大元素 IV](https://leetcode.cn/problems/next-greater-element-iv/)
 ```c++
@@ -343,24 +351,6 @@ vector<int> secondGreaterElement(vector<int>& nums) {
 		mid.pop();
 	    }
 	    s.emplace(i);
-	}
-	return ans;
-}
-```
-#### [42. 接雨水](https://leetcode.cn/problems/trapping-rain-water/)
-```c++
-int trap(vector<int>& height) {
-	int n = height.size();
-	stack<int>s;
-	int ans = 0;
-	for (int i = 0; i < n; i++) {
-		while (!s.empty() && height[i] >= height[s.top()]) {
-			int temp = s.top();
-			s.pop();
-			if (s.empty())break;
-			ans += (i - s.top() - 1) * (min(height[s.top()], height[i]) - height[temp]);
-		}
-		s.emplace(i);
 	}
 	return ans;
 }
@@ -395,22 +385,43 @@ long long maximumSumOfHeights(vector<int>& maxHeights) {
 	return ans;
 }
 ```
-#### [84. 柱状图中最大的矩形](https://leetcode.cn/problems/largest-rectangle-in-histogram/)
+**找到数组元素前面第一个小/大于该元素的下标**
+#### [962. 最大宽度坡](https://leetcode.cn/problems/maximum-width-ramp/) 
 ```c++
-int largestRectangleArea(vector<int>& heights) {
-	stack<int>st;
-	heights.emplace(heights.begin(), 0);
-	heights.emplace_back(0);//防止数组递增，没法弹出面积
-	int ans = 0;
-	for (int i = 0; i < heights.size(); i++) {
-		while (!st.empty() && heights[st.top()] > heights[i]) {
-			int cur = st.top();
-			st.pop();
-			int left = st.top() + 1;
-			int right = i - 1;
-			ans = max(ans, (right - left + 1) * heights[cur]);
+int maxWidthRamp(vector<int>& nums) {
+	int ans = 0, n = nums.size();
+	stack<int>sta;
+	for (int i = 0; i < n; i++) {
+		if (sta.empty() || nums[sta.top()] > nums[i]) 
+			sta.emplace(i);//单调递减的序列
+	}
+	for (int i = n - 1; ~i; i--) {
+		while (!sta.empty() && nums[sta.top()] <= nums[i]) {
+			ans = max(ans, i - sta.top());
+			sta.pop();//从右向左遍历 弹出后不影响答案
 		}
-		st.emplace(i);
+		if (sta.empty())return ans;//提前退出
+	}
+	return ans;
+}
+```
+#### [1124. 表现良好的最长时间段](https://leetcode.cn/problems/longest-well-performing-interval/)
+```c++
+int longestWPI(vector<int>& hours) {
+	int n = hours.size(), ans = 0;
+	//劳累的一天视为1 不劳累视为-1 求最长子数组使其元素和大于0
+	vector<int>pre(n + 1); stack<int>sta;
+	sta.push(0);
+	for (int i = 1; i <= n; ++i) {//维护一个前缀和单调递减的栈
+		pre[i] = pre[i - 1] + (hours[i - 1] > 8 ? 1 : -1);
+		if (pre[i] < pre[sta.top()])sta.push(i);
+	}
+	for (int i = n; i; --i) {
+		while (!sta.empty() && pre[i] > pre[sta.top()]) {
+			ans = max(ans, i - sta.top());
+			sta.pop();
+		}
+		if (sta.empty())return ans;//提前退出
 	}
 	return ans;
 }

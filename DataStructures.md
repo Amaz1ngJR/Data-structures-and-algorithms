@@ -606,7 +606,7 @@ int maxResult(vector<int>& nums, int k) {
 ### [1. 两数之和](https://leetcode.cn/problems/two-sum/)
 
 ![1699109708486](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/16ba909e-8d2c-4d40-a322-465c26f7f52c)
-
+c++
 ```c++ [
 vector<int> twoSum(vector<int>& nums, int target) {
     unordered_map<int, int>m;//创建一个空哈希表
@@ -620,7 +620,16 @@ vector<int> twoSum(vector<int>& nums, int target) {
     return {};
 }
 ```
-
+python
+```python
+def twoSum(self, nums: List[int], target: int) -> List[int]:
+	m = {} # 创建一个字典
+	for i in range(len(nums)):
+    		if target - nums[i] in m:
+			return [i, m[target - nums[i]]]
+    		m[nums[i]] = i
+	return []
+```
 ### [146. LRU 缓存](https://leetcode.cn/problems/lru-cache/) 哈希+双链表
 ```c++
 class LRUCache {

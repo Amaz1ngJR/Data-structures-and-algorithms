@@ -299,7 +299,7 @@ bool canJump(vector<int>& nums) {
 }
 ```
 隔板的插入种数
-[100136. 统计好分割方案的数目](https://leetcode.cn/problems/count-the-number-of-good-partitions/)
+[2963. 统计好分割方案的数目](https://leetcode.cn/problems/count-the-number-of-good-partitions/)
 ```c++
 int numberOfGoodPartitions(vector<int>& nums) {
 	//合并区间：1、遍历数组 维护每个元素最后一次出现的下标

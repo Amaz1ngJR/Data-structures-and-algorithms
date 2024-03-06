@@ -203,7 +203,7 @@ for(int i = 0; i < nums.size(); i++){
 	st.push(nums[i]);
 }
 ```
-**找到数组元素前面最后一个小/大于该元素的下标**
+**找到数组元素前小/大于该元素的最大下标**
 ```c++
 vector<int>pre(n, -1); stack<int>sta;
 for (int i = 0; i < n; i++) {
@@ -385,7 +385,7 @@ long long maximumSumOfHeights(vector<int>& maxHeights) {
 	return ans;
 }
 ```
-**找到数组元素前面第一个小/大于该元素的下标**
+**找到数组元素前小/大于该元素的最小下标**
 #### [962. 最大宽度坡](https://leetcode.cn/problems/maximum-width-ramp/) 
 ```c++
 int maxWidthRamp(vector<int>& nums) {

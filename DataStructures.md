@@ -314,7 +314,7 @@ int largestRectangleArea(vector<int>& heights) {
 	return ans;
 }
 ```
-### [456. 132 模式](https://leetcode.cn/problems/132-pattern/)
+#### [456. 132 模式](https://leetcode.cn/problems/132-pattern/)
 ```c++
 bool find132pattern(vector<int>& nums) {
 	stack<int> sta;

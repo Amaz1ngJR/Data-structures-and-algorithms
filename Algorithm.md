@@ -1078,7 +1078,21 @@ bool isHappy(int n) {
 }
 ```
 ## *前后指针
-
+### [283. 移动零](https://leetcode.cn/problems/move-zeroes/)
+```c++
+void moveZeroes(vector<int>& nums) {
+	int n = nums.size(), back = 0, front = 0;
+	while (front < n) {
+		if (nums[front]) {
+			nums[back] = nums[front];
+			back++;
+		}
+		front++;
+	}
+	while (back < n) 
+		nums[back++] = 0;
+}
+```
 ### [19. 删除链表的倒数第 N 个结点](https://leetcode.cn/problems/remove-nth-node-from-end-of-list/)
 
 ```c++

@@ -315,6 +315,7 @@ int largestRectangleArea(vector<int>& heights) {
 }
 ```
 #### [456. 132 模式](https://leetcode.cn/problems/132-pattern/)
+c++
 ```c++
 bool find132pattern(vector<int>& nums) {
 	stack<int> sta;
@@ -329,6 +330,21 @@ bool find132pattern(vector<int>& nums) {
 	}
 	return false;
 }
+```
+python
+```python
+def find132pattern(self, nums: List[int]) -> bool:
+	sta = []
+	n = len(nums)
+	k = float('-inf')
+	for i in range(n - 1, -1, -1):
+	    if nums[i] < k :
+		return True
+	    while sta and nums[i] > sta[-1]:
+		k = max(k, sta[-1])
+		sta.pop()
+	    sta.append(nums[i])
+	return False
 ```
 #### [2454. 下一个更大元素 IV](https://leetcode.cn/problems/next-greater-element-iv/)
 ```c++

@@ -392,36 +392,31 @@ bool possibleToStamp(vector<vector<int>>& grid, int stampHeight, int stampWidth)
 ### [121. 买卖股票的最佳时机](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/)
 ```c++
 int maxProfit(vector<int>& prices) {
-    vector<int>suf;
-    int ans = 0;
-    int n = prices.size();
-    suf.resize(n);
-    int  maxsuf= 0;
-    for (int j = n - 1; j >= 0; j--) {
-        suf[j] = maxsuf;
-        maxsuf = max(maxsuf, prices[j]);
-    }
-    for (int i = 0; i < n; i++) {
-        ans = max(ans, suf[i] - prices[i]);
-    }
-    return ans;
+	int ans = 0, n = prices.size(), maxsuf = 0;
+	vector<int>suf(n);
+	for (int i = n - 1; ~i; --i) {
+		suf[i] = maxsuf;
+		maxsuf = max(maxsuf, prices[i]);
+	}
+	for (int i = 0; i < n; ++i) {
+		ans = max(ans, suf[i] - prices[i]);
+	}
+	return ans;
 }
 ```
 ### [238. 除自身以外数组的乘积](https://leetcode.cn/problems/product-of-array-except-self/)
 ```c++
 vector<int> productExceptSelf(vector<int>& nums) {
-    int n = nums.size();
-    vector<int> ans(n, 1);
-    int i, suf;
-    suf = 1;
-    for (i = 1; i < n; i++) {
-        ans[i] = nums[i - 1] * ans[i - 1];//ans是前缀积
-    }
-    for (i = n - 1; i >= 0; i--) {
-        ans[i] *= suf;
-        suf *= nums[i];//suf是后缀积
-    }
-    return ans;
+	int n = nums.size(), suf = 1;
+	vector<int> ans(n, 1);
+	for (int i = 1; i < n; ++i) {
+		ans[i] = nums[i - 1] * ans[i - 1];//ans是前缀积
+	}
+	for (int i = n - 1; ~i; --i) {
+		ans[i] *= suf;
+		suf *= nums[i];//suf是后缀积
+	}
+	return ans;
 }
 ```
 ### [42. 接雨水](https://leetcode.cn/problems/trapping-rain-water/)

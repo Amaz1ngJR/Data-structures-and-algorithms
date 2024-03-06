@@ -606,6 +606,7 @@ int maxResult(vector<int>& nums, int k) {
 ### [1. 两数之和](https://leetcode.cn/problems/two-sum/)
 
 ![1699109708486](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/16ba909e-8d2c-4d40-a322-465c26f7f52c)
+
 c++
 ```c++ [
 vector<int> twoSum(vector<int>& nums, int target) {

@@ -240,6 +240,45 @@ void demo() {
 	int leading_zeros = __builtin_clz(16);//返回整数的二进制表示中从最高位开始到第一个非零位的位数 28
 }
 ```
+![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/06ac940e-9b16-4fc2-b431-0be66aba861a)
+[137. 只出现一次的数字 II](https://leetcode.cn/problems/single-number-ii/)
+```c++
+int singleNumber(vector<int>& nums) {
+	int ans = 0;
+	for (int i = 0; i < 32; ++i) {
+		int cnt = 0;
+		for (const int& v : nums)
+			cnt += v >> i & 1;
+		ans |= cnt % 3 << i;
+	}
+	return ans;
+}
+```
+# 模运算
+[2575. 找出字符串的可整除数组](https://leetcode.cn/problems/find-the-divisibility-array-of-a-string/)
+c++
+```c++
+vector<int> divisibilityArray(string word, int m) {
+	int n = word.size();
+	vector<int>ans(n);
+	long long x = 0;
+	for (int i = 0; i < n; ++i) {
+		x = (10 * x + (word[i] - '0')) % m;
+		ans[i] = x == 0;
+	}
+	return ans;
+}
+```
+python
+```python
+def divisibilityArray(self, word: str, m: int) -> List[int]:
+	ans = []
+        x = 0
+        for i in map(int, word):
+            x = (10 * x + i) % m
+            ans.append(0 if x else 1)
+        return ans
+```
 # 重叠区间
 [452. 用最少数量的箭引爆气球](https://leetcode.cn/problems/minimum-number-of-arrows-to-burst-balloons/)
 ```c++

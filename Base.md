@@ -240,7 +240,7 @@ void demo() {
 	int leading_zeros = __builtin_clz(16);//返回整数的二进制表示中从最高位开始到第一个非零位的位数 28
 }
 ```
-![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/06ac940e-9b16-4fc2-b431-0be66aba861a)
+![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/089180b1-3747-42f2-97fb-db4951eea74a)
 [137. 只出现一次的数字 II](https://leetcode.cn/problems/single-number-ii/)
 ```c++
 int singleNumber(vector<int>& nums) {
@@ -256,6 +256,7 @@ int singleNumber(vector<int>& nums) {
 ```
 # 模运算
 [2575. 找出字符串的可整除数组](https://leetcode.cn/problems/find-the-divisibility-array-of-a-string/)
+
 c++
 ```c++
 vector<int> divisibilityArray(string word, int m) {

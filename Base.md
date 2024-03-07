@@ -241,6 +241,7 @@ void demo() {
 }
 ```
 ![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/089180b1-3747-42f2-97fb-db4951eea74a)
+
 [137. 只出现一次的数字 II](https://leetcode.cn/problems/single-number-ii/)
 ```c++
 int singleNumber(vector<int>& nums) {

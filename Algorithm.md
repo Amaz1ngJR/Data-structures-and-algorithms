@@ -2248,7 +2248,27 @@ int maxProfit(int k, vector<int>& prices) {
 	return f[k + 1][0];
 }
 ```
-
+## 线性DP
+### [2312. 卖木头块](https://leetcode.cn/problems/selling-pieces-of-wood/)
+```c++
+long long sellingWood(int m, int n, vector<vector<int>>& prices) {
+	vector<vector<int>>pr(m + 1, vector<int>(n + 1));
+	for (const auto& p : prices) 
+		pr[p[0]][p[1]] = p[2];
+	//dp[i][j]高为i宽为j的矩形木块可以得到的最多钱
+	vector<vector<long long>>dp(m + 1, vector<long long>(n + 1));
+	for (int i = 1; i <= m; ++i) {//枚举木板高度
+		for (int j = 1; j <= n; ++j) {//枚举木板宽度
+			dp[i][j] = pr[i][j];
+			for (int k = 1; k <= j / 2; ++k)//枚举竖切位置 改变宽度
+				dp[i][j] = max(dp[i][j], dp[i][k] + dp[i][j - k]);
+			for (int k = 1; k <= i / 2; ++k)//枚举横切位置 改变高度
+				dp[i][j] = max(dp[i][j], dp[k][j] + dp[i - k][j]);
+		}
+	}
+	return dp[m][n];
+}
+```
 ## *区间DP
 ### [1690. 石子游戏 VII](https://leetcode.cn/problems/stone-game-vii/)
 ```c++

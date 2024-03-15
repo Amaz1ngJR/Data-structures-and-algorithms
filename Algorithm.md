@@ -2248,7 +2248,7 @@ int maxProfit(int k, vector<int>& prices) {
 	return f[k + 1][0];
 }
 ```
-## 线性DP
+## *线性DP
 ### [2312. 卖木头块](https://leetcode.cn/problems/selling-pieces-of-wood/)
 ```c++
 long long sellingWood(int m, int n, vector<vector<int>>& prices) {

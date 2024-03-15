@@ -176,23 +176,21 @@ void HeapSort(vector<T>& nums) {
 	std::function <void(vector<T>&, int, int)> HeapAdjust =
 		[&](vector<T>& nums, int start, int end) {
 		for (int i = 2 * start + 1; i <= end; i = i * 2 + 1) {
-			//大根堆
 			if (i < end && nums[i] < nums[i + 1]) {//有左孩子，且左孩子小于右孩子
 				i++;//用i表示孩子中最大的
 			}
-			if (nums[i] > nums[start]) {
-				swap(nums[start], nums[i]);
+			if (nums[i] > nums[start]) {//孩子大于当前根结点start
+				swap(nums[start], nums[i]);//调整结点
 				start = i;
 			}
-			else break;
+			else break;//无需调整
 		}
 	};
-	//建立大根堆，从后往前调整
-	for (int i = (nums.size() - 2) / 2; i >= 0; i--)
-		HeapAdjust(nums, i, nums.size() - 1);
-	for (int i = 0; i < nums.size() - 1; i++) {
-		swap(nums[0], nums[nums.size() - 1 - i]);
-		HeapAdjust(nums, 0, nums.size() - 2 - i);
+	for (int i = (nums.size() - 2) / 2; i >= 0; i--) // 构建初始最大堆
+		HeapAdjust(nums, i, nums.size() - 1);// 从当前非叶子节点开始向上遍历
+	for (int i = 0; i < nums.size() - 1; i++) {// 逐个从堆中提取元素以形成排序后的数组
+		swap(nums[0], nums[nums.size() - 1 - i]);// 将最大元素(位于索引0)移动到数组末尾
+		HeapAdjust(nums, 0, nums.size() - 2 - i);// 移除已排序的元素
 	}
 }
 ```

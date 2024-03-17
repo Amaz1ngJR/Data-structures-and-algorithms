@@ -3132,6 +3132,41 @@ int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
 	return 0;
 }
 ```
+## 拓扑排序
+### [310. 最小高度树](https://leetcode.cn/problems/minimum-height-trees/)
+```c++
+vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
+	if (n == 1)return { 0 };
+	vector<int>depth(n), ans;
+	vector<vector<int>> g(n);
+	for (const auto& e : edges) {
+		g[e[0]].emplace_back(e[1]);
+		g[e[1]].emplace_back(e[0]);
+		++depth[e[0]];
+		++depth[e[1]];
+	}
+	queue<int>qu;//存放度为1的结点
+	for (int i = 0; i < n; ++i) 
+		if (depth[i] == 1)qu.emplace(i);
+	
+	int res = n;//剩余结点
+	while (res > 2) {//不断删除度为1的结点 直到结点数小于等于2
+		int qz = qu.size();
+		res -= qz;
+		for (int i = 0; i < qz; ++i) {
+			int cur = qu.front();
+			qu.pop();
+			for (const auto& v : g[cur]) 
+				if (--depth[v] == 1)qu.emplace(v);
+		}
+	}
+	while (!qu.empty()) {
+		ans.emplace_back(qu.front());
+		qu.pop();
+	}
+	return ans;
+}
+```
 ## 最近公共祖先LCA
 ### [2846. 边权重均等查询](https://leetcode.cn/problems/minimum-edge-weight-equilibrium-queries-in-a-tree/)
 ```c++

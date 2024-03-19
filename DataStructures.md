@@ -314,6 +314,33 @@ int largestRectangleArea(vector<int>& heights) {
 	return ans;
 }
 ```
+#### [1793. 好子数组的最大分数](https://leetcode.cn/problems/maximum-score-of-a-good-subarray/)
+```c++
+int maximumScore(vector<int>& nums, int k) {
+	stack<int>pre, suf;
+	int n = nums.size();
+	vector<int> left(n, -1), right(n, n);
+	for (int i = 0; i < n; ++i) {//递增序列
+		while (!pre.empty() && nums[i] <= nums[pre.top()])
+			pre.pop();
+		if (!pre.empty())left[i] = pre.top();
+		pre.emplace(i);
+	}
+	for (int i = n - 1; ~i; --i) {//递减序列
+		while (!suf.empty() && nums[i] <= nums[suf.top()])
+			suf.pop();
+		if (!suf.empty())right[i] = suf.top();
+		suf.emplace(i);
+	}
+	int ans = 0;
+	for (int i = 0; i < n; ++i) {
+		int high = nums[i], l = left[i], r = right[i];
+		if (l < k && r > k) //题目约束
+			ans = max(ans, high * (r - l - 1));	
+	}
+	return ans;
+}
+```
 #### [456. 132 模式](https://leetcode.cn/problems/132-pattern/)
 c++
 ```c++

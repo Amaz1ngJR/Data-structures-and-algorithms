@@ -203,6 +203,7 @@ for(int i = 0; i < nums.size(); i++){
 	st.push(nums[i]);
 }
 ```
+[402. 移掉 K 位数字](https://leetcode.cn/problems/remove-k-digits/)、
 **找到数组元素前小/大于该元素的最大下标**
 ```c++
 vector<int>pre(n, -1); stack<int>sta;

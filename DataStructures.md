@@ -203,7 +203,6 @@ for(int i = 0; i < nums.size(); i++){
 	st.push(nums[i]);
 }
 ```
-[402. 移掉 K 位数字](https://leetcode.cn/problems/remove-k-digits/)、
 **找到数组元素前小/大于该元素的最大下标**
 ```c++
 vector<int>pre(n, -1); stack<int>sta;
@@ -293,24 +292,6 @@ int trap(vector<int>& height) {
 			ans += (i - s.top() - 1) * (min(height[s.top()], height[i]) - height[temp]);
 		}
 		s.emplace(i);//维护一个单调递减的栈
-	}
-	return ans;
-}
-```
-#### [84. 柱状图中最大的矩形](https://leetcode.cn/problems/largest-rectangle-in-histogram/)
-```c++
-int largestRectangleArea(vector<int>& heights) {
-	heights.emplace(heights.begin(), 0);
-	heights.emplace_back(0);
-	stack<int>sta;
-	int ans = 0, n = heights.size();
-	for (int i = 0; i < n; ++i) {
-		while (!sta.empty() && heights[i] < heights[sta.top()]) {
-			int h = heights[sta.top()];//当前面积的最大值为h*w
-			sta.pop();//w是其右边第一个小于h的下标 - 左边第一个小于h的下标 - 1
-			ans = max(ans, (i - sta.top() - 1) * h);
-		}
-		sta.emplace(i);//维护一个单调递增的栈
 	}
 	return ans;
 }
@@ -468,6 +449,84 @@ int longestWPI(vector<int>& hours) {
 		if (sta.empty())return ans;//提前退出
 	}
 	return ans;
+}
+```
+#### 矩形系列
+##### [84. 柱状图中最大的矩形](https://leetcode.cn/problems/largest-rectangle-in-histogram/)
+```c++
+int largestRectangleArea(vector<int>& heights) {
+	heights.emplace(heights.begin(), 0);
+	heights.emplace_back(0);
+	stack<int>sta;
+	int ans = 0, n = heights.size();
+	for (int i = 0; i < n; ++i) {
+		while (!sta.empty() && heights[i] < heights[sta.top()]) {
+			int h = heights[sta.top()];//当前面积的最大值为h*w
+			sta.pop();//w是其右边第一个小于h的下标 - 左边第一个小于h的下标 - 1
+			ans = max(ans, (i - sta.top() - 1) * h);
+		}
+		sta.emplace(i);//维护一个单调递增的栈
+	}
+	return ans;
+}
+```
+#### 字典序最小
+##### [402. 移掉 K 位数字](https://leetcode.cn/problems/remove-k-digits/)
+```c++
+string removeKdigits(string num, int k) {
+	stack<char>sta; int n = num.size();
+	string ans = "";
+	for (int i = 0; i < n; ++i) {
+		while (!sta.empty() && num[i] < sta.top() && k) {
+			sta.pop();
+			--k;
+		}//维护一个递增的序列
+		sta.emplace(num[i]);
+	}
+	while (!sta.empty()) {//从栈中取出来的是一个递减的序列
+		ans.append(1, sta.top());
+		sta.pop();
+	}
+	ans = ans.substr(k, num.size() - k);//去掉前面大的数
+	for (int i = ans.size() - 1; ~i; --i) {
+		if (ans[i] != '0')break;
+		else ans.pop_back();
+	}
+	ranges::reverse(ans);//再次形成递增序列
+	return ans.size() > 0 ? ans : "0";
+}
+```
+#### 优化DP
+##### [2617. 网格图中最少访问的格子数](https://leetcode.cn/problems/minimum-number-of-visited-cells-in-a-grid/) 单调栈上二分
+```c++
+int minimumVisitedCells(vector<vector<int>>& grid) {
+	int m = grid.size(), n = grid[0].size(), mn;
+	vector<vector<pair<int, int>>>col_stack(n);//列单调栈 [<最少跳,行号>,...]
+	vector<pair<int, int>>row_stack;//行单调栈 <最小跳,列号>
+	for (int i = m - 1; ~i; --i) {
+		row_stack.clear();
+		for (int j = n - 1; ~j; --j) {
+			int g = grid[i][j];
+			mn = i < m - 1 || j < n - 1 ? INT_MAX : 1;//初始最小跳 终点为1 其他为无穷大
+			if (g) {//不为0 可以跳
+				auto it = lower_bound(row_stack.begin(), row_stack.end(),
+					j + g, [](auto& a, int b) {return a.second > b; });
+				if (it < row_stack.end())mn = it->first + 1;
+				it = lower_bound(col_stack[j].begin(), col_stack[j].end(),
+					i + g, [](auto& a, int b) {return a.second > b; });
+				if (it < col_stack[j].end())mn = min(mn, it->first + 1);
+			}
+			if (mn < INT_MAX) {//插入栈中
+				while (!row_stack.empty() && mn <= row_stack.back().first)
+					row_stack.pop_back();
+				row_stack.emplace_back(mn, j);
+				while (!col_stack[j].empty() && mn <= col_stack[j].back().first)
+					col_stack[j].pop_back();
+				col_stack[j].emplace_back(mn, i);
+			}
+		}
+	}
+	return mn < INT_MAX ? mn : -1;//最后一个算出的mn就是 f[0][0]
 }
 ```
 ### **最小栈

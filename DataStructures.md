@@ -496,6 +496,33 @@ string removeKdigits(string num, int k) {
 	return ans.size() > 0 ? ans : "0";
 }
 ```
+##### [316. 去除重复字母](https://leetcode.cn/problems/remove-duplicate-letters/)
+```c++
+string removeDuplicateLetters(string s) {
+	vector<int>cnt(26), in_sta(26); int n = s.size();
+	for (const char& ch : s)cnt[ch - 'a']++;
+	stack<char>sta;
+	for (int i = 0; i < n; ++i) {
+		while (!sta.empty() && s[i] < sta.top() && cnt[sta.top() - 'a']>1 && in_sta[s[i] - 'a'] == 0) {
+			--cnt[sta.top() - 'a'];
+			--in_sta[sta.top() - 'a'];
+			sta.pop();
+		}
+		if (in_sta[s[i] - 'a'] == 0) {
+			in_sta[s[i] - 'a'] = 1;
+			sta.emplace(s[i]);
+		}
+		else --cnt[s[i] - 'a'];
+	}
+	string ans = "";
+	while (!sta.empty()) {
+		ans.append(1, sta.top());
+		sta.pop();
+	}
+	ranges::reverse(ans);
+	return ans;
+}
+```
 #### 优化DP
 ##### [2617. 网格图中最少访问的格子数](https://leetcode.cn/problems/minimum-number-of-visited-cells-in-a-grid/) 单调栈上二分
 ```c++

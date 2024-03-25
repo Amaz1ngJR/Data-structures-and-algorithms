@@ -203,6 +203,22 @@ for(int i = 0; i < nums.size(); i++){
 	st.push(nums[i]);
 }
 ```
+**记录每个元素后面比该元素大的个数
+```c++
+vector<int>nex(n);
+stack<int>s;
+for (int i = 0; i < n; ++i) {
+	while (!s.empty() && nums[i] < nums[s.top()]) {
+		nex[s.top()] = i - s.top() - 1;
+		s.pop();
+	}
+	s.emplace(i);
+}
+while (!s.empty()) {
+	nex[s.top()] = n - s.top() - 1;
+	s.pop();
+}
+```
 **找到数组元素前小/大于该元素的最大下标**
 ```c++
 vector<int>pre(n, -1); stack<int>sta;
@@ -523,6 +539,10 @@ string removeDuplicateLetters(string s) {
 	ranges::reverse(ans);
 	return ans;
 }
+```
+##### [321. 拼接最大数](https://leetcode.cn/problems/create-maximum-number/)
+```c++
+
 ```
 #### 优化DP
 ##### [2617. 网格图中最少访问的格子数](https://leetcode.cn/problems/minimum-number-of-visited-cells-in-a-grid/) 单调栈上二分

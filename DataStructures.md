@@ -503,12 +503,13 @@ string removeDuplicateLetters(string s) {
 	for (const char& ch : s)cnt[ch - 'a']++;
 	stack<char>sta;
 	for (int i = 0; i < n; ++i) {
-		while (!sta.empty() && s[i] < sta.top() && cnt[sta.top() - 'a']>1 && in_sta[s[i] - 'a'] == 0) {
-			--cnt[sta.top() - 'a'];
-			--in_sta[sta.top() - 'a'];
+		//当后面出现字典序比栈顶更小的且不在栈中的字母且栈顶字母后面还有 则弹出栈顶
+		while (!sta.empty() && s[i] < sta.top() && cnt[sta.top() - 'a'] > 1 && in_sta[s[i] - 'a'] == 0) {
+			--cnt[sta.top() - 'a'];//cnt表示这个字母存活(在栈中、在当前后面)的个数
+			--in_sta[sta.top() - 'a'];//in_sta表示栈中这个字母的个数
 			sta.pop();
 		}
-		if (in_sta[s[i] - 'a'] == 0) {
+		if (in_sta[s[i] - 'a'] == 0) {//不在栈中
 			in_sta[s[i] - 'a'] = 1;
 			sta.emplace(s[i]);
 		}

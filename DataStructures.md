@@ -203,7 +203,7 @@ for(int i = 0; i < nums.size(); i++){
 	st.push(nums[i]);
 }
 ```
-**记录每个元素后面比该元素大的个数
+**记录每个元素后面比该元素大的个数**
 ```c++
 vector<int>nex(n);
 stack<int>s;

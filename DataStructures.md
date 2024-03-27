@@ -798,6 +798,17 @@ private:
 	unordered_map<int, list<pair<int, int>>::iterator>m;
 };
 ```
+### [442. 数组中重复的数据](https://leetcode.cn/problems/find-all-duplicates-in-an-array/) 原地哈希
+```c++
+vector<int> findDuplicates(vector<int>& nums) {
+	vector<int>ans;
+	for (const auto& v : nums) {//将nums[i]映射到nums[nums[i] - 1] 映射的方法就是将该位置设为其相反数 
+		if (nums[abs(v) - 1] < 0)ans.emplace_back(abs(v));
+		else nums[abs(v) - 1] *= -1;
+	}
+	return ans;
+}
+```
 ## *树
 
 ### **二叉树

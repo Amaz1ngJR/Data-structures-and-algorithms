@@ -306,6 +306,7 @@ int findMinArrowShots(vector<vector<int>>& points) {
 }
 ```
 do [2580. 统计将重叠区间合并成组的方案数](https://leetcode.cn/problems/count-ways-to-group-overlapping-ranges/)
+
 [56. 合并区间](https://leetcode.cn/problems/merge-intervals/)
 ```c++
 vector<vector<int>> merge(vector<vector<int>>& intervals) {

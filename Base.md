@@ -281,7 +281,7 @@ def divisibilityArray(self, word: str, m: int) -> List[int]:
             ans.append(0 if x else 1)
         return ans
 ```
-# 重叠区间
+# 重叠区间、区间合并
 [452. 用最少数量的箭引爆气球](https://leetcode.cn/problems/minimum-number-of-arrows-to-burst-balloons/)
 ```c++
 int findMinArrowShots(vector<vector<int>>& points) {
@@ -305,7 +305,7 @@ int findMinArrowShots(vector<vector<int>>& points) {
 	return ans;
 }
 ```
-# 区间合并
+do [2580. 统计将重叠区间合并成组的方案数](https://leetcode.cn/problems/count-ways-to-group-overlapping-ranges/)
 [56. 合并区间](https://leetcode.cn/problems/merge-intervals/)
 ```c++
 vector<vector<int>> merge(vector<vector<int>>& intervals) {

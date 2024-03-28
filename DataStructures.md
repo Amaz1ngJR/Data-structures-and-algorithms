@@ -542,7 +542,36 @@ string removeDuplicateLetters(string s) {
 ```
 ##### [321. 拼接最大数](https://leetcode.cn/problems/create-maximum-number/)
 ```c++
-
+vector<int> maxNumber(vector<int>& nums1, vector<int>& nums2, int k) {
+	int n1 = nums1.size(), n2 = nums2.size();
+	vector<int> ans;
+	auto maxsquence = [&](vector<int> nums, int len) {
+		int n = nums.size();
+		if (n <= len)return nums;
+		int pop = n - len;
+		vector<int>s;
+		for (int i = 0; i < n; ++i) {
+			while (!s.empty() && s.back() < nums[i] && pop) {
+				s.pop_back();
+				--pop;
+			}//维护一个单调递减的栈
+			s.push_back(nums[i]);
+		}
+		s.resize(len);
+		return s;
+	};
+	for (int len = max(0, k - n2); len <= min(k, n1); ++len) {//枚举从nums1中选len个数
+		vector<int>s1 = maxsquence(nums1, len);//长度为len的最大序列
+		vector<int>s2 = maxsquence(nums2, k - len);//长度为k-len的最大序列
+		vector<int>temp;//存储合并后的序列
+		auto iter1 = s1.begin(), iter2 = s2.begin();
+		while (iter1 != s1.end() || iter2 != s2.end()) //合并两个序列
+			temp.push_back(lexicographical_compare(iter1, s1.end(), iter2, s2.end()) ? *iter2++ : *iter1++);
+		// 如果归并后的最大子序列大于目前已找到的最大子序列，则更新解
+		ans = lexicographical_compare(ans.begin(), ans.end(), temp.begin(), temp.end()) ? temp : ans;
+	}
+	return ans;
+}
 ```
 #### 优化DP
 ##### [2617. 网格图中最少访问的格子数](https://leetcode.cn/problems/minimum-number-of-visited-cells-in-a-grid/) 单调栈上二分

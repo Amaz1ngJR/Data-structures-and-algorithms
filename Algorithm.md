@@ -2791,6 +2791,22 @@ int eraseOverlapIntervals(vector<vector<int>>& intervals) {
 	return high - low - 1;
 }
 ```
+## [2952. 需要添加的硬币的最小数量](https://leetcode.cn/problems/minimum-number-of-coins-to-be-added/)
+```c++
+int minimumAddedCoins(vector<int>& coins, int target) {
+	ranges::sort(coins);
+	int ans = 0, i = 0, s = 0;//[0,s]是能够筹够的面值
+	while (s < target) {
+		if (i < coins.size() && coins[i] <= s + 1)
+			s += coins[i++];
+		else {//需要添加硬币面值为s+1
+			++ans;
+			s += s + 1;
+		}
+	}
+	return ans;
+}
+```
 # 图
 遍历上下左右 四个方向
 ```c++

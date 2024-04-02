@@ -1098,6 +1098,26 @@ TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
 	return lowestCommonAncestor(root->left, p, q);//p、q在root的左侧
 }
 ```
+#### [894. 所有可能的真二叉树](https://leetcode.cn/problems/all-possible-full-binary-trees/)
+```c++
+vector<TreeNode*> allPossibleFBT(int n) {
+	vector<vector<TreeNode*>>f(11, vector<TreeNode*>());//f[i]表示有i个叶子结点的真二叉树
+	f[1].push_back(new TreeNode(0));
+	auto init = [&]() {
+		for (int i = 2; i < 11; ++i) {//n个结点有(n+1)/2个叶子结点 20个结点最多10个
+			for (int j = 1; j < i; ++j) {//枚举左子树叶子结点个数
+				for (auto left : f[j]) {//枚举左子树
+					for (auto right : f[i - j]) {//枚举右子树
+						f[i].push_back(new TreeNode(0, left, right));
+					}
+				}
+			}
+		}
+	};
+	init();
+	return n % 2 ? f[(n + 1) / 2] : f[0];
+}
+```
 ### **堆
 
 堆是一个完全二叉树

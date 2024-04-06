@@ -3185,7 +3185,35 @@ vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
 	return ans;
 }
 ```
-## 最近公共祖先LCA
+## 树上倍增、最近公共祖先LCA
+### [1483. 树节点的第 K 个祖先](https://leetcode.cn/problems/kth-ancestor-of-a-tree-node/)
+```c++
+class TreeAncestor {
+private:
+	vector<vector<int>>pa;
+public:
+	TreeAncestor(int n, vector<int>& parent) {
+		int m = 32 - __builtin_clz(n); // n 的二进制长度
+		pa.resize(n, vector<int>(m, -1));
+		for (int i = 0; i < n; ++i)
+			pa[i][0] = parent[i];
+		for (int i = 0; i < m - 1; ++i)
+			for (int x = 0; x < n; ++x)
+				if (int p = pa[x][i]; p != -1)
+					pa[x][i + 1] = pa[p][i];
+	}
+
+	int getKthAncestor(int node, int k) {
+		int m = 32 - __builtin_clz(k);
+		for (int i = 0; i < m; ++i)
+			if ((k >> i) & 1) { // k 的二进制从低到高第 i 位是 1
+				node = pa[node][i];
+				if (node < 0)break;
+			}
+		return node;
+	}
+};
+```
 ### [2846. 边权重均等查询](https://leetcode.cn/problems/minimum-edge-weight-equilibrium-queries-in-a-tree/)
 ```c++
 vector<int> minOperationsQueries(int n, vector<vector<int>>& edges, vector<vector<int>>& queries) {

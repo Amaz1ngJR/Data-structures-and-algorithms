@@ -88,31 +88,31 @@ ListNode* List::reverseList(ListNode* head) {
 反转链表区间
 [92. 反转链表 II](https://leetcode.cn/problems/reverse-linked-list-ii/)
 ```c++
-ListNode* List::reverseBetween(ListNode* head, int left, int right) {
-	//头结点存储数据
-	ListNode* dummy = new ListNode(head);//哨兵 下标为0
-	ListNode* cur, * star, * lef, * rig, * end, * pre, * nex;
-	cur = star = lef = rig = end = dummy;
-	pre = nullptr;
-	int number = 0;
-	while (cur != nullptr) {
-		if (number == left - 1) {
+ListNode* reverseBetween(ListNode* head, int left, int right) {
+	ListNode* dummy = new ListNode(0, head);
+	ListNode* star, * end, * lef, * rig, * cur;
+	cur = dummy;
+	int cnt = 0;
+	while (cur) {
+		if (cnt == left - 1) {
 			star = cur;
 			lef = cur->next;
 		}
-		if (number == right) {
+		else if (cnt == right) {
 			rig = cur;
 			end = cur->next;
+			break;
 		}
-		number++;
+		++cnt;
 		cur = cur->next;
 	}
-	ListNode* temp = lef;
-	while (temp != end) {//反转区间
-		nex = temp->next;
-		temp->next = pre;
-		pre = temp;
-		temp = nex;
+	ListNode* last, * temp;
+	temp = lef; last = nullptr;
+	while (temp != end) {//反转left-right
+		ListNode* next = temp->next;
+		temp->next = last;
+		last = temp;
+		temp = next;
 	}
 	star->next = rig;
 	lef->next = end;

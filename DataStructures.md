@@ -731,7 +731,7 @@ vector<int> maxSlidingWindow(vector<int>& nums, int k) {
 	for (int i = 0; i < nums.size(); ++i) {
 		//入队
 		while (!q.empty() && nums[q.back()] <= nums[i]) {
-			q.pop_back();// 维护 q 的单调性
+			q.pop_back();// 维护 q 的单调递减
 		}
 		q.emplace_back(i);// 入队
 		//出队

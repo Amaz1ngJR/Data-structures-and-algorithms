@@ -728,19 +728,19 @@ bool Queue::PopQueue(LinkQueue& Q) {
 vector<int> maxSlidingWindow(vector<int>& nums, int k) {
 	vector<int>ans;
 	deque<int>q;//单调队列
-	for (int i = 0; i < nums.size(); i++) {
+	for (int i = 0; i < nums.size(); ++i) {
 		//入队
 		while (!q.empty() && nums[q.back()] <= nums[i]) {
-			q.pop_back();
+			q.pop_back();// 维护 q 的单调性
 		}
-		q.emplace_back(i);
+		q.emplace_back(i);// 入队
 		//出队
-		if (i - q[0] + 1 > k) {
+		if (i - q[0] >= k) {// 队首已经离开窗口了
 			q.pop_front();
 		}
 		//记录答案
 		if (i >= k - 1) {
-			ans.emplace_back(nums[q.front()]);
+			ans.emplace_back(nums[q.front()]);// 由于队首到队尾单调递减，所以窗口最大值就是队首
 		}
 	}
 	return ans;

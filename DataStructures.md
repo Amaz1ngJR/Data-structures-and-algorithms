@@ -89,35 +89,19 @@ ListNode* List::reverseList(ListNode* head) {
 [92. 反转链表 II](https://leetcode.cn/problems/reverse-linked-list-ii/)
 ```c++
 ListNode* reverseBetween(ListNode* head, int left, int right) {
-	ListNode* dummy = new ListNode(0, head);
-	ListNode* star, * end, * lef, * rig, * cur;
-	cur = dummy;
-	int cnt = 0;
-	while (cur) {
-		if (cnt == left - 1) {
-			star = cur;
-			lef = cur->next;
-		}
-		else if (cnt == right) {
-			rig = cur;
-			end = cur->next;
-			break;
-		}
-		++cnt;
-		cur = cur->next;
+	ListNode* dummy = new ListNode(0, head), * p0 = dummy;
+	for (int i = 1; i < left; ++i)
+		p0 = p0->next;//找到反转部分的前驱
+	ListNode* cur = p0->next, * pre = nullptr;
+	for (int i = 0; i < right - left + 1; ++i) {
+		ListNode* next = cur->next;
+		cur->next = pre;
+		pre = cur;
+		cur = next;
 	}
-	ListNode* last, * temp;
-	temp = lef; last = nullptr;
-	while (temp != end) {//反转left-right
-		ListNode* next = temp->next;
-		temp->next = last;
-		last = temp;
-		temp = next;
-	}
-	star->next = rig;
-	lef->next = end;
-	if (left == 1)return star->next;
-	return head;
+	p0->next->next = cur;
+	p0->next = pre;
+	return dummy->next;
 }
 ```
 [61. 旋转链表](https://leetcode.cn/problems/rotate-list/)

@@ -443,6 +443,24 @@ int trap(vector<int>& height) {
 	return ans;
 }
 ```
+### [2602. 使数组元素全部相等的最少操作次数](https://leetcode.cn/problems/minimum-operations-to-make-all-array-elements-equal/) 前缀和+二分查找
+```c++
+vector<long long> minOperations(vector<int>& nums, vector<int>& queries) {
+	int n = nums.size(), m = queries.size();
+	vector<long long>ans(m), pre_sum(n + 1);
+	ranges::sort(nums);
+	for (int i = 0; i < n; ++i)
+		pre_sum[i + 1] = pre_sum[i] + nums[i];
+	for (int i = 0; i < m; ++i) {
+		int q = queries[i];
+		long long len = ranges::lower_bound(nums, q) - nums.begin();
+		long long left = q * len - pre_sum[len];
+		long long right = pre_sum[n] - pre_sum[len] - q * (n - len);
+		ans[i] = left + right;
+	}
+	return ans;
+}
+```
 ### [221. 最大正方形](https://leetcode.cn/problems/maximal-square/) 二维前缀和+二分答案
 ```c++
 int maximalSquare(vector<vector<char>>& matrix) {

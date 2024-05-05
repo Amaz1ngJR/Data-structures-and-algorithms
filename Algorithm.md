@@ -3323,15 +3323,17 @@ vector<int> minOperationsQueries(int n, vector<vector<int>>& edges, vector<vecto
 # 博弈
 ## [486. 预测赢家](https://leetcode.cn/problems/predict-the-winner/)
 ```c++
-int n = nums.size();
-        vector<vector<int>>dp(n,vector<int>(n, -1));
-        vector<int>pre(n + 1);//sum[low, high] = pre[high + 1] - pre[low]
-        partial_sum(nums.begin(), nums.end(), pre.begin() + 1);
-        function<int(int, int)>dfs=[&](int low, int high)->int {
-            if(dp[low][high] != -1) return dp[low][high];
-            if(low == high) return nums[low];
-            dp[low][high] = pre[high + 1] - pre[low] - min(dfs(low + 1, high), dfs(low, high - 1));
-            return dp[low][high];
-        };//dfs表示在区间中能拿到的最优解(留给下一个拿的最少)
-        return dfs(0, n - 1) * 2 >= pre[n];
+bool predictTheWinner(vector<int>& nums) {
+	int n = nums.size();
+	vector<vector<int>>dp(n, vector<int>(n, -1));
+	vector<int>pre(n + 1);//sum[low, high] = pre[high + 1] - pre[low]
+	partial_sum(nums.begin(), nums.end(), pre.begin() + 1);
+	function<int(int, int)>dfs = [&](int low, int high)->int {
+		if (dp[low][high] != -1) return dp[low][high];
+		if (low == high) return nums[low];
+		dp[low][high] = pre[high + 1] - pre[low] - min(dfs(low + 1, high), dfs(low, high - 1));
+		return dp[low][high];
+	};//dfs表示在区间中能拿到的最优解(留给下一个拿的最少)
+	return dfs(0, n - 1) * 2 >= pre[n];
+}
 ```

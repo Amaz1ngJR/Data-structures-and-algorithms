@@ -1026,25 +1026,22 @@ head到入口的距离为a-c 恰好是环长的倍速
 继续走 二者相遇处即是入口
 ```
 ```c++
-ListNode *detectCycle(ListNode *head) {
-    ListNode* slow, * fast;
-    slow = fast = head;
-    while (slow != nullptr && fast != nullptr) {
-        fast = fast->next;
-        if (fast != nullptr) {
-            fast = fast->next;
-        }
-        else return NULL;
-        slow = slow->next;
-        if (slow == fast) {
-            while (head != slow) {
-                head = head->next;
-                slow = slow->next;
-            }
-            return slow;
-        }
-    }
-    return NULL;
+ListNode* detectCycle(ListNode* head) {
+	ListNode* slow = head, * fast = head;
+	while (fast) {
+		fast = fast->next;
+		if (!fast) return nullptr;
+		fast = fast->next;
+		slow = slow->next;
+		if (slow == fast) {
+			while (head != slow) {
+				slow = slow->next;
+				head = head->next;
+			}
+			return head;
+		}
+	}
+	return nullptr;
 }
 ```
 ### [287. 寻找重复数](https://leetcode.cn/problems/find-the-duplicate-number/)

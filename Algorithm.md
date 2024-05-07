@@ -996,19 +996,16 @@ long long countSubarrays(vector<int>& nums, int minK, int maxK) {
 
 判断一个链表是否是有环
 ```c++
-bool hasCycle(ListNode *head) {
-    ListNode* slow, * fast;
-    slow = fast = head;
-    while (slow != nullptr && fast != nullptr) {
-        fast = fast->next;
-        if (fast != nullptr)
-            fast = fast->next;
-        else return false;
-        slow = slow->next;
-        if (slow == fast)
-            return true;
-    }
-    return false;
+bool hasCycle(ListNode* head) {
+	ListNode* fast = head, * slow = head;
+	while (fast) {
+		fast = fast->next;
+		if (!fast)return false;
+		fast = fast->next;
+		slow = slow->next;
+		if (slow == fast)return true;
+	}
+	return false;
 }
 ```
 

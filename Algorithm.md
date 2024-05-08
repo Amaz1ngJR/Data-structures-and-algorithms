@@ -3157,8 +3157,32 @@ int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
 ```
 ## *拓扑排序
 [1557. 可以到达所有点的最少点数目](https://leetcode.cn/problems/minimum-number-of-vertices-to-reach-all-nodes/)
-
-### [310. 最小高度树](https://leetcode.cn/problems/minimum-height-trees/)
+### [207. 课程表](https://leetcode.cn/problems/course-schedule/) 有向图
+```c++
+bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+	vector<int>indegree(numCourses);//记录入度
+	vector<vector<int>>next(numCourses);
+	for (const auto& it : prerequisites) {
+		++indegree[it[0]];
+		next[it[1]].push_back(it[0]);
+	}
+	queue<int>q;//记录入度为0的结点
+	for (int i = 0; i < numCourses; ++i)
+		if (indegree[i] == 0)
+			q.push(i);
+	int cnt = 0;//记录已经学过的课程数量
+	while (!q.empty()) {
+		int t = q.front();
+		q.pop();
+		++cnt;
+		for (const auto& ne : next[t])
+			if (--indegree[ne] == 0)
+				q.push(ne);
+	}
+	return cnt == numCourses;
+}
+```
+### [310. 最小高度树](https://leetcode.cn/problems/minimum-height-trees/) 无向图
 ```c++
 vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
 	if (n == 1)return { 0 };

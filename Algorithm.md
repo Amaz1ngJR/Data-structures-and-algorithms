@@ -486,6 +486,28 @@ int maximalSquare(vector<vector<char>>& matrix) {
 	return low * low;
 }
 ```
+### [437. 路径总和 III](https://leetcode.cn/problems/path-sum-iii/)
+```c++
+int pathSum(TreeNode* root, int targetSum) {
+	int ans = 0; long long sum = 0;
+	vector<int>path;
+	path.push_back(0);//存在一个0 根节点就是target的话也能正确
+	function<void(TreeNode*)>dfs = [&](TreeNode* root) {
+		if (!root) return;
+		sum += root->val;//选了
+		if (int a = count(path.begin(), path.end(), sum - targetSum))
+			ans += a;//以当前结点作为路径结尾的满足条件的路径个数
+		path.push_back(sum);
+		dfs(root->left);
+		dfs(root->right);
+		//恢复现场
+		sum -= root->val;
+		path.pop_back();
+	};
+	dfs(root);
+	return ans;
+}
+```
 # 双指针
 ### [160. 相交链表](https://leetcode.cn/problems/intersection-of-two-linked-lists/)
 消除两个链表的长度差

@@ -1256,6 +1256,24 @@ vector<vector<int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k
 	return ans;
 }
 ```
+#### [23. 合并 K 个升序链表](https://leetcode.cn/problems/merge-k-sorted-lists/)
+```c++
+ListNode* mergeKLists(vector<ListNode*>& lists) {
+	ListNode* dummy = new ListNode(0), * tail = dummy;
+	auto cmp = [](ListNode* a, ListNode* b) {return a->val > b->val; };//小根堆
+	priority_queue<ListNode*, vector<ListNode*>, decltype(cmp)> pq;
+	for (const auto& head : lists)
+		if (head) pq.emplace(head);
+	while (!pq.empty()) {
+		auto node = pq.top();
+		pq.pop();
+		if (node->next) pq.emplace(node->next);
+		tail->next = node;
+		tail = node;
+	}
+	return dummy->next;
+}
+```
 **对顶堆**
 #### [295. 数据流的中位数](https://leetcode.cn/problems/find-median-from-data-stream/)
 ```c++

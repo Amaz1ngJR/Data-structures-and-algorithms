@@ -373,6 +373,25 @@ double myPow(double x, int n) {
     return tmp*tmp*myPow(x, n%2);
 }
 ```
+```cpp
+double myPow(double x, int n) {
+	double ans = 1;
+	long long N = n;
+	if(N < 0) {
+	    N = - N;
+	    x = 1 / x;
+	}
+	while(N) { //从低到高枚举N的每个比特位
+	    if(N & 1) { //这个比特位数1
+		ans *= x; 
+	    }
+	    x *= x;
+	    N >>= 1;
+	}
+	return ans;
+}
+```
+
 ## 最大公因子/最大公约数
 辗转相除法(欧几里得算法)得到两个数的最大公因数
 ```

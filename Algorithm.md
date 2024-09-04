@@ -1117,6 +1117,28 @@ void moveZeroes(vector<int>& nums) {
 		nums[back++] = 0;
 }
 ```
+### [2181. 合并零之间的节点](https://leetcode.cn/problems/merge-nodes-in-between-zeros/)
+```c++
+ListNode* mergeNodes(ListNode* head) {
+	ListNode * dummy = new ListNode();
+	dummy->next = head;
+	ListNode* front = head->next, * back = dummy;
+	int sum = 0;
+	while(front){
+	    if(front->val == 0) {
+		back = back->next;
+		back->val = sum;
+		sum = 0;
+	    }
+	    else {
+		sum += front->val;
+	    }
+	    front = front->next;
+	}
+	back->next = nullptr;
+	return head;
+}
+```
 ### [19. 删除链表的倒数第 N 个结点](https://leetcode.cn/problems/remove-nth-node-from-end-of-list/)
 
 ```c++

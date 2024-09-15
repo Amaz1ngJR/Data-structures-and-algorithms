@@ -322,8 +322,7 @@ vector<vector<int>> merge(vector<vector<int>>& intervals) {
 			high = intervals[i][1];
 		}
 	}
-	if (ans.empty() || low != ans.back()[0])
-		ans.push_back({ low, high });
+	ans.push_back({ low, high });
 	return ans;
 }
 ```

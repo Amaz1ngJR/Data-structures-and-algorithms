@@ -1,6 +1,7 @@
 
 快速排序和归并排序都是基于分治思想的
-![image](https://github.com/Amaz1ngJR/Re/assets/83129567/89d82c34-a238-4475-b9bc-ea22c4040c76)
+![image](https://github.com/user-attachments/assets/03b78fc8-98ea-4396-a956-78158d009549)
+
 
 #  *插入排序（空间复杂度为O(1)，不适用链表）
 

@@ -1392,29 +1392,25 @@ vector<vector<int>> combinationSum3(int k, int n) {
 
 ```c++
 vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-	vector<vector<int>>ans;
-    vector<int>path;
-    int sum = 0;
-    sort(candidates.begin(), candidates.end());
-    int n = candidates.size();
-    std::function<void(int)> dfs = [&](int i) {
-        if (i == n || sum > target)return;
-        if (sum == target) {
-            ans.push_back(path);
-            return;
-        }
-        if (candidates[i] > target)return;
-        //不选
-        dfs(i + 1);
-        //选
-        sum += candidates[i];
-        path.push_back(candidates[i]);
-        dfs(i);
-        sum -= candidates[i];
-        path.pop_back();	
-    };
-    dfs(0);
-    return ans;
+        vector<vector<int>>ans;
+        vector<int> path;
+        int n = candidates.size();
+        auto& c = candidates;
+        function<void(int, int)>dfs = [&](int i, int res) {
+            if(res == 0) {
+                ans.emplace_back(path);
+                return;
+            }
+            if(i == n || res < 0) return;
+            //不选
+            dfs(i + 1, res);
+            //选
+            path.emplace_back(c[i]);
+            dfs(i, res - c[i]);//可以重复选，还从i开始dfs
+            path.pop_back();//恢复现场
+        };
+        dfs(0, target);
+        return ans;
 }
 ```
 

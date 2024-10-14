@@ -1467,7 +1467,30 @@ vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
     return ans;
 }
 ```
-
+### [22. 括号生成](https://leetcode.cn/problems/generate-parentheses/)
+```c++
+vector<string> generateParenthesis(int n) {
+        vector<string>ans;
+        int m = 2 * n;
+	    string path(m, 0);
+        function<void(int, int)> dfs = [&](int i, int open) {//open表示左括号个数
+            if(i == m) {
+                ans.emplace_back(path);
+                return;
+            }
+            if(open < n) {//可以填左括号
+                path[i] = '(';
+                dfs(i + 1, open + 1);
+            }
+            if(i - open < open) {//右括号少于左括号 可以填右括号
+                path[i] = ')';
+                dfs(i + 1, open);
+            }
+        };
+        dfs(0, 0);
+	return ans;	
+}
+```
 ## *排列型
 排列数学公式 A(n,k)= n!/(n-k)!
 

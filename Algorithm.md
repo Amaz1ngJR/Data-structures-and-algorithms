@@ -1472,7 +1472,7 @@ vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
 vector<string> generateParenthesis(int n) {
         vector<string>ans;
         int m = 2 * n;
-	    string path(m, 0);
+	string path(m, 0);
         function<void(int, int)> dfs = [&](int i, int open) {//open表示左括号个数
             if(i == m) {
                 ans.emplace_back(path);

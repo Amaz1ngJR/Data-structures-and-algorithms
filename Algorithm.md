@@ -444,6 +444,21 @@ int trap(vector<int>& height) {
 	return ans;
 }
 ```
+### [560. 和为 K 的子数组](https://leetcode.cn/problems/subarray-sum-equals-k/) 前缀和+哈希表
+```c++
+int subarraySum(vector<int>& nums, int k) {
+	int ans = 0, sum = 0;
+	unordered_map<int, int>cnt;
+	cnt[0] = 1;//特殊情况 前缀和为0是存在的
+	for(const int& num: nums) {
+	    sum += num;//前缀和
+	    ans += cnt[sum - k];//找到前缀和为sum - k 的个数
+	    ++cnt[sum];
+	}
+	return ans;
+}
+
+```
 ### [2602. 使数组元素全部相等的最少操作次数](https://leetcode.cn/problems/minimum-operations-to-make-all-array-elements-equal/) 前缀和+二分查找
 ```c++
 vector<long long> minOperations(vector<int>& nums, vector<int>& queries) {

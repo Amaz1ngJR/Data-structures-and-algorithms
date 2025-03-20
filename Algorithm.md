@@ -2207,10 +2207,10 @@ int maxSubarraySumCircular(vector<int>& nums) {
 ```c++
 int countSubstrings(string s) {
 	int n = s.size(), ans = 0;
-	vector<vector<bool>>dp(n, vector<bool>(n, false));
-	for (int i = n - 1; ~i; i--) {//从dp[i + 1][j - 1]->dp[i][j] i从最大处n - 1开始
-		for (int j = i; j < n; j++) {//dp[i][j]表示从下标i到下标j的子串
-			if (s[i] == s[j]&&(j - i <= 1 || dp[i + 1][j - 1])) {
+	vector<vector<bool>>dp(n, vector<bool>(n, false));//dp[i][j]表示从下标i到下标j的子串是否为回文子串
+	for (int i = n - 1; ~i; i--) {//枚举起点
+		for (int j = i; j < n; j++) {//枚举终点
+			if (s[i] == s[j]&&(j - i <= 1 || dp[i + 1][j - 1])) {//ij相邻或相同或两者中间是回文串
 				ans++;
 				dp[i][j] = true;	
 			}

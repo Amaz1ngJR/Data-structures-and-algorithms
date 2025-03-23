@@ -1713,7 +1713,7 @@ long long maxTaxiEarnings(int n, vector<vector<int>>& rides) {
 [2830. 销售利润最大化](https://leetcode.cn/problems/maximize-the-profit-as-the-salesman/)
 ## *打家劫舍
 
-[198. 打家劫舍](https://leetcode.cn/problems/house-robber/)
+### [198. 打家劫舍](https://leetcode.cn/problems/house-robber/)
 
 ```
 dfs(i)=max(dfs(i-1),dfs(i-2)+nums[i])
@@ -1778,7 +1778,33 @@ int rob(vector<int>& nums) {
 	return f1;
 }
 ```
+### [213. 打家劫舍 II](https://leetcode.cn/problems/house-robber-ii/)
 针对环形房子的打家劫舍 只要对[0,n-1)和[1,n) 两个区间求两次 取最大即可
+
+**值域打家劫舍**
+[740. 删除并获得点数](https://leetcode.cn/problems/delete-and-earn/)
+```c++
+int deleteAndEarn(vector<int>& nums) {
+	int mx = ranges::max(nums);
+	vector<int> a(mx + 1);
+	for (int x : nums) {
+	    a[x] += x; // 统计等于 x 的元素之和
+	}
+	//降为打家劫舍
+	int f0 = 0, f1 = 0;
+	for (int x : a) {
+	    int new_f = max(f1, f0 + x);
+	    f0 = f1;
+	    f1 = new_f;
+	}
+	return f1;
+	// vector<int>dp(mx + 3);
+	// for(int i = 0; i < mx + 1; ++i) {
+	//     dp[i + 2] = max(dp[i + 1], dp[i] + a[i]);
+	// }
+	// return dp[mx + 2];
+}
+```
 ## *0/1背包
 
 ```

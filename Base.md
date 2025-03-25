@@ -377,7 +377,7 @@ double myPow(double x, int n) {
 ```cpp
 double myPow(double x, int n) {
 	double ans = 1;
-	long long N = n;
+	long long N = n;//负数-2^31没法用int变成2^31 改用long
 	if(N < 0) {
 	    N = - N;
 	    x = 1 / x;
@@ -387,7 +387,7 @@ double myPow(double x, int n) {
 		ans *= x; 
 	    }
 	    x *= x;
-	    N >>= 1;
+	    N >>= 1;//右移一位
 	}
 	return ans;
 }

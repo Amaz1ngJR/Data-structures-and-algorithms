@@ -2018,10 +2018,10 @@ int coinChange(vector<int>& coins, int amount) {
 ### [518. 零钱兑换 II](https://leetcode.cn/problems/coin-change-ii/)
 ```c++
 int change(int amount, vector<int>& coins) {
-	vector<int>dp(amount + 1, 0);
+	vector<int>dp(amount + 1, 0); //dp[i]表示凑成i元的硬币方案数
 	dp[0] = 1;//存在背包余额为0的情况
-	for (int i = 0; i < coins.size(); i++) {
-		for (int c = coins[i]; c <= amount; c++)
+	for (int i = 0; i < coins.size(); i++) { //枚举所使用的硬币
+		for (int c = coins[i]; c <= amount; c++) //枚举使用该硬币能达到的金额
 			dp[c] += dp[c - coins[i]];
 	}
 	return dp[amount];

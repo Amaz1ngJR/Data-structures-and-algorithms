@@ -2002,11 +2002,11 @@ dfs(i,c)=max(dfs(i-1,c),dfs(i,c-w[i])+v[i])
 ### [322. 零钱兑换](https://leetcode.cn/problems/coin-change/)
 ```c++
 int coinChange(vector<int>& coins, int amount) {
-	vector<int>dp(amount + 1, INT_MAX);
+	vector<int>dp(amount + 1, INT_MAX);//dp[c]表示凑成c元所需的最小硬币数
 	dp[0] = 0;//达到0金额所需的最少硬币为0
 	for (int c = 1; c <= amount; c++) {//枚举余额
 		for (int i = 0; i < coins.size(); i++) {//枚举硬币
-			if (coins[i] <= c && dp[c - coins[i]] != INT_MAX)
+			if (coins[i] <= c && dp[c - coins[i]] != INT_MAX)//可以使用该硬币coins[i]
 				dp[c] = min(dp[c], dp[c - coins[i]] + 1);
 		}
 	}

@@ -362,6 +362,8 @@ int numberOfGoodPartitions(vector<int>& nums) {
 ```
 # 数学
 ## 快速幂
+![image](https://github.com/user-attachments/assets/52912bc5-43e3-4039-bbff-f8965e512420)
+
 [50. Pow(x, n)](https://leetcode.cn/problems/powx-n/)
 ```c++
 double myPow(double x, int n) {

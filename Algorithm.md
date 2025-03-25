@@ -643,6 +643,30 @@ int maxArea(vector<int>& height) {
 }
 ```
 ## *同向双指针
+#### [88. 合并两个有序数组](https://leetcode.cn/problems/merge-sorted-array/)
+```c++
+void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+//逆向的同向双指针 
+//指针设置为从后向前遍历，每次取两者之中的较大者放进 nums 1的最后面。
+	int tail = m + n - 1, p1 = m - 1, p2 = n - 1;
+	while(p1 >= 0 || p2 >= 0) {
+	    if(p1 < 0) {
+		nums1[tail--] = nums2[p2--];
+	    }
+	    else if(p2 < 0) {
+		nums1[tail--] = nums1[p1--];
+	    }
+	    else {
+		if(nums1[p1] > nums2[p2]) {
+		    nums1[tail--] = nums1[p1--];
+		}
+		else {
+		    nums1[tail--] = nums2[p2--];
+		}
+	    }
+	}
+}
+```
 #### [443. 压缩字符串](https://leetcode.cn/problems/string-compression/)
 ```c++
 int compress(vector<char>& chars) {

@@ -70,23 +70,42 @@ bool List::ListInsert(ListNode*& L, int i, int val) {
 ```
 删除链表见算法前后指针
 ### 链表操作
-[206. 反转链表](https://leetcode.cn/problems/reverse-linked-list/)
+#### [143. 重排链表](https://leetcode.cn/problems/reorder-list/)
 ```c++
-ListNode* List::reverseList(ListNode* head) {
-	//头结点存储数据
-	ListNode* pre, * nex;
-	pre = nullptr;
-	while (head != nullptr) {
-		nex = head->next;
-		head->next = pre;
-		pre = head;
-		head = nex;
+//链表的中间结点
+ListNode* middleNode(ListNode* head) {//快慢指针
+	ListNode* slow = head, *fast = head;
+	while (fast && fast->next) {
+	    slow = slow->next;
+	    fast = fast->next->next;
+	}
+	return slow;
+}
+//反转链表
+ListNode* reverseList(ListNode* head) {
+	ListNode* pre = nullptr, *cur = head;
+	while (cur) {
+	    ListNode* nxt = cur->next;
+	    cur->next = pre;
+	    pre = cur;
+	    cur = nxt;
 	}
 	return pre;
 }
+void reorderList(ListNode* head) {
+	ListNode* mid = middleNode(head);
+	ListNode* head2 = reverseList(mid);
+	while (head2->next) {
+	    ListNode* nxt = head->next;
+	    ListNode* nxt2 = head2->next;
+	    head->next = head2;
+	    head2->next = nxt;
+	    head = nxt;
+	    head2 = nxt2;
+	}
+}
 ```
-反转链表区间
-[92. 反转链表 II](https://leetcode.cn/problems/reverse-linked-list-ii/)
+#### [92. 反转链表 II](https://leetcode.cn/problems/reverse-linked-list-ii/)
 ```c++
 ListNode* reverseBetween(ListNode* head, int left, int right) {
 	ListNode* dummy = new ListNode(0, head), * p0 = dummy;
@@ -104,7 +123,7 @@ ListNode* reverseBetween(ListNode* head, int left, int right) {
 	return dummy->next;
 }
 ```
-[61. 旋转链表](https://leetcode.cn/problems/rotate-list/)
+#### [61. 旋转链表](https://leetcode.cn/problems/rotate-list/)
 ```c++
 ListNode* rotateRight(ListNode* head, int k) {
 	if (!head || !head->next)return head;//链表为空或长为1直接返回原链表
@@ -127,7 +146,7 @@ ListNode* rotateRight(ListNode* head, int k) {
 	return new_head;
 }
 ```
-[86. 分隔链表](https://leetcode.cn/problems/partition-list/)
+#### [86. 分隔链表](https://leetcode.cn/problems/partition-list/)
 ```c++
 ListNode* partition(ListNode* head, int x) {
 	ListNode* pre = new ListNode(), * suf = new ListNode(),
@@ -152,7 +171,7 @@ ListNode* partition(ListNode* head, int x) {
 	return suf->next;
 }
 ```
-[21. 合并两个有序链表](https://leetcode.cn/problems/merge-two-sorted-lists/)
+#### [21. 合并两个有序链表](https://leetcode.cn/problems/merge-two-sorted-lists/)
 ```c++
 ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
 	if ((!list1) || (!list2)) return list1 ? list1 : list2; //有一个为空 返回另一个

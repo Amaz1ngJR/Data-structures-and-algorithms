@@ -805,15 +805,12 @@ int maxResult(vector<int>& nums, int k) {
 c++
 ```c++ [
 vector<int> twoSum(vector<int>& nums, int target) {
-    unordered_map<int, int>m;//创建一个空哈希表
-    for (int i = 0; i < nums.size();i++) {// 枚举 i
-        auto it = m.find(target - nums[i]);// 在左边找target-nums[i]
-        if (it != m.end()) {// 找到了
-            return { i,it->second };
+	unordered_map<int, int> um;//创建一个空哈希表
+        for(int i = 0; i < nums.size(); ++i) {
+            if(um.find(target - nums[i]) != um.end()) return {um[target - nums[i]], i};// 找到了
+            um[nums[i]] = i;
         }
-        m[nums[i]] = i;
-    }
-    return {};
+        return {-1, -1};
 }
 ```
 python
@@ -824,7 +821,7 @@ def twoSum(self, nums: List[int], target: int) -> List[int]:
     		if target - nums[i] in m:
 			return [i, m[target - nums[i]]]
     		m[nums[i]] = i
-	return []
+	return [-1， -1]
 ```
 ### [146. LRU 缓存](https://leetcode.cn/problems/lru-cache/) 哈希+双链表
 ```c++

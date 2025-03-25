@@ -123,6 +123,34 @@ ListNode* reverseBetween(ListNode* head, int left, int right) {
 	return dummy->next;
 }
 ```
+#### [25. K 个一组翻转链表](https://leetcode.cn/problems/reverse-nodes-in-k-group/)
+![image](https://github.com/user-attachments/assets/5e1d9eb7-0908-4808-8b25-ba37ce0b088d)
+
+```c++
+ListNode* reverseKGroup(ListNode* head, int k) {
+	if(k == 1) return head;//特判
+	ListNode* dummy = new ListNode(0, head), *pre = head, * cur = head, * nex;
+	int len = 0;
+	while(pre) {//记录链表长度
+	    ++len;
+	    pre = pre->next;
+	}
+	ListNode* p0 = dummy;
+	for(; len >= k; len -= k) {//k个一组反转链表
+	    for(int i = 0; i < k; ++i) {//反转链表
+		nex = cur->next;
+		cur->next = pre;
+		pre = cur;
+		cur = nex;
+	    }
+	    auto t = p0->next;
+	    t->next = cur;//（1）
+	    p0->next = pre;//（2）
+	    p0 = t;//（3）
+	}
+	return dummy->next;
+}
+```
 #### [61. 旋转链表](https://leetcode.cn/problems/rotate-list/)
 ```c++
 ListNode* rotateRight(ListNode* head, int k) {

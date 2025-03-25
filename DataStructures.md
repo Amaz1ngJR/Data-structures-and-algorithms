@@ -180,11 +180,11 @@ ListNode* partition(ListNode* head, int x) {
 	ListNode* pre = new ListNode(), * suf = new ListNode(),
 		* plast = pre, * slast = suf, * p = head;
 	while (p) {
-		if (p->val < x) {
+		if (p->val < x) {//将小于x的尾插到pre后面
 			plast->next = p;
 			plast = plast->next;
 		}
-		else {
+		else {//将大于x的尾插到suf后面
 			slast->next = p;
 			slast = slast->next;
 		}
@@ -192,7 +192,7 @@ ListNode* partition(ListNode* head, int x) {
 	}
 	plast->next = nullptr;
 	slast->next = nullptr;
-	if (pre->next) {
+	if (pre->next) {//如果pre后面有节点 将suf后的节点尾插到pre后面
 		plast->next = suf->next;
 		return pre->next;
 	}

@@ -1735,9 +1735,9 @@ long long maxTaxiEarnings(int n, vector<vector<int>>& rides) {
 }
 ```
 [2830. 销售利润最大化](https://leetcode.cn/problems/maximize-the-profit-as-the-salesman/)
-## *打家劫舍
+## *打家劫舍问题
 
-[198. 打家劫舍](https://leetcode.cn/problems/house-robber/)
+源问题[198. 打家劫舍](https://leetcode.cn/problems/house-robber/)
 
 ```
 dfs(i)=max(dfs(i-1),dfs(i-2)+nums[i])
@@ -1802,10 +1802,25 @@ int rob(vector<int>& nums) {
 	return f1;
 }
 ```
-针对环形房子的打家劫舍 [213. 打家劫舍 II](https://leetcode.cn/problems/house-robber-ii/)只要对[0,n-1)和[1,n) 两个区间求两次 取最大即可
+**环形房子的打家劫舍** [213. 打家劫舍 II](https://leetcode.cn/problems/house-robber-ii/)
 
-**值域打家劫舍**
-[740. 删除并获得点数](https://leetcode.cn/problems/delete-and-earn/)
+只要对[0,n-1)和[1,n) 两个区间求两次 取最大即可
+
+**房子间隔不定的打家劫舍** [2140. 解决智力问题](https://leetcode.cn/problems/solving-questions-with-brainpower/description/)
+```c++
+long long mostPoints(vector<vector<int>>& questions) {
+	int n = questions.size();
+	vector<long long>memo(n, -1);
+	auto dfs = [&](this auto&& dfs, int i)->long long {
+	    if(i >= n) return 0;
+	    if(memo[i] != -1) return memo[i];
+	    memo[i] = (long long)max(questions[i][0] + dfs(i + questions[i][1] + 1), dfs(i + 1));
+	    return memo[i];
+	};
+	return dfs(0);
+}
+```
+**值域打家劫舍** [740. 删除并获得点数](https://leetcode.cn/problems/delete-and-earn/)
 ```c++
 int deleteAndEarn(vector<int>& nums) {
 	int mx = ranges::max(nums);

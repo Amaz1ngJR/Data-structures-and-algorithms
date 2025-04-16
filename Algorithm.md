@@ -975,10 +975,10 @@ long long countGood(vector<int>& nums, int k) {
 	int n = nums.size(), low = 0, high = 0, sum = 0;
 	long long ans = 0;
 	unordered_map<int, int>cnt;
-	while (high < n) {//枚举子数组左端点high
+	while (high < n) {//枚举子数组右端点high
 		sum += cnt[nums[high]]++;//新增的满足的对数
 		//如果源区间[low,high]恰好满足那么除了源区间 向左[0,high]-[low-1,high]还有low个满足
-		//在更新新的low之前 随着右端点high++都有low个区间满足(固定左端点计算)
+		//故随着右端点high++都有low个区间满足(固定左端点计算)
 		ans += low;
 		while (sum >= k) {//满足条件
 			ans++;//[low,high]恰好满足条件的源区间本身

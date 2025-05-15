@@ -209,7 +209,7 @@ template<typename T>
 	void MergeSort(vector<T>& a, int low, int high) {
 	int i , j, k;
 	vector<T> b;//辅助数组
-	auto Merge = [&](this auto && Merge, vector<T>& a, int low, int mid, int high) {
+	auto Merge = [&](this auto && Merge, int low, int mid, int high) {
 	    b.resize(a.size());
 	    for(int t = low; t <= high; ++t) {//将a中所有元素复制到b
 		b[t] = a[t];
@@ -224,7 +224,7 @@ template<typename T>
 	    int mid = low + (high - low) / 2;	//从中间划分
 	    MergeSort(a, low, mid);		//对左半部分归并排序	
 	    MergeSort(a, mid + 1, high);	//对右半部分归并排序
-	    Merge(a, low, mid, high);		//归并
+	    Merge(low, mid, high);		//归并
 	}
 }
 ```

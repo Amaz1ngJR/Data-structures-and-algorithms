@@ -206,25 +206,25 @@ void HeapSort(vector<T>& nums) {
 //时间复杂度：平均O(nlogn) 
 //空间复杂度：O(n)
 template<typename T>
-void MergeSort(vector<T>& a, int low, int high) {
-	int i, j, k;
-	vector<int> b;//辅助数组
-	std::function<void(vector<T>&, int, int, int)>Merge =
-		[&](vector<T>& a, int low, int mid, int high) {
-		b.resize(a.size());
-		for (k = low; k <= high; k++) b[k] = a[k];//将a中所有元素复制到b
-		for (i = low, j = mid + 1, k = i; i <= mid && j <= high; k++) {
-			if (b[i] <= b[j]) a[k] = b[i++]; //较小值复制到a
-			else a[k] = b[j++];
-		}
-		while (i <= mid) a[k++] = b[i++];
-		while (j <= high) a[k++] = b[j++];
+	void MergeSort(vector<T>& a, int low, int high) {
+	int i , j, k;
+	vector<T> b;//辅助数组
+	auto Merge = [&](this auto && Merge, vector<T>& a, int low, int mid, int high) {
+	    b.resize(a.size());
+	    for(int t = low; t <= high; ++t) {//将a中所有元素复制到b
+		b[t] = a[t];
+	    }
+	    for(i = low, j = mid + 1, k = i; i <= mid && j <= high; ++k) {
+		a[k] = (b[i] < b[j] ? b[i++] : b[j++]);//较小值复制到a
+	    }
+	    while (i <= mid) a[k++] = b[i++];
+	    while (j <= high) a[k++] = b[j++];
 	};
-	if (low < high) {
-		int mid = (low + high) / 2;    //从中间划分
-		MergeSort(a, low, mid);        //对左半部分归并排序
-		MergeSort(a, mid + 1, high);   //对右半部分归并排序
-		Merge(a, low, mid, high);      //归并
+	if(low < high) {
+	    int mid = low + (high - low) / 2;	//从中间划分
+	    MergeSort(a, low, mid);		//对左半部分归并排序	
+	    MergeSort(a, mid + 1, high);	//对右半部分归并排序
+	    Merge(a, low, mid, high);		//归并
 	}
 }
 ```

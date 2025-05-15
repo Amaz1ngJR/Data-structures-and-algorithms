@@ -95,27 +95,26 @@ void ShellSort(vector<T>& nums) {
 //性能分析 不稳定
 //时间复杂度：平均O(nlogn) 最好O(nlogn) 最坏O(n^2)
 //空间复杂度：O(nlogn)
+
 template<typename T>
-void QuickSort(vector<T>& nums, int low, int high) {
-    //划分
-    std::function<int(vector<T>&, int, int)>Parttion =
-        [&](vector<T>& nums, int low, int high)->int {
-        int pivot = nums[low];//每次划分确定基准pivot:nums[low]的位置
-        while (low < high) {
-            while (low < high && nums[high] >= pivot) --high;
-            nums[low] = nums[high];//nums[high]<pivot
-            while (low < high && nums[low] <= pivot) ++low;
-            nums[high] = nums[low];//nums[low]>pivot
-        }
-        nums[low] = pivot;//基准的位置为当前的low
-        return low;
-    };
-    //排序
-    if (low < high) {
-        int pivotpos = Parttion(nums, low, high);
-        QuickSort(nums, low, pivotpos - 1);
-        QuickSort(nums, pivotpos + 1, high);
-    }
+	void QuickSort(vector<T>& a, int low, int high) {
+	auto partition = [&](this auto && partition, int low ,int high) {
+	    int pivot = a[low];//每次划分确定基准pivot:nums[low]的位置
+	    while(low < high) {
+		//注意下面两个while的顺序！
+		while(low < high && a[high] > pivot) --high;
+		a[low] = a[high];
+		while(low < high && a[low] <= pivot) ++low;
+		a[high] = a[low];
+	    }
+	    a[low] = pivot;//基准的位置为当前的low
+	    return low;
+	};
+	if(low < high) {
+	    int pivotpos = partition(low, high);
+	    QuickSort(a, low, pivotpos - 1);
+	    QuickSort(a, pivotpos + 1, high);
+	}
 }
 ```
 

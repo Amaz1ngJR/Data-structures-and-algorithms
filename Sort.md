@@ -98,7 +98,7 @@ void ShellSort(vector<T>& nums) {
 
 template<typename T>
 	void QuickSort(vector<T>& a, int low, int high) {
-	auto partition = [&](this auto && partition, int low ,int high) {
+	auto partition = [&](this auto && partition, int low, int high) {
 	    int pivot = a[low];//每次划分确定基准pivot:nums[low]的位置
 	    while(low < high) {
 		//注意下面两个while的顺序！

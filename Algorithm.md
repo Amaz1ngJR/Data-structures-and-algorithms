@@ -288,6 +288,31 @@ bool searchMatrix(vector<vector<int>>& matrix, int target) {
 	return false;
 }
 ```
+### [378. 有序矩阵中第 K 小的元素](https://leetcode.cn/problems/kth-smallest-element-in-a-sorted-matrix/)
+```c++
+int kthSmallest(vector<vector<int>>& matrix, int k) {
+	int m = matrix.size(), n = matrix[0].size();
+	int low = matrix[0][0] - 1, high = matrix[m - 1][n -1];
+	auto check = [&](int mid)->bool {
+	    int cnt = 0;
+	    int i = 0, j = n - 1;
+	    while(i < m && j >= 0 && cnt < k) {
+		if(matrix[i][j] <= mid) {
+		    //cnt = max(cnt, i * n + j + 1);
+		    cnt += j + 1;
+		    ++i;
+		}
+		else --j;
+	    }
+	    return cnt >= k;
+	};
+	while(low + 1 < high) {
+	    int mid = low + (high - low) / 2;
+	    (check(mid) ? high : low) = mid;
+	}
+	return high;
+}
+```
 # 前后缀与差分数组
 
 ```

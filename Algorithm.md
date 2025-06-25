@@ -298,8 +298,7 @@ int kthSmallest(vector<vector<int>>& matrix, int k) {
 	    int i = 0, j = n - 1;
 	    while(i < m && j >= 0 && cnt < k) {
 		if(matrix[i][j] <= mid) {
-		    //cnt = max(cnt, i * n + j + 1);
-		    cnt += j + 1;
+		    cnt += j + 1;// 从 matrix[i][0] 到 matrix[i][j] 都 <= mid
 		    ++i;
 		}
 		else --j;

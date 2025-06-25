@@ -275,7 +275,7 @@ int maxNumberOfAlloys(int n, int k, int budget,
 }
 ```
 ## 矩形二分(双指针)
-### [搜索二维矩阵 II](https://leetcode.cn/problems/search-a-2d-matrix-ii/)
+### [240.搜索二维矩阵 II](https://leetcode.cn/problems/search-a-2d-matrix-ii/)
 ```c++
 bool searchMatrix(vector<vector<int>>& matrix, int target) {
 	int m = matrix.size(), n = matrix[0].size();

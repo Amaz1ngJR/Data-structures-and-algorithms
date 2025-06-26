@@ -44,8 +44,13 @@ for (const auto& v : nums) {
 	for (int i = 0; i < 31; i++) {
 		if (v >> i & 1)temp[30 - i] = '1';
 	}
+	//另一种方法
+	int m = bit_width((uint32_t) k);//直接得到没有前导零的二进制长度
+
 	std::bitset<64> bits(temp);//#include <bitset> 将二进制字符串表示为二进制
 	int num = bits.to_ulong();//将二进制转成十进制
+	//另一种方法
+	int num = stoi(temp, nullptr, 2);
 }
 void test() {
 	int a = 7;

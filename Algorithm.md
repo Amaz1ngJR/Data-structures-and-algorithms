@@ -784,7 +784,31 @@ vector<int> findAnagrams(string s, string p) {
 	return ans;
 }
 ```
-#### [2156. 查找给定哈希值的子串](https://leetcode.cn/problems/find-substring-with-given-hash-value/)
+#### [3439. 重新安排会议得到最多空余时间 I](https://leetcode.cn/problems/reschedule-meetings-for-maximum-free-time-i/) 1729
+```c++
+int maxFreeTime(int eventTime, int k, vector<int>& startTime, vector<int>& endTime) {
+	int n = startTime.size();//n个会议将活动时长分割成n+1段空闲时长
+	vector<int> res;//记录n+1段空闲时长段 
+	res.push_back(startTime[0]);
+	for(int i = 1; i < n; ++i) {
+	    res.push_back(startTime[i] - endTime[i - 1]);
+	}
+	res.push_back(eventTime - endTime[n - 1]);
+	//转换为寻找k+1个连续的空闲段 定长滑动窗口解决
+	int len = res.size(), ans = 0, sum = 0;
+	int low = 0, high = 0;
+	while(high < len) {
+	    sum += res[high];
+	    if(high - low > k) {
+		sum -= res[low++];
+	    }
+	    ans = max(ans, sum);
+	    ++high;
+	}
+	return ans;
+}
+```
+#### [2156. 查找给定哈希值的子串](https://leetcode.cn/problems/find-substring-with-given-hash-value/) 2063
 ```c++
 string subStrHash(string s, int power, int modulo, int k, int hashValue) {
 	int ans = -1, n = s.size();
@@ -801,6 +825,7 @@ string subStrHash(string s, int power, int modulo, int k, int hashValue) {
 	return s.substr(ans, k);
 }
 ```
+
 ### 不定长滑动窗口
 
 #### [1004. 最大连续1的个数 III](https://leetcode.cn/problems/max-consecutive-ones-iii/)

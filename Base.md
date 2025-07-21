@@ -484,3 +484,31 @@ a^2 + b^2 + c^2 >= a*b +b*c +c*a   当且仅当a = b = c 取等
 两个递增序列a1, ..., an; b1, ..., bn; ci是bi的乱序 满足：sum(ai*ci)最大是ai与bi正序乘 最小是ai与bi倒序乘 等号在ai==bi取等
 ```
 ![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/8c9d035c-6650-40c9-a658-2de0ec425b36)
+## 组合
+[3623. 统计梯形的数目 I](https://leetcode.cn/problems/count-number-of-trapezoids-i/)
+```c++
+int countTrapezoids(vector<vector<int>>& points) {
+        const int mod = 1e9 + 7;
+        unordered_map<int, int> cnt;
+        for(const auto&p: points) {
+            ++cnt[p[1]];
+        }
+        vector<int>c;
+        for(const auto& t: cnt) {
+            if(t.second >= 2) {
+                c.push_back(((long long)t.second * (t.second - 1) / 2) % mod);
+            }
+        }
+        long long ans = 0, s = 0;
+        for(int i = 0; i < c.size(); ++i) {
+            long long k = 1LL * c[i] % mod;//当前行
+            ans = (ans + s * k) % mod;
+            s = (s + k) % mod;//之前遍历到的
+            // for(int j = i + 1; j <c.size(); ++j) {
+            //     ans = (((long long)(c[i] * c[j]) % mod) + ans) % mod;
+            // }
+        }
+        return ans;
+}
+```
+

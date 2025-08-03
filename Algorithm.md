@@ -1009,6 +1009,26 @@ int findLengthOfShortestSubarray(vector<int>& arr) {
 	return ans;
 }
 ```
+#### [2537. 统计好子数组的数目](https://leetcode.cn/problems/count-the-number-of-good-subarrays/)
+```c++
+long long countGood(vector<int>& nums, int k) {
+	int n = nums.size(), low = 0, high = 0, sum = 0;
+	long long ans = 0;
+	unordered_map<int, int>cnt;
+	while (high < n) {//枚举子数组右端点high
+		sum += cnt[nums[high]]++;//新增的满足的对数
+		//如果源区间[low,high]恰好满足那么除了源区间 向左[0,high]-[low-1,high]还有low个满足
+		//故随着右端点high++都有low个区间满足(固定左端点计算)
+		ans += low;
+		while (sum >= k) {//满足条件
+			ans++;//[low,high]恰好满足条件的源区间本身
+			sum -= --cnt[nums[low++]];
+		}
+		high++;
+	}
+	return ans;
+}
+```
 #### [2516. 每种字符至少取 K 个](https://leetcode.cn/problems/take-k-of-each-character-from-left-and-right/)
 ```c++
 int takeCharacters(string s, int k) {
@@ -1032,22 +1052,26 @@ int takeCharacters(string s, int k) {
 	return ans;
 }
 ```
-#### [2537. 统计好子数组的数目](https://leetcode.cn/problems/count-the-number-of-good-subarrays/)
+#### [2106. 摘水果](https://leetcode.cn/problems/maximum-fruits-harvested-after-at-most-k-steps/description/)
 ```c++
-long long countGood(vector<int>& nums, int k) {
-	int n = nums.size(), low = 0, high = 0, sum = 0;
-	long long ans = 0;
-	unordered_map<int, int>cnt;
-	while (high < n) {//枚举子数组右端点high
-		sum += cnt[nums[high]]++;//新增的满足的对数
-		//如果源区间[low,high]恰好满足那么除了源区间 向左[0,high]-[low-1,high]还有low个满足
-		//故随着右端点high++都有low个区间满足(固定左端点计算)
-		ans += low;
-		while (sum >= k) {//满足条件
-			ans++;//[low,high]恰好满足条件的源区间本身
-			sum -= --cnt[nums[low++]];
-		}
-		high++;
+int maxTotalFruits(vector<vector<int>>& fruits, int startPos, int k) {
+	auto leftIt = lower_bound(fruits.begin(), fruits.end(), startPos - k, 
+			      [](const vector<int>& a, int val) { return a[0] < val; });
+	int left = distance(fruits.begin(), leftIt);//向左能达到的最大距离
+	int right = left, n = fruits.size(), sum = 0;
+	while(right < n && fruits[right][0] <= startPos) {//left到startPos上能拿到的水果数
+	    sum += fruits[right++][1];
+	}
+	int ans = sum;
+	while(right < n && fruits[right][0] <= startPos + k) {//滑动窗口
+	    sum += fruits[right][1];
+	    //无论先左再右还是先右再左，都没法达到fruits[left][0]
+	    while(fruits[right][0] - fruits[left][0] * 2 + startPos > k //先左再右走的太多了
+		&& fruits[right][0] * 2 - fruits[left][0] - startPos > k) {//先右再左走的太多了
+		sum -= fruits[left++][1];
+	    }
+	    ++right;
+	    ans = max(ans, sum);
 	}
 	return ans;
 }
@@ -3561,3 +3585,4 @@ bool predictTheWinner(vector<int>& nums) {
 	return dfs(0, n - 1) * 2 >= pre[n];
 }
 ```
+

@@ -1,7 +1,5 @@
 Algorithm
 
-![image](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/assets/83129567/3f60b9b4-4d9a-4d77-8bca-82876d343086)
-
 # 二分算法
 二分查找
 
@@ -3585,4 +3583,5 @@ bool predictTheWinner(vector<int>& nums) {
 	return dfs(0, n - 1) * 2 >= pre[n];
 }
 ```
+
 

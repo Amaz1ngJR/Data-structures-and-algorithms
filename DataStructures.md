@@ -1689,6 +1689,9 @@ public:
 	}
 };
 ```
+### **线段树
+
+### **动态开点线段树
 ### **珂朵莉树
 #### [2276. 统计区间中的整数数目](https://leetcode.cn/problems/count-integers-in-intervals/)
 ```c++
@@ -1711,3 +1714,4 @@ public:
 	int count() {return cnt;}
 };
 ```
+

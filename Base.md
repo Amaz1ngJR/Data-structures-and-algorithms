@@ -16,7 +16,15 @@ bool demo() {
 		cout << n << endl;
 		n &= n - 1; //去掉n二进制中低位第一个1 n -= n & -n 的另一种写法
 	}
-	return (n&(n-1))==0;//判断一个正整数是否是2的幂
+
+	vector<int> powers;//仅有2的幂之和构成的n
+	while (n) {
+		int lowbit = n & -n;//取出最低位的1
+		powers.push_back(lowbit);
+		n ^= lowbit;//去掉最低位的1为0
+	}
+
+	return n & (n - 1) == 0;//判断一个正整数是否是2的幂
 }
 ```
 

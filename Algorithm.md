@@ -2089,6 +2089,22 @@ int findMaxForm(vector<string>& strs, int m, int n) {
 	return dp[m][n];
 }
 ```
+### [2787. 将一个数字表示成幂的和的方案数](https://leetcode.cn/problems/ways-to-express-an-integer-as-sum-of-powers/)
+```c++
+int numberOfWays(int n, int x) {
+	const int mod = 1e9 + 7;
+	vector<long long>dp(n + 1);
+	dp[0] = 1;
+	vector<int> t;
+	for(int i = 1; pow(i, x) <= n; ++i) {
+		int v = pow(i, x);
+		for(int j = n; j >= v; --j) {
+			dp[j] += dp[j - v];
+		}
+	}
+	return dp[n] % mod;
+}
+```
 ### [2809. 使数组和小于等于 x 的最少时间](https://leetcode.cn/problems/minimum-time-to-make-array-sum-at-most-x/) 不等式+贪心+DP
 ```c++
 int minimumTime(vector<int>& nums1, vector<int>& nums2, int x) {
@@ -3583,5 +3599,6 @@ bool predictTheWinner(vector<int>& nums) {
 	return dfs(0, n - 1) * 2 >= pre[n];
 }
 ```
+
 
 

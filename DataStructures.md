@@ -516,6 +516,126 @@ int largestRectangleArea(vector<int>& heights) {
 	return ans;
 }
 ```
+##### [1504. 统计全 1 子矩形](https://leetcode.cn/problems/count-submatrices-with-all-ones/)
+```c++
+//使用二维前缀和时间复杂度为O(m²n²)
+int numSubmat(vector<vector<int>>& mat) {
+	int m = mat.size(), n = mat[0].size(), ans = 0;
+	vector<vector<int>>sum(m + 1, vector<int>(n + 1, 0));//二维前缀和 下标是从1开始的！
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < n; j++) {
+			sum[i + 1][j + 1] = sum[i + 1][j] + sum[i][j + 1] - sum[i][j] + mat[i][j];
+		}
+	}
+	//枚举左上角
+	for(int x = 0; x < m; ++x) {
+		for(int y = 0; y < n; ++y) {
+			//枚举长度
+			for(int l = 1; l <= m; ++l) {
+				if(x + l > m) break;
+				for(int w = 1; w <= n; ++w) {
+					if(y + w > n) break;
+					int s = sum[x + l][y + w] - sum[x + l][y] - sum[x][y + w] + sum[x][y];
+					if(s == l * w) ++ans;
+				}
+			}
+		}
+	}
+	return ans;
+}
+
+/*
+mat = 
+    [[1,0,1],
+    [1,1,1],
+    [1,1,0]]
+
+第0行: height = [1,0,1] → 子矩形: 1 + 0 + 1 = 2
+第1行: height = [2,1,2] → 枚举:
+    j=0: 2 + min(2,1)=1 + min(2,1,2)=1 → 2+1+1 = 4
+    j=1: 1 + min(1,2)=1 → 1+1 = 2
+    j=2: 2 → 2
+    共 4+2+2 = 8
+第2行: height = [3,2,0] →
+    j=0: 3 + min(3,2)=2 + 0 → 3+2 = 5
+    j=1: 2 + 0 → 2
+    j=2: 0
+    共 5+2 = 7
+总: 2 + 8 + 7 = 17
+*/
+//柱状图的思路 时间复杂度降为O(mn²)
+int numSubmat(vector<vector<int>>& mat) {
+    int m = mat.size(), n = mat[0].size();
+    vector<int> height(n, 0); // 每列的连续1高度
+    int ans = 0;
+
+    for (int i = 0; i < m; ++i) {
+        // 更新当前行的每列高度
+        for (int j = 0; j < n; ++j) {
+            if (mat[i][j] == 1)
+                height[j] += 1;
+            else
+                height[j] = 0;
+        }
+
+        // 对当前行的 height 数组统计所有全1子矩形（以当前行为底边）
+        // 使用较直观的优化暴力
+        for (int j = 0; j < n; ++j) {
+            int min_height = height[j];
+            for (int k = j; k < n && min_height > 0; ++k) {
+                min_height = min(min_height, height[k]);
+                ans += min_height;
+            }
+        }
+    }
+
+    return ans;
+}
+//使用单调栈优化时间复杂度至O(mn)
+int numSubmat(vector<vector<int>>& mat) {
+	int m = mat.size(), n = mat[0].size();
+	vector<int> height(n, 0);  // 每列的连续1高度
+	int ans = 0;
+
+	for (int i = 0; i < m; ++i) {
+		// 更新 height 数组 当前行的每列高度
+		for (int j = 0; j < n; ++j) {
+			if (mat[i][j] == 1)
+				height[j] += 1;
+			else
+				height[j] = 0;
+		}
+
+		// 使用单调栈计算以当前行为底边的子矩阵个数
+		stack<int> st;  // 单调递增栈，存列索引
+		vector<int> dp(n, 0);  // dp[j]: 以第 j 列为右边界，能构成的全1子矩形个数
+
+		for (int j = 0; j < n; ++j) {
+			// 维护单调递增栈（非严格）
+			while (!st.empty() && height[st.top()] > height[j]) {
+				st.pop();
+			}
+
+			if (height[j] == 0) {
+				dp[j] = 0;
+			} else {
+				if (st.empty()) {
+					// 当前高度是最小的，可以从第0列扩展到j
+					dp[j] = height[j] * (j + 1);
+				} else {
+					int prev = st.top();  // 上一个更小高度的位置
+					dp[j] = dp[prev] + height[j] * (j - prev);
+				}
+			}
+
+			st.push(j);
+			ans += dp[j];
+		}
+	}
+
+	return ans;
+}
+```
 #### 字典序最小
 ##### [402. 移掉 K 位数字](https://leetcode.cn/problems/remove-k-digits/)
 ```c++
@@ -2092,6 +2212,7 @@ public:
 	int count() {return cnt;}
 };
 ```
+
 
 
 

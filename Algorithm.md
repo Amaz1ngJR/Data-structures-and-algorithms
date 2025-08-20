@@ -538,7 +538,31 @@ int maximalSquare(vector<vector<char>>& matrix) {
 	return low * low;
 }
 ```
-### [437. 路径总和 III](https://leetcode.cn/problems/path-sum-iii/)
+### [1277. 统计全为 1 的正方形子矩阵](https://leetcode.cn/problems/count-square-submatrices-with-all-ones/) 二维前缀和
+```c++
+int countSquares(vector<vector<int>>& matrix) {
+	int m = matrix.size(), n = matrix[0].size(), ans = 0;
+	vector<vector<int>>sum(m + 1, vector<int>(n + 1, 0));//二维前缀和 下标是从1开始的！
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < n; j++) {
+			sum[i + 1][j + 1] = sum[i + 1][j] + sum[i][j + 1] - sum[i][j] + matrix[i][j];
+		}
+	}
+	//枚举左上角
+	for(int x = 0; x < m; ++x) {
+		for(int y = 0; y < n; ++y) {
+			//枚举正方形长度
+			for(int d = 1; d <= min(m, n); ++d) {
+				if(x + d > m || y + d > n) break;
+				int s = sum[x + d][y + d] - sum[x + d][y] - sum[x][y + d] + sum[x][y];
+				if(s == d*d) ++ans;
+			}
+		}
+	}
+	return ans;
+}
+```
+### [437. 路径总和 III](https://leetcode.cn/problems/path-sum-iii/) 前缀和拓展
 ```c++
 int pathSum(TreeNode* root, int targetSum) {
 	int ans = 0; long long sum = 0;
@@ -3599,6 +3623,7 @@ bool predictTheWinner(vector<int>& nums) {
 	return dfs(0, n - 1) * 2 >= pre[n];
 }
 ```
+
 
 
 

@@ -563,6 +563,7 @@ int countSquares(vector<vector<int>>& matrix) {
 }
 ```
 类似问题但不同解法 go [1504. 统计全 1 子矩形](https://leetcode.cn/problems/count-submatrices-with-all-ones/)
+[解法](https://github.com/Amaz1ngJR/Data-structures-and-algorithms/blob/main/DataStructures.md#1504-%E7%BB%9F%E8%AE%A1%E5%85%A8-1-%E5%AD%90%E7%9F%A9%E5%BD%A2)
 ### [437. 路径总和 III](https://leetcode.cn/problems/path-sum-iii/) 前缀和拓展
 ```c++
 int pathSum(TreeNode* root, int targetSum) {
@@ -3624,6 +3625,7 @@ bool predictTheWinner(vector<int>& nums) {
 	return dfs(0, n - 1) * 2 >= pre[n];
 }
 ```
+
 
 
 

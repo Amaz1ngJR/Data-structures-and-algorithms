@@ -519,4 +519,28 @@ int countTrapezoids(vector<vector<int>>& points) {
         return ans;
 }
 ```
-
+# 技巧
+## [对角线遍历](https://leetcode.cn/problems/diagonal-traverse/)
+```c++
+vector<int> findDiagonalOrder(vector<vector<int>>& mat) {
+	int m = mat.size(), n = mat[0].size();
+	vector<int> ans;
+	ans.reserve(m * n); // 预分配空间
+	//每条对角线上元素下标之和k是固定的，分别从0到m + n - 2
+	for (int k = 0; k < m + n - 1; k++) {
+		// i = (k - j) , 0 <= j <= n - 1, 0 <= (k - i) <= m - 1
+		int min_j = max(k - m + 1, 0);
+		int max_j = min(k, n - 1);
+		if (k % 2 == 0) { // 偶数向上从左到右
+			for (int j = min_j; j <= max_j; j++) {
+				ans.push_back(mat[k - j][j]);
+			}
+		} else { // 奇数向下从右到左
+			for (int j = max_j; j >= min_j; j--) {
+				ans.push_back(mat[k - j][j]);
+			}
+		}
+	}
+	return ans;
+}
+```

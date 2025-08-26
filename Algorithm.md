@@ -1807,7 +1807,7 @@ void solveSudoku(vector<vector<char>>& board) {
 定义状态 状态转移方程 时间复杂度：状态的个数*计算状态的时间
 
 回溯/递归+记忆化搜索->动态规划  记忆化搜索->循环递推
-## 记忆化搜索
+## *记忆化搜索
 ### [2008. 出租车的最大盈利](https://leetcode.cn/problems/maximum-earnings-from-taxi/)
 ```c++
 /*dfs(i) 表示从1到i可以赚的最多的钱
@@ -3661,6 +3661,7 @@ bool predictTheWinner(vector<int>& nums) {
 	return dfs(0, n - 1) * 2 >= pre[n];
 }
 ```
+
 
 
 

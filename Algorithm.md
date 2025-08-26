@@ -1807,8 +1807,8 @@ void solveSudoku(vector<vector<char>>& board) {
 定义状态 状态转移方程 时间复杂度：状态的个数*计算状态的时间
 
 回溯/递归+记忆化搜索->动态规划  记忆化搜索->循环递推
-
-[2008. 出租车的最大盈利](https://leetcode.cn/problems/maximum-earnings-from-taxi/)
+## 记忆化搜索
+### [2008. 出租车的最大盈利](https://leetcode.cn/problems/maximum-earnings-from-taxi/)
 ```c++
 /*dfs(i) 表示从1到i可以赚的最多的钱
 当没人在i下车的时候dfs(i) = dfs(i−1)
@@ -1820,20 +1820,20 @@ long long maxTaxiEarnings(int n, vector<vector<int>>& rides) {
 	}
 	//递归+记忆化搜索
 	vector<long long>dp(n + 1, -1);
-        dp[0] = 0;
-        function<long long(int)>dfs = [&](int i)->long long {
-            if (dp[i] != -1)return dp[i];
-            if (v[i].size() == 0) {
-                dp[i] = dfs(i - 1);
-                return dp[i];
-            }
-            dp[i] = dfs(i - 1);
-            for (const auto& vv : v[i]) {
-                dp[i] = max(vv.second + dfs(vv.first), dp[i]);
-            }
-            return dp[i];
-        };
-        return dfs(n);
+	dp[0] = 0;
+	function<long long(int)>dfs = [&](int i)->long long {
+		if (dp[i] != -1)return dp[i];
+		if (v[i].size() == 0) {
+			dp[i] = dfs(i - 1);
+			return dp[i];
+		}
+		dp[i] = dfs(i - 1);
+		for (const auto& vv : v[i]) {
+			dp[i] = max(vv.second + dfs(vv.first), dp[i]);
+		}
+		return dp[i];
+	};
+	return dfs(n);
 	//递推
 	vector<long long>dp(n + 1, 0);
 	for (int i = 1; i <= n; i++) {
@@ -1846,6 +1846,42 @@ long long maxTaxiEarnings(int n, vector<vector<int>>& rides) {
 }
 ```
 [2830. 销售利润最大化](https://leetcode.cn/problems/maximize-the-profit-as-the-salesman/)
+### [3459. 最长 V 形对角线段的长度](https://leetcode.cn/problems/length-of-longest-v-shaped-diagonal-segment/) 多状态记忆化
+```c++
+int lenOfVDiagonal(vector<vector<int>>& grid) {
+	int m = grid.size(), n = grid[0].size(), ans = 0;
+	vector memo(m, vector<array<array<int, 2>, 4>>(n));//记忆化搜索
+	vector<vector<int>>dirs = {//顺时针变化
+		{-1, -1},//0左上
+		{-1, 1},//1右上
+		{1, 1},//2右下
+		{1, -1}//3左下
+	};
+	vector<int>nex = {2, 2, 0};//0 -> 2; 1 -> 2; 2 -> 0
+	auto dfs = [&](this auto&& dfs, int x, int y, int dir, int change) ->int {
+		int nx = x + dirs[dir][0];
+		int ny = y + dirs[dir][1];
+		if(nx < 0 || nx >= m || ny < 0 || ny >= n || 
+			grid[nx][ny] != nex[grid[x][y]]) return 0;
+		if(memo[nx][ny][dir][change]) return memo[nx][ny][dir][change];
+		int res = dfs(nx, ny, dir, change);//不变方向
+		if(change) {
+			res = max(res, dfs(nx, ny, (dir + 1) % 4, 0));
+		}
+		return memo[nx][ny][dir][change] = res + 1;//加上当前位置
+	};
+	for(int x = 0; x < m; ++x) {
+		for(int y = 0; y < n; ++y) {
+			if(grid[x][y] == 1) {//起点
+				for(int dir = 0; dir < 4; ++dir) {
+					ans = max(ans, dfs(x, y, dir, 1) + 1);
+				}
+			}
+		}
+	}
+	return ans;
+}
+```
 ## *打家劫舍问题
 
 源问题[198. 打家劫舍](https://leetcode.cn/problems/house-robber/)
@@ -3625,6 +3661,7 @@ bool predictTheWinner(vector<int>& nums) {
 	return dfs(0, n - 1) * 2 >= pre[n];
 }
 ```
+
 
 
 

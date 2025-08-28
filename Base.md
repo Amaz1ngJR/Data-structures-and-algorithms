@@ -520,7 +520,7 @@ int countTrapezoids(vector<vector<int>>& points) {
 }
 ```
 # 技巧
-## [对角线遍历](https://leetcode.cn/problems/diagonal-traverse/) 副对角线
+## [498. 对角线遍历](https://leetcode.cn/problems/diagonal-traverse/) 副对角线
 ```c++
 vector<int> findDiagonalOrder(vector<vector<int>>& mat) {
 	int m = mat.size(), n = mat[0].size();

@@ -520,7 +520,7 @@ int countTrapezoids(vector<vector<int>>& points) {
 }
 ```
 # 技巧
-## [对角线遍历](https://leetcode.cn/problems/diagonal-traverse/)
+## [对角线遍历](https://leetcode.cn/problems/diagonal-traverse/) 副对角线
 ```c++
 vector<int> findDiagonalOrder(vector<vector<int>>& mat) {
 	int m = mat.size(), n = mat[0].size();
@@ -542,5 +542,68 @@ vector<int> findDiagonalOrder(vector<vector<int>>& mat) {
 		}
 	}
 	return ans;
+}
+```
+## [3446. 按对角线进行矩阵排序](https://leetcode.cn/problems/sort-matrix-by-diagonals/)
+```c++
+vector<vector<int>> sortMatrix(vector<vector<int>>& grid) {
+	int n = grid.size();
+	//左下角（包括中间对角线）对角线满足i - j = k 属于[n - 1, 0]
+	//右上角 对角线满足i - j = k属于 [-1, 1 - n]
+	for(int k = n - 1; k >= 1 - n; --k) {//枚举对角线
+		if(k >= 0) {//左下角（包括中间对角线）起点为(k, 0)
+			vector<int>t;
+			int x = k, y = 0;
+			while(x < n && y < n) {
+				t.push_back(grid[x++][y++]);
+			}
+			ranges::sort(t, [](int a, int b){return a > b;});
+			x = k, y = 0;
+			while(x < n && y < n) {
+				grid[x++][y++] = t[y];
+			}
+		}
+		else {//右上角 起点为(0, -k)
+			vector<int>t;
+			int x = 0, y = -k;
+			while(x < n && y < n) {
+				t.push_back(grid[x++][y++]);
+			}
+			ranges::sort(t);
+			x = 0, y = -k;
+			while(x < n && y < n) {
+				grid[x++][y++] = t[x];
+			}
+		}
+	}
+	return grid;
+}
+```
+模版
+```c++
+//设 k=i−j+n，那么右上角那条对角线的 k=0−(n−1)+n=1，左下角那条对角线的 k=(m−1)−0+n=m+n−1
+vector<vector<int>> sortMatrix(vector<vector<int>>& grid) {
+	int m = grid.size(), n = grid[0].size();
+	// 第一排在右上，最后一排在左下
+	// 每排从左上到右下
+	// 令 k=i-j+n，那么右上角 k=1，左下角 k=m+n-1
+	for (int k = 1; k < m + n; k++) {
+		// 核心：计算 j 的最小值和最大值
+		int min_j = max(n - k, 0); // i=0 的时候，j=n-k，但不能是负数
+		int max_j = min(m + n - 1 - k, n - 1); // i=m-1 的时候，j=m+n-1-k，但不能超过 n-1
+		vector<int> a;
+		for (int j = min_j; j <= max_j; j++) {
+			a.push_back(grid[k + j - n][j]); // 根据 k 的定义得 i=k+j-n
+		}
+		if (min_j > 0) { // 右上角三角形
+			ranges::sort(a);
+		} else { // 左下角三角形（包括中间对角线）
+			ranges::sort(a, greater<int>());
+		}
+		for (int j = min_j; j <= max_j; j++) {
+			grid[k + j - n][j] = a[j - min_j];
+		}
+	}
+	return grid;
 }
 ```

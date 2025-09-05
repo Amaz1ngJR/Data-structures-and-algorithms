@@ -124,6 +124,9 @@ void demo() {
 	//初始化
 	std::bitset<8> a(42);//使用整数值 42 初始化一个包含 8 位的 bitset
 	std::bitset<4> myBits("1010");  // 使用二进制字符串 "1010" 初始化一个包含 4 位的 bitset
+	std::bitset<8> bs3("101010"); // 从字符串初始化
+	std::bitset<8> bs4("00101010"); // 字符串长度必须 <= N，高位补 0
+
 	bool bitValue = myBits[2];  // 获取第 2 位的值
 	myBits <<= 2;  // 将所有位左移两位
 	//成员函数
@@ -137,6 +140,23 @@ void demo() {
 	int num = myBits.to_ulong();//将 bitset 二进制转成十进制
 }
 ```
+|函数	|说明|
+|-----|------|
+|bs.test(pos)	|返回第 pos 位是否为 1（越界抛 std::out_of_range）|
+|bs.test(pos, val) (C++23)|	设置第 pos 位为 val 并返回旧值|
+|bs.set(pos)	|将第 pos 位置为 1|
+|bs.set(pos, val)|	将第 pos 位设置为 val（true/false）|
+|bs.reset(pos)	|将第 pos 位置为 0|
+|bs.flip(pos)|	翻转第 pos 位|
+|bs.all()	|所有位都为 1 返回 true|
+|bs.any()	|至少有一位为 1 返回 true|
+|bs.none()	|所有位都为 0 返回 true|
+|bs.count()|	返回为 1 的位的个数（即 popcount）|
+|bs.size()|	返回位数 N|
+|bs.to_string()|	转换为字符串|
+|bs.to_ulong()|	转换为 unsigned long（如果溢出抛 std::overflow_error）|
+|bs.to_ullong()|	转换为 unsigned long long|
+
 [37. 解数独](https://leetcode.cn/problems/sudoku-solver/)
 ```c++
 void solveSudoku(vector<vector<char>>& board) {
